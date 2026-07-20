@@ -1,0 +1,27 @@
+generated: '2026-07-19'
+method: searched
+source: https://apidocs.kennasecurity.com/reference/api-authentication
+docs: https://apidocs.kennasecurity.com/reference/api-authentication
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+  oauth2_flows: []
+schemes:
+- name: XRiskToken
+  type: apiKey
+  in: header
+  parameter_name: X-Risk-Token
+  description: >-
+    All requests must include an X-Risk-Token header whose value is the API token
+    generated in the Cisco Vulnerability Management UI under Settings > API Keys.
+    API keys can be copied one time immediately after generation. All calls must be
+    over HTTPS; plain HTTP requests fail.
+  sources:
+  - https://apidocs.kennasecurity.com/reference/api-authentication
+notes:
+- The API base host matches the subscription subdomain; the documented example host is
+  api.kennasecurity.com. Verify the exact host on the Settings > API Keys page.
+- No OAuth2 / OpenID Connect flows are documented; authentication is a single static
+  API-key token header.
