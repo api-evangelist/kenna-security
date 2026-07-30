@@ -1,0 +1,20 @@
+generated: '2026-07-19'
+method: searched
+source: https://apidocs.kennasecurity.com/changelog
+scheme: annual-rollup
+notes: The Kenna / Cisco Vulnerability Management API publishes a public changelog on its
+  ReadMe developer portal, grouped by year. Entries are captured at the yearly-rollup
+  level; the live changelog is the source of truth for individual dated changes.
+entries:
+- version: '2025'
+  title: 2025 Changes
+  url: https://apidocs.kennasecurity.com/changelog
+- version: '2024'
+  title: 2024 Changes
+  url: https://apidocs.kennasecurity.com/changelog
+- version: '2023'
+  title: 2023 Changes
+  url: https://apidocs.kennasecurity.com/changelog
+- version: '2022'
+  title: 2022 Changes
+  url: https://apidocs.kennasecurity.com/changelog

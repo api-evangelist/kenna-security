@@ -1,0 +1,48 @@
+generated: '2026-07-19'
+method: searched
+source: https://apidocs.kennasecurity.com/reference
+docs:
+- https://apidocs.kennasecurity.com/reference/api-authentication
+- https://apidocs.kennasecurity.com/reference/data-types
+- https://apidocs.kennasecurity.com/reference/pagination
+authentication:
+  style: api-key-header
+  header: X-Risk-Token
+  transport: https-only
+  ref: authentication/kenna-security-authentication.yml
+idempotency:
+  supported: false
+  notes: No idempotency-key header or contract is documented in the API reference.
+pagination:
+  style: page-number
+  params:
+  - name: page
+    description: 1-based page number; omitting returns the first page.
+  - name: per_page
+    description: Items per page (availability and maximum vary per endpoint).
+  response_fields:
+    meta:
+    - page
+    - pages
+    - total_count
+  notes: Default and maximum page size vary per endpoint; each endpoint documents its own
+    max page, max page size, and default page size.
+media_types:
+  request: application/json
+  response:
+  - application/json
+  - application/json+gzip
+data_types:
+  date_time_format: ISO-8601
+  integers: int32 (default) or int64
+  numbers: float (default)
+  notes: Data types follow the OpenAPI Specification primitive set (string, number,
+    integer, boolean, array, object).
+versioning:
+  ref: lifecycle/kenna-security-lifecycle.yml
+errors:
+  ref: null
+  notes: A dedicated error-handling reference is published for the legacy Vulnerability
+    Inference V2 API; a consolidated RFC 9457 problem+json envelope is not documented.
+rate_limiting:
+  documented: false

@@ -1,0 +1,29 @@
+generated: '2026-07-19'
+method: searched
+host: https://api.kennasecurity.com
+notes: >-
+  The API host api.kennasecurity.com is fully authentication-gated — every /.well-known/
+  path returns 401 Unauthorized rather than a public document. The website host
+  redirects to Cisco. No public /.well-known catalog, OIDC, or OAuth discovery document
+  is published, so no WellKnown/SecurityTxt pointer is wired. Absence is valid recorded
+  data.
+documents:
+- path: /.well-known/security.txt
+  status: 401
+  host: api.kennasecurity.com
+- path: /.well-known/openid-configuration
+  status: 401
+  host: api.kennasecurity.com
+- path: /.well-known/oauth-authorization-server
+  status: 401
+  host: api.kennasecurity.com
+- path: /.well-known/api-catalog
+  status: 401
+  host: api.kennasecurity.com
+- path: /.well-known/ai-plugin.json
+  status: 401
+  host: api.kennasecurity.com
+- path: /.well-known/security.txt
+  status: 301
+  host: www.kennasecurity.com
+  note: redirects to Cisco

@@ -1,0 +1,37 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/KennaSecurity/toolkit
+name: Kenna Security Toolkit
+description: >-
+  First-party open-source Ruby task-runner for the Cisco Vulnerability Management
+  (Kenna) platform. Discrete units of functionality ("tasks") are invoked from a
+  container command line to move data in and out of the platform and drive API
+  operations. Distributed as the kennasecurity/toolkit container image.
+repo: https://github.com/KennaSecurity/toolkit
+install:
+- method: docker
+  command: docker pull kennasecurity/toolkit
+- method: docker-build
+  command: docker build (provided Dockerfile / Containerfile)
+- method: github-action
+  command: KennaSecurity/Kenna-Actions
+invocation:
+  interactive: docker run -it kennasecurity/toolkit
+  task_example: docker run -it --rm -t toolkit:latest task=aws_inspector aws_region=us-east-1
+  task_selector: task=<task_name>
+  help_suffixes:
+  - ':help'
+  - ':readme'
+features:
+- Task-based architecture (task= parameter selects the unit of work)
+- Input/output file handling via Docker volumes
+- GitHub Actions integration (Kenna-Actions)
+- Proxy configuration support
+- Per-task help and readme via :help / :readme suffixes
+requirements:
+- Container runtime (Docker or Podman)
+- 8GB RAM
+- Network access
+notes: The full tasks library (connectors, importers, data manipulation) is documented in
+  the repository's tasks directory. The toolkit binary/image is also catalogued in
+  packages/kenna-security-packages.yml.

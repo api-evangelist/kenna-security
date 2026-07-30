@@ -1,0 +1,39 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/KennaSecurity
+packages:
+- language: ruby
+  registry: github
+  name: KennaSecurity/toolkit
+  url: https://github.com/KennaSecurity/toolkit
+  container: kennasecurity/toolkit
+  install: docker pull kennasecurity/toolkit
+  official: true
+  description: >-
+    First-party Kenna Security API and Scripting Toolkit — a Ruby, task-based tool
+    (distributed as the kennasecurity/toolkit Docker image) for building connectors and
+    automating data/API operations against the Cisco Vulnerability Management platform.
+- language: ruby
+  registry: rubygems
+  name: kenna
+  url: https://rubygems.org/gems/kenna
+  install: gem install kenna
+  official: false
+  description: >-
+    Community Ruby client that wraps the Kenna Security API (author: maynard). Not
+    published by Kenna Security / Cisco.
+- language: python
+  registry: pypi
+  name: kenna
+  url: https://pypi.org/project/kenna/
+  install: pip install kenna
+  official: false
+  description: >-
+    Community Python package named "kenna" (author: Tyler Fisher). Not published by
+    Kenna Security / Cisco.
+notes:
+- Kenna / Cisco Vulnerability Management does not publish first-party language client
+  SDKs on npm, PyPI, RubyGems, Maven, NuGet, or crates.io. The official first-party
+  package is the container-distributed Scripting Toolkit above.
+- Additional first-party repos in the KennaSecurity GitHub org include All_Samples and
+  blog_samples (code samples) and Kenna-Actions (a GitHub Action wrapping the toolkit).

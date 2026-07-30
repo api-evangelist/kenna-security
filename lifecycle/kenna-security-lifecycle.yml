@@ -1,0 +1,23 @@
+generated: '2026-07-19'
+method: searched
+source: https://apidocs.kennasecurity.com/reference
+versioning:
+  scheme: multi-version
+  versions:
+  - v1.0
+  - v2.0-platform
+  docs: https://apidocs.kennasecurity.com/reference/welcome
+  notes: The API reference exposes both a v1.0 and a v2.0-platform selection.
+deprecation:
+  policy_url: https://apidocs.kennasecurity.com/docs/getting-started-with-vulnerability-inference-v2
+  sunset_header: false
+  notes: Vulnerability Inference V2 is deprecated in favor of Vulnerability Inference V3;
+    all V2-related documentation is explicitly marked legacy.
+  deprecated_products:
+  - name: Vulnerability Inference V2 (Legacy)
+    replaced_by: Vulnerability Inference V3
+sla:
+  url: null
+  uptime_target: null
+status_page: https://status.kennasecurity.com
+deprecated_operations: []
