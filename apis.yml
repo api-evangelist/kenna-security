@@ -13,17 +13,14 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/kenna-security.png
 name: Kenna Security
-description: 'Kenna Security is the risk-based vulnerability management platform now
-  part of Cisco as Cisco Vulnerability Management. Founded in Chicago and acquired by
-  Cisco in 2021, the platform ingests scanner, asset, and threat-intelligence data to
-  prioritize vulnerabilities by real-world exploitability and business risk. It exposes
-  a REST API (the Kenna / Cisco Vulnerability Management API) at api.kennasecurity.com
-  covering assets, asset groups, applications, findings, fixes, vulnerabilities,
-  vulnerability intelligence, connectors, data exports, dashboards, metrics, roles, and
-  users. The API uses an X-Risk-Token API-key header over HTTPS, page-number pagination,
-  and JSON payloads. Kenna also publishes a first-party open-source Scripting Toolkit on
-  GitHub for building connectors and integrations. Sector: cybersecurity / vulnerability
-  management.'
+description: 'Kenna Security is the risk-based vulnerability management platform now part of Cisco as Cisco Vulnerability
+  Management. Founded in Chicago and acquired by Cisco in 2021, the platform ingests scanner, asset, and threat-intelligence
+  data to prioritize vulnerabilities by real-world exploitability and business risk. It exposes a REST API (the
+  Kenna / Cisco Vulnerability Management API) at api.kennasecurity.com covering assets, asset groups, applications,
+  findings, fixes, vulnerabilities, vulnerability intelligence, connectors, data exports, dashboards, metrics, roles,
+  and users. The API uses an X-Risk-Token API-key header over HTTPS, page-number pagination, and JSON payloads.
+  Kenna also publishes a first-party open-source Scripting Toolkit on GitHub for building connectors and integrations.
+  Sector: cybersecurity / vulnerability management.'
 url: https://raw.githubusercontent.com/api-evangelist/kenna-security/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -33,7 +30,7 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.23'
 created: '2026-07-17'
-modified: '2026-07-19'
+modified: '2026-08-19'
 tags:
 - Company
 - Cybersecurity
@@ -50,11 +47,10 @@ maintainers:
   email: info@apis.io
 apis:
 - name: Cisco Vulnerability Management API (Kenna)
-  description: 'REST API for the Kenna / Cisco Vulnerability Management platform: manage
-    assets, asset groups, applications, findings, fixes, vulnerabilities, vulnerability
-    intelligence, connectors, data exports, dashboards, metrics, roles, and users.
-    Authenticated with an X-Risk-Token API-key header over HTTPS; JSON request/response
-    with page-number pagination.'
+  description: 'REST API for the Kenna / Cisco Vulnerability Management platform: manage assets, asset groups, applications,
+    findings, fixes, vulnerabilities, vulnerability intelligence, connectors, data exports, dashboards, metrics,
+    roles, and users. Authenticated with an X-Risk-Token API-key header over HTTPS; JSON request/response with page-number
+    pagination.'
   humanURL: https://apidocs.kennasecurity.com/reference
   baseURL: https://api.kennasecurity.com
   properties:
@@ -65,6 +61,12 @@ apis:
   - type: Authentication
     url: https://apidocs.kennasecurity.com/reference/api-authentication
 common:
+- type: ParentCompany
+  url: https://apis.io/providers/cisco/
+  name: Cisco
+  x-relationship: acquisition
+  x-generated-by: cisco-family:2026-08-19
+  x-acquired: 2021
 - type: Website
   url: https://www.kennasecurity.com
 - type: DeveloperPortal
@@ -108,3 +110,6 @@ x-enrichment:
   status: backfilled
   pass: local-v1
   note: backfilled from .gitignore signal + verified work evidence
+x-parent: cisco
+x-relationship: acquisition
+x-acquired: 2021
