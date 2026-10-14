@@ -1,16 +1,33 @@
 generated: '2026-10-14'
-method: none
+method: searched
 source:
 - https://zapier.com/apps/kenna-security/integrations
 - https://n8n.io/integrations/kenna-security/
 - https://composio.dev/toolkits/kenna-security
 - https://monid.ai/tools/kenna-security
 checked:
+- crowdstrike/integrations/crowdstrike-integration-edges.yml
 - https://composio.dev/toolkits/kenna-security
 - https://monid.ai/tools/kenna-security
 - https://n8n.io/integrations/kenna-security/
 - https://zapier.com/apps/kenna-security/integrations
 summary: null
 marketplace_apps: []
-edges: []
+edges:
+- partner_name: CrowdStrike (own)
+  partner: crowdstrike
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://marketplace.crowdstrike.com/listings/kenna-vm/
+  mirror_of: crowdstrike/integrations/crowdstrike-integration-edges.yml
+  apps:
+  - Kenna.VM Vulnerability Management
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
 templates: []
