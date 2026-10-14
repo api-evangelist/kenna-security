@@ -1,0 +1,214 @@
+generated: '2026-10-14'
+method: derived
+generator: derive-mcp-candidate.py
+source:
+- openapi/kenna-security-inference-api-openapi.yml
+- openapi/kenna-security-platform-api-openapi.yml
+status: candidate
+deployment:
+  mode: none
+  auth: unknown
+  verified: derived
+note: No MCP server was found. No probe result in the dossier. Candidate tools below are derived from the 120 operation(s) in the provider's own
+  OpenAPI (40 listed); they describe what a server WOULD expose, not one that exists.
+tools:
+- name: v2_os_inference
+  operationId: v2-os-inference
+  method: POST
+  path: /inference/v2/os_query
+  description: Vulnerability Inference for Windows, Darwin (macOS) and Linux Systems
+- name: list_applications
+  operationId: list-applications
+  method: GET
+  path: /applications
+  description: List Applications
+- name: v3_os_inference
+  operationId: v3-os-inference
+  method: POST
+  path: /inference/v3/os_query
+  description: Vulnerability Inference for Windows, Darwin (macOS) and Linux Systems
+- name: create_application
+  operationId: create-application
+  method: POST
+  path: /applications
+  description: Create Application
+- name: get_odata_cves
+  operationId: get-odata-cves
+  method: GET
+  path: /v3/odata/cves
+  description: Cve entities details
+- name: show_application
+  operationId: show-application
+  method: GET
+  path: /applications/{id}
+  description: Show Application
+- name: application_inference
+  operationId: application-inference
+  method: POST
+  path: /vulnerability_definitions/app_inference
+  description: Vulnerability Inference for Applications
+- name: delete_application
+  operationId: delete-application
+  method: DELETE
+  path: /applications/{id}
+  description: Delete Application
+- name: windows_os_inference
+  operationId: windows-os-inference
+  method: POST
+  path: /vulnerability_definitions/os_inference
+  description: Vulnerability Inference for Microsoft Operating Systems
+- name: update_application
+  operationId: update-application
+  method: PUT
+  path: /applications/{id}
+  description: Update Application
+- name: application_findings_historical_mean_time_to_remediate_by_ri
+  operationId: application-findings-historical-mean-time-to-remediate-by-risk-level
+  method: GET
+  path: /applications/{id}/report_query/findings/historical_mean_time_to_remediate_by_risk_level
+  description: Historical Mean Time To Remediate Findings by Risk Level
+- name: application_historical_mean_time_to_remediate_by_risk_level
+  operationId: application-historical-mean-time-to-remediate-by-risk-level
+  method: GET
+  path: /applications/{id}/report_query/historical_mean_time_to_remediate_by_risk_level
+  description: Historical Mean Time To Remediate Vulnerabilities by Risk Level
+- name: application_historical_vulnerability_count_by_risk_level
+  operationId: application-historical-vulnerability-count-by-risk-level
+  method: GET
+  path: /applications/{id}/report_query/historical_open_vulnerability_count_by_risk_level
+  description: Historical Vulnerability Risk Category Counts
+- name: list_asset_groups
+  operationId: list-asset-groups
+  method: GET
+  path: /asset_groups
+  description: List Asset Groups
+- name: create_asset_group_and_risk_meter
+  operationId: create-asset-group-and-risk-meter
+  method: POST
+  path: /asset_groups
+  description: Create Asset Group or Risk Meter
+- name: update_asset_group
+  operationId: update-asset-group
+  method: PUT
+  path: /asset_groups/{id}
+  description: Update Asset Group
+- name: show_asset_group
+  operationId: show-asset-group
+  method: GET
+  path: /asset_groups/{id}
+  description: Show Asset Group
+- name: delete_asset_group
+  operationId: delete-asset-group
+  method: DELETE
+  path: /asset_groups/{id}
+  description: Delete Asset Group
+- name: show_all_fixes
+  operationId: show-all-fixes
+  method: GET
+  path: /asset_groups/{id}/fixes
+  description: Show All Fixes
+- name: calculate_asset_group_metric
+  operationId: calculate-asset-group-metric
+  method: GET
+  path: /asset_groups/{id}/metric_name/{metric_name}
+  description: Calculate Asset Group Metric
+- name: asset_groups_findings_historical_mean_time_to_remediate_by_r
+  operationId: asset-groups-findings-historical-mean-time-to-remediate-by-risk-level
+  method: GET
+  path: /asset_groups/{id}/report_query/findings/historical_mean_time_to_remediate_by_risk_level
+  description: Historical Mean Time To Remediate Findings by Risk Level
+- name: average_days_open_by_risk_level_over_time
+  operationId: average-days-open-by-risk-level-over-time
+  method: GET
+  path: /asset_groups/{id}/report_query/historical_avg_days_open_vulnerabilities_by_risk_level
+  description: Average Days Open by Risk Level Over Time
+- name: false_positive_by_risk_level_over_time
+  operationId: false-positive-by-risk-level-over-time
+  method: GET
+  path: /asset_groups/{id}/report_query/historical_false_positives_by_risk_level
+  description: False Positives by Risk Level Over Time
+- name: historical_mean_time_to_remediate_by_risk_level
+  operationId: historical-mean-time-to-remediate-by-risk-level
+  method: GET
+  path: /asset_groups/{id}/report_query/historical_mean_time_to_remediate_by_risk_level
+  description: Historical Mean Time To Remediate Vulnerabilities by Risk Level
+- name: historical_vulnerability_risk_category_counts
+  operationId: historical-vulnerability-risk-category-counts
+  method: GET
+  path: /asset_groups/{id}/report_query/historical_open_vulnerability_count_by_risk_level
+  description: Historical Vulnerability Risk Category Counts
+- name: past_due_vulnerabilities_by_risk_level_over_time
+  operationId: past-due-vulnerabilities-by-risk-level-over-time
+  method: GET
+  path: /asset_groups/{id}/report_query/historical_past_due_vulnerabilities_by_risk_level
+  description: Past Due Vulnerabilities by Risk Level Over Time
+- name: historical_risk_meter_scores
+  operationId: historical-risk-meter-scores
+  method: GET
+  path: /asset_groups/{id}/report_query/historical_risk_meter_scores
+  description: Historical Risk Meter Scores
+- name: risk_accepted_by_risk_level_over_time
+  operationId: risk-accepted-by-risk-level-over-time
+  method: GET
+  path: /asset_groups/{id}/report_query/risk_accepted_over_time
+  description: Risk Accepted by Risk Level Over Time
+- name: total_past_due_vulnerabilities_by_risk_level
+  operationId: total-past-due-vulnerabilities-by-risk-level
+  method: GET
+  path: /asset_groups/{id}/report_query/total_past_due_vulnerabilities_by_risk_level
+  description: Total Past Due Vulnerabilities by Risk Level
+- name: vulnerabilities_by_due_date
+  operationId: vulnerabilities-by-due-date
+  method: GET
+  path: /asset_groups/{id}/report_query/vulnerabilities_by_due_date
+  description: Vulnerabilities by Due Date
+- name: show_top_fix_groups
+  operationId: show-top-fix-groups
+  method: GET
+  path: /asset_groups/{id}/top_fixes
+  description: Show Top Fix Groups
+- name: create_child_asset_group_and_risk_meter
+  operationId: create-child-asset-group-and-risk-meter
+  method: POST
+  path: /asset_groups/{parent_id}/children
+  description: Create Child Asset Group or Risk Meter
+- name: list_assets
+  operationId: list-assets
+  method: GET
+  path: /assets
+  description: List Assets
+- name: create_asset
+  operationId: create-asset
+  method: POST
+  path: /assets
+  description: Create Asset
+- name: bulk_update_assets
+  operationId: bulk-update-assets
+  method: PUT
+  path: /assets/bulk
+  description: Bulk Update Assets
+- name: download_zipped_asset_data
+  operationId: download-zipped-asset-data
+  method: GET
+  path: /assets/download_data_zip
+  description: Download Zipped Asset Data
+- name: search_assets
+  operationId: search-assets
+  method: GET
+  path: /assets/search
+  description: Search Assets
+- name: validate_asset_search_query
+  operationId: validate-asset-search-query
+  method: GET
+  path: /assets/validate_search
+  description: Validate Asset Search Query
+- name: update_asset
+  operationId: update-asset
+  method: PUT
+  path: /assets/{id}
+  description: Update Asset
+- name: show_asset
+  operationId: show-asset
+  method: GET
+  path: /assets/{id}
+  description: Show Asset

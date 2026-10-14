@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kenna-security/main/json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json",
+  "title": "microsoft_vuln_inferenece_post_response_schema",
+  "description": "An array of malware family information.",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/kenna-security-inference-api-openapi.yml#/components/schemas/microsoft_vuln_inferenece_post_response_schema",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "fixed_by": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "id": {
+        "type": "integer",
+        "format": "int32"
+      },
+      "cve_description": {
+        "type": "string"
+      },
+      "cvss_access_complexity": {
+        "type": "string"
+      },
+      "cvss_access_vector": {
+        "type": "string"
+      },
+      "cvss_authentication": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "risk_meter_score": {
+        "type": "number"
+      },
+      "cve_checksum": {
+        "type": "string"
+      },
+      "cve_checksum_updated_at": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "cve_remote_code_execution": {
+        "type": "boolean"
+      },
+      "cvss_availability_impact": {
+        "type": "string"
+      },
+      "cvss_confidentiality_impact": {
+        "type": "string"
+      },
+      "cvss_integrity_impact": {
+        "type": "string"
+      },
+      "easily_exploitable": {
+        "type": "boolean"
+      },
+      "malware_exploitable": {
+        "type": "boolean"
+      },
+      "active_internet_breach": {
+        "type": "boolean"
+      },
+      "cve_id": {
+        "type": "string"
+      },
+      "cvss_score": {
+        "type": "number"
+      },
+      "cvss_exploit_subscore": {
+        "type": "number"
+      },
+      "cvss_impact_subscore": {
+        "type": "number"
+      },
+      "cvss_vector": {
+        "type": "string"
+      },
+      "cvss_temporal_score": {
+        "type": "number"
+      },
+      "cvss_v3_score": {
+        "type": "number"
+      },
+      "cvss_v3_exploit_subscore": {
+        "type": "number"
+      },
+      "cvss_v3_impact_subscore": {
+        "type": "number"
+      },
+      "cvss_v3_vector": {
+        "type": "string"
+      },
+      "cvss_v3_temporal_score": {
+        "type": "string",
+        "format": "nullable"
+      },
+      "last_modified": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "malware_count": {
+        "type": "integer",
+        "format": "int32"
+      },
+      "published": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "vulnerable_products": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "vulnerable_products_v2": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "affected_versions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "cpe_version": {
+              "type": "string"
+            },
+            "cpe_uri": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

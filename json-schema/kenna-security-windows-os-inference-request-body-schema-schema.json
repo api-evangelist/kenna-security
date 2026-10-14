@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kenna-security/main/json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json",
+  "title": "windows_os_inference_request_body_schema",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/kenna-security-inference-api-openapi.yml#/components/schemas/windows_os_inference_request_body_schema",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "arch": {
+        "type": "string",
+        "description": "OS or program architecture"
+      },
+      "build": {
+        "type": "string",
+        "description": "Optional build-specific or variant string"
+      },
+      "codename": {
+        "type": "string",
+        "description": "OS version codename"
+      },
+      "install_date": {
+        "type": "string",
+        "description": "Unix Timestamp"
+      },
+      "major": {
+        "type": "string",
+        "description": "Major release version"
+      },
+      "minor": {
+        "type": "string",
+        "description": "Minor release version"
+      },
+      "name": {
+        "type": "string",
+        "description": "Distribution or product name"
+      },
+      "patch": {
+        "type": "string",
+        "description": "Optional patch release"
+      },
+      "platform": {
+        "type": "string",
+        "description": "OS Platform"
+      },
+      "platform_like": {
+        "type": "string",
+        "description": "Closely related platforms"
+      },
+      "version": {
+        "type": "string",
+        "description": "OS or product version"
+      },
+      "identifying_number": {
+        "type": "string",
+        "description": "Product identification such as a serial number on software, or a die number on a hardware chip."
+      },
+      "install_location": {
+        "type": "string",
+        "description": "The installation location directory of the product."
+      },
+      "install_source": {
+        "type": "string",
+        "description": "The installation source of the product."
+      },
+      "language": {
+        "type": "string",
+        "description": "The language of the product."
+      },
+      "publisher": {
+        "type": "string",
+        "description": "Name of the product supplier."
+      },
+      "uninstall_string": {
+        "type": "string",
+        "description": "Path and filename of the uninstaller."
+      }
+    }
+  }
+}

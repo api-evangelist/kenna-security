@@ -1,0 +1,1487 @@
+{
+  "@context": {
+    "@vocab": "https://kennasecurity.com/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "kenna": "https://kennasecurity.com/schema#",
+    "os_inference_response_schema": "kenna:os_inference_response_schema",
+    "meta": {
+      "@id": "kenna:meta"
+    },
+    "os": {
+      "@id": "kenna:os"
+    },
+    "applications": {
+      "@id": "kenna:applications",
+      "@container": "@list"
+    },
+    "success": {
+      "@id": "kenna:success",
+      "@type": "xsd:boolean"
+    },
+    "errors": {
+      "@id": "kenna:errors",
+      "@container": "@list"
+    },
+    "has_application_errors": {
+      "@id": "kenna:has_application_errors",
+      "@type": "xsd:boolean"
+    },
+    "v3_os_inference_response_schema": "kenna:v3_os_inference_response_schema",
+    "warnings": {
+      "@id": "kenna:warnings",
+      "@container": "@list"
+    },
+    "inferred_kbs": {
+      "@id": "kenna:inferred_kbs",
+      "@container": "@list"
+    },
+    "odata_cve_response_schema": "kenna:odata_cve_response_schema",
+    "__metadata": {
+      "@id": "kenna:__metadata"
+    },
+    "cve_id": {
+      "@id": "kenna:cve_id",
+      "@type": "xsd:string"
+    },
+    "remote_code_execution": {
+      "@id": "kenna:remote_code_execution",
+      "@type": "xsd:boolean"
+    },
+    "cvss_access_complexity": {
+      "@id": "kenna:cvss_access_complexity",
+      "@type": "xsd:string"
+    },
+    "cvss_access_vector": {
+      "@id": "kenna:cvss_access_vector",
+      "@type": "xsd:string"
+    },
+    "cvss_authentication": {
+      "@id": "kenna:cvss_authentication",
+      "@type": "xsd:string"
+    },
+    "cvss_availability_impact": {
+      "@id": "kenna:cvss_availability_impact",
+      "@type": "xsd:string"
+    },
+    "cvss_confidentiality_impact": {
+      "@id": "kenna:cvss_confidentiality_impact",
+      "@type": "xsd:string"
+    },
+    "cvss_integrity_impact": {
+      "@id": "kenna:cvss_integrity_impact",
+      "@type": "xsd:string"
+    },
+    "cvss_score": {
+      "@id": "kenna:cvss_score",
+      "@type": "xsd:decimal"
+    },
+    "cvss_exploit_subscore": {
+      "@id": "kenna:cvss_exploit_subscore",
+      "@type": "xsd:decimal"
+    },
+    "cvss_impact_subscore": {
+      "@id": "kenna:cvss_impact_subscore",
+      "@type": "xsd:decimal"
+    },
+    "cvss_vector": {
+      "@id": "kenna:cvss_vector",
+      "@type": "xsd:string"
+    },
+    "cvss_temporal_score": {
+      "@id": "kenna:cvss_temporal_score",
+      "@type": "xsd:decimal"
+    },
+    "cvss_v3_score": {
+      "@id": "kenna:cvss_v3_score",
+      "@type": "xsd:decimal"
+    },
+    "cvss_v3_exploit_subscore": {
+      "@id": "kenna:cvss_v3_exploit_subscore",
+      "@type": "xsd:decimal"
+    },
+    "cvss_v3_impact_subscore": {
+      "@id": "kenna:cvss_v3_impact_subscore",
+      "@type": "xsd:decimal"
+    },
+    "cvss_v3_vector": {
+      "@id": "kenna:cvss_v3_vector",
+      "@type": "xsd:string"
+    },
+    "cvss_v3_temporal_score": {
+      "@id": "kenna:cvss_v3_temporal_score",
+      "@type": "xsd:decimal"
+    },
+    "description": {
+      "@id": "kenna:description",
+      "@type": "xsd:string"
+    },
+    "last_modified": {
+      "@id": "kenna:last_modified",
+      "@type": "xsd:dateTime"
+    },
+    "published": {
+      "@id": "kenna:published",
+      "@type": "xsd:dateTime"
+    },
+    "vulnerable_products": {
+      "@id": "kenna:vulnerable_products",
+      "@container": "@list"
+    },
+    "checksum": {
+      "@id": "kenna:checksum",
+      "@type": "xsd:string"
+    },
+    "checksum_updated_at": {
+      "@id": "kenna:checksum_updated_at",
+      "@type": "xsd:dateTime"
+    },
+    "vulnerability_score": {
+      "@id": "kenna:vulnerability_score",
+      "@type": "xsd:decimal"
+    },
+    "easily_exploitable": {
+      "@id": "kenna:easily_exploitable",
+      "@type": "xsd:boolean"
+    },
+    "malware_exploitable": {
+      "@id": "kenna:malware_exploitable",
+      "@type": "xsd:boolean"
+    },
+    "active_internet_breach": {
+      "@id": "kenna:active_internet_breach",
+      "@type": "xsd:boolean"
+    },
+    "malware_count": {
+      "@id": "kenna:malware_count",
+      "@type": "xsd:integer"
+    },
+    "internal_updated_at": {
+      "@id": "kenna:internal_updated_at",
+      "@type": "xsd:dateTime"
+    },
+    "last_seen_breach_at": {
+      "@id": "kenna:last_seen_breach_at",
+      "@type": "xsd:dateTime"
+    },
+    "odata_error_response_schema": "kenna:odata_error_response_schema",
+    "code": {
+      "@id": "kenna:code",
+      "@type": "xsd:integer"
+    },
+    "message": {
+      "@id": "kenna:message",
+      "@type": "xsd:string"
+    },
+    "target": {
+      "@id": "kenna:target",
+      "@type": "xsd:string"
+    },
+    "details": {
+      "@id": "kenna:details",
+      "@container": "@list"
+    },
+    "app_inference_request_body_schema": "kenna:app_inference_request_body_schema",
+    "arch": {
+      "@id": "kenna:arch",
+      "@type": "xsd:string"
+    },
+    "os_type": {
+      "@id": "kenna:os_type",
+      "@type": "xsd:string"
+    },
+    "os_name": {
+      "@id": "kenna:os_name",
+      "@type": "xsd:string"
+    },
+    "os_version": {
+      "@id": "kenna:os_version",
+      "@type": "xsd:string"
+    },
+    "software": {
+      "@id": "kenna:software",
+      "@container": "@list"
+    },
+    "min_risk_meter_score": {
+      "@id": "kenna:min_risk_meter_score",
+      "@type": "xsd:integer"
+    },
+    "error_response": "kenna:error_response",
+    "error": {
+      "@id": "kenna:error",
+      "@type": "xsd:string"
+    },
+    "os_inference_request_body_schema": "kenna:os_inference_request_body_schema",
+    "include_unverified_versions": {
+      "@id": "kenna:include_unverified_versions",
+      "@type": "xsd:boolean"
+    },
+    "installed_kbs": {
+      "@id": "kenna:installed_kbs",
+      "@container": "@list"
+    },
+    "application_get_response_schema": "kenna:application_get_response_schema",
+    "application": {
+      "@id": "kenna:application"
+    },
+    "application_put_response_schema": "kenna:application_put_response_schema",
+    "application_update_request_body_schema": "kenna:application_update_request_body_schema",
+    "page_metadata": "kenna:page_metadata",
+    "application_post_response_schema": "kenna:application_post_response_schema",
+    "application_request_body_schema": "kenna:application_request_body_schema",
+    "applications_findings_mttr_get_response_schema": "kenna:applications_findings_mttr_get_response_schema",
+    "id": {
+      "@id": "kenna:id",
+      "@type": "xsd:integer"
+    },
+    "name": {
+      "@id": "kenna:name",
+      "@type": "xsd:string"
+    },
+    "mttr": {
+      "@id": "kenna:mttr",
+      "@type": "@id"
+    },
+    "findings_mttr_schema": "kenna:findings_mttr_schema",
+    "applications_vuln_mttr_get_response_schema": "kenna:applications_vuln_mttr_get_response_schema",
+    "vuln_mttr_schema": "kenna:vuln_mttr_schema",
+    "applications_historical_vuln_counts_by_risk_level_schema": "kenna:applications_historical_vuln_counts_by_risk_level_schema",
+    "historical_vulnerability_count_by_risk": {
+      "@id": "kenna:historical_vulnerability_count_by_risk",
+      "@type": "@id"
+    },
+    "asset_groups_put_request_body_schema": "kenna:asset_groups_put_request_body_schema",
+    "query": {
+      "@id": "kenna:query",
+      "@type": "@id"
+    },
+    "asset_groups_query_schema": "kenna:asset_groups_query_schema",
+    "exclude_child_filter": {
+      "@id": "kenna:exclude_child_filter",
+      "@container": "@list"
+    },
+    "min_priority": {
+      "@id": "kenna:min_priority",
+      "@type": "xsd:integer"
+    },
+    "max_priority": {
+      "@id": "kenna:max_priority",
+      "@type": "xsd:integer"
+    },
+    "operating_system": {
+      "@id": "kenna:operating_system",
+      "@container": "@list"
+    },
+    "primary_locator": {
+      "@id": "kenna:primary_locator",
+      "@container": "@list"
+    },
+    "q": {
+      "@id": "kenna:q",
+      "@type": "xsd:string"
+    },
+    "service_ports": {
+      "@id": "kenna:service_ports",
+      "@container": "@list"
+    },
+    "service_protocols": {
+      "@id": "kenna:service_protocols",
+      "@type": "@id"
+    },
+    "status": {
+      "@id": "kenna:status",
+      "@container": "@list"
+    },
+    "tags": {
+      "@id": "kenna:tags",
+      "@container": "@list"
+    },
+    "tag_boolean_mode": {
+      "@id": "kenna:tag_boolean_mode",
+      "@type": "xsd:string"
+    },
+    "asset_group_get_response_schema": "kenna:asset_group_get_response_schema",
+    "parent": {
+      "@id": "kenna:parent"
+    },
+    "child_ids": {
+      "@id": "kenna:child_ids",
+      "@container": "@list"
+    },
+    "resource": {
+      "@id": "kenna:resource",
+      "@type": "xsd:string"
+    },
+    "querystring": {
+      "@id": "kenna:querystring",
+      "@type": "xsd:string"
+    },
+    "created_at": {
+      "@id": "kenna:created_at",
+      "@type": "xsd:string"
+    },
+    "updated_at": {
+      "@id": "kenna:updated_at",
+      "@type": "xsd:string"
+    },
+    "risk_meter_score": {
+      "@id": "kenna:risk_meter_score",
+      "@type": "xsd:integer"
+    },
+    "true_risk_meter_score": {
+      "@id": "kenna:true_risk_meter_score",
+      "@type": "xsd:integer"
+    },
+    "asset_count": {
+      "@id": "kenna:asset_count",
+      "@type": "xsd:integer"
+    },
+    "unique_open_cve_count": {
+      "@id": "kenna:unique_open_cve_count",
+      "@type": "xsd:integer"
+    },
+    "predicted_exploitable_count": {
+      "@id": "kenna:predicted_exploitable_count",
+      "@type": "xsd:integer"
+    },
+    "highest_score": {
+      "@id": "kenna:highest_score"
+    },
+    "lowest_score": {
+      "@id": "kenna:lowest_score"
+    },
+    "score_last_week": {
+      "@id": "kenna:score_last_week"
+    },
+    "score_last_month": {
+      "@id": "kenna:score_last_month"
+    },
+    "score_90_days_ago": {
+      "@id": "kenna:score_90_days_ago"
+    },
+    "vulnerability_density": {
+      "@id": "kenna:vulnerability_density",
+      "@type": "xsd:integer"
+    },
+    "historical_risk_meter_scores": {
+      "@id": "kenna:historical_risk_meter_scores",
+      "@container": "@list"
+    },
+    "fix_info_schema": "kenna:fix_info_schema",
+    "alternative_visible": {
+      "@id": "kenna:alternative_visible",
+      "@type": "xsd:boolean"
+    },
+    "assets": {
+      "@id": "kenna:assets",
+      "@container": "@list"
+    },
+    "category": {
+      "@id": "kenna:category",
+      "@type": "xsd:string"
+    },
+    "consequence": {
+      "@id": "kenna:consequence",
+      "@type": "xsd:string"
+    },
+    "cves": {
+      "@id": "kenna:cves",
+      "@container": "@list"
+    },
+    "diagnosis": {
+      "@id": "kenna:diagnosis",
+      "@type": "xsd:string"
+    },
+    "exact_match": {
+      "@id": "kenna:exact_match",
+      "@type": "xsd:boolean"
+    },
+    "max_vuln_score": {
+      "@id": "kenna:max_vuln_score",
+      "@type": "xsd:integer"
+    },
+    "patch_publication_date": {
+      "@id": "kenna:patch_publication_date",
+      "@type": "xsd:string"
+    },
+    "reference_links": {
+      "@id": "kenna:reference_links",
+      "@container": "@list"
+    },
+    "scanner_ids": {
+      "@id": "kenna:scanner_ids",
+      "@container": "@list"
+    },
+    "solution": {
+      "@id": "kenna:solution",
+      "@type": "xsd:string"
+    },
+    "title": {
+      "@id": "kenna:title",
+      "@type": "xsd:string"
+    },
+    "url": {
+      "@id": "kenna:url",
+      "@type": "xsd:string"
+    },
+    "urls": {
+      "@id": "kenna:urls",
+      "@container": "@list"
+    },
+    "vendor": {
+      "@id": "kenna:vendor",
+      "@type": "xsd:string"
+    },
+    "vuln_count": {
+      "@id": "kenna:vuln_count",
+      "@type": "xsd:integer"
+    },
+    "show_top_fix_groups_schema": "kenna:show_top_fix_groups_schema",
+    "top_fixes": {
+      "@id": "kenna:top_fixes",
+      "@container": "@list"
+    },
+    "top_fixes_info_schema": "kenna:top_fixes_info_schema",
+    "asset_group_post_response_schema": "kenna:asset_group_post_response_schema",
+    "parent_id": {
+      "@id": "kenna:parent_id",
+      "@type": "xsd:integer"
+    },
+    "client_id": {
+      "@id": "kenna:client_id",
+      "@type": "xsd:integer"
+    },
+    "full_query": {
+      "@id": "kenna:full_query",
+      "@container": "@list"
+    },
+    "asset_group_request_body_schema": "kenna:asset_group_request_body_schema",
+    "historical": {
+      "@id": "kenna:historical",
+      "@type": "xsd:boolean"
+    },
+    "asset_groups_findings_mttr_by_risk_level_get_response_schema": "kenna:asset_groups_findings_mttr_by_risk_level_get_response_schema",
+    "asset_groups_average_vuln_counts_by_risk_level_schema": "kenna:asset_groups_average_vuln_counts_by_risk_level_schema",
+    "historical_avg_days_open_vulnerabilities_by_risk_level": {
+      "@id": "kenna:historical_avg_days_open_vulnerabilities_by_risk_level",
+      "@type": "@id"
+    },
+    "asset_groups_false_positive_by_risk_level_schema": "kenna:asset_groups_false_positive_by_risk_level_schema",
+    "historical_false_positives_by_risk_level": {
+      "@id": "kenna:historical_false_positives_by_risk_level",
+      "@type": "@id"
+    },
+    "asset_groups_mttr_by_risk_level_schema": "kenna:asset_groups_mttr_by_risk_level_schema",
+    "asset_groups_vulnerability_count_by_risk_schema": "kenna:asset_groups_vulnerability_count_by_risk_schema",
+    "historical_vulnerabilitiy_count_by_risk": {
+      "@id": "kenna:historical_vulnerabilitiy_count_by_risk",
+      "@type": "@id"
+    },
+    "asset_groups_historical_past_due_vulns_by_risk_level_schema": "kenna:asset_groups_historical_past_due_vulns_by_risk_level_schema",
+    "historical_past_due_vulnerabilities_by_risk_level": {
+      "@id": "kenna:historical_past_due_vulnerabilities_by_risk_level",
+      "@type": "@id"
+    },
+    "asset_groups_risk_meter_scores_schema": "kenna:asset_groups_risk_meter_scores_schema",
+    "risk_meter_scores": {
+      "@id": "kenna:risk_meter_scores"
+    },
+    "asset_groups_risk_accepted_over_time_schema": "kenna:asset_groups_risk_accepted_over_time_schema",
+    "risk_accepted_over_time": {
+      "@id": "kenna:risk_accepted_over_time",
+      "@type": "@id"
+    },
+    "asset_groups_total_past_due_vulns_by_risk_level_schema": "kenna:asset_groups_total_past_due_vulns_by_risk_level_schema",
+    "total_past_due_vulnerabilities_by_risk_level": {
+      "@id": "kenna:total_past_due_vulnerabilities_by_risk_level"
+    },
+    "asset_groups_vulns_by_due_date_schema": "kenna:asset_groups_vulns_by_due_date_schema",
+    "vulnerabilities_by_due_date": {
+      "@id": "kenna:vulnerabilities_by_due_date",
+      "@container": "@list"
+    },
+    "message_response_schema": "kenna:message_response_schema",
+    "asset_request_body_schema": "kenna:asset_request_body_schema",
+    "asset": {
+      "@id": "kenna:asset"
+    },
+    "assets_get_response_schema": "kenna:assets_get_response_schema",
+    "last_seen_time": {
+      "@id": "kenna:last_seen_time",
+      "@type": "xsd:dateTime"
+    },
+    "last_booted_at": {
+      "@id": "kenna:last_booted_at",
+      "@type": "xsd:dateTime"
+    },
+    "ipv6": {
+      "@id": "kenna:ipv6",
+      "@type": "xsd:string"
+    },
+    "locator": {
+      "@id": "kenna:locator",
+      "@type": "xsd:string"
+    },
+    "network_ports": {
+      "@id": "kenna:network_ports",
+      "@container": "@list"
+    },
+    "vulnerabilities_count": {
+      "@id": "kenna:vulnerabilities_count",
+      "@type": "xsd:integer"
+    },
+    "inactive_at": {
+      "@id": "kenna:inactive_at",
+      "@type": "xsd:string"
+    },
+    "status_set_manually": {
+      "@id": "kenna:status_set_manually",
+      "@type": "xsd:boolean"
+    },
+    "overage": {
+      "@id": "kenna:overage",
+      "@type": "xsd:boolean"
+    },
+    "notes": {
+      "@id": "kenna:notes"
+    },
+    "priority": {
+      "@id": "kenna:priority",
+      "@type": "xsd:integer"
+    },
+    "hostname": {
+      "@id": "kenna:hostname"
+    },
+    "mac_address": {
+      "@id": "kenna:mac_address"
+    },
+    "ec2": {
+      "@id": "kenna:ec2"
+    },
+    "external_id": {
+      "@id": "kenna:external_id"
+    },
+    "netbios": {
+      "@id": "kenna:netbios"
+    },
+    "fqdn": {
+      "@id": "kenna:fqdn"
+    },
+    "ip_address": {
+      "@id": "kenna:ip_address",
+      "@type": "xsd:string"
+    },
+    "file": {
+      "@id": "kenna:file"
+    },
+    "database": {
+      "@id": "kenna:database"
+    },
+    "asset_groups": {
+      "@id": "kenna:asset_groups",
+      "@container": "@list"
+    },
+    "owner": {
+      "@id": "kenna:owner",
+      "@type": "xsd:string"
+    },
+    "cvss_v2_schema": "kenna:cvss_v2_schema",
+    "score": {
+      "@id": "kenna:score",
+      "@type": "xsd:decimal"
+    },
+    "exploit_subscore": {
+      "@id": "kenna:exploit_subscore",
+      "@type": "xsd:decimal"
+    },
+    "impact_subscore": {
+      "@id": "kenna:impact_subscore",
+      "@type": "xsd:decimal"
+    },
+    "temporal_score": {
+      "@id": "kenna:temporal_score",
+      "@type": "xsd:decimal"
+    },
+    "cvss_v3_schema": "kenna:cvss_v3_schema",
+    "service_ticket_response_schema": "kenna:service_ticket_response_schema",
+    "external_identifier": {
+      "@id": "kenna:external_identifier",
+      "@type": "xsd:string"
+    },
+    "ticket_type": {
+      "@id": "kenna:ticket_type",
+      "@type": "xsd:string"
+    },
+    "system_id": {
+      "@id": "kenna:system_id",
+      "@type": "xsd:string"
+    },
+    "due_date": {
+      "@id": "kenna:due_date",
+      "@type": "xsd:dateTime"
+    },
+    "due_date_override": {
+      "@id": "kenna:due_date_override",
+      "@type": "xsd:dateTime"
+    },
+    "vulnerability_get_response_schema": "kenna:vulnerability_get_response_schema",
+    "closed_at": {
+      "@id": "kenna:closed_at",
+      "@type": "xsd:dateTime"
+    },
+    "port": {
+      "@id": "kenna:port",
+      "@container": "@list"
+    },
+    "identifiers": {
+      "@id": "kenna:identifiers",
+      "@container": "@list"
+    },
+    "custom_fields": {
+      "@id": "kenna:custom_fields",
+      "@type": "@id"
+    },
+    "scanner_score": {
+      "@id": "kenna:scanner_score",
+      "@type": "xsd:integer"
+    },
+    "fix_id": {
+      "@id": "kenna:fix_id",
+      "@type": "xsd:integer"
+    },
+    "scanner_vulnerabilities": {
+      "@id": "kenna:scanner_vulnerabilities",
+      "@container": "@list"
+    },
+    "asset_id": {
+      "@id": "kenna:asset_id",
+      "@type": "xsd:integer"
+    },
+    "connectors": {
+      "@id": "kenna:connectors",
+      "@container": "@list"
+    },
+    "service_ticket": {
+      "@id": "kenna:service_ticket",
+      "@type": "@id"
+    },
+    "patch": {
+      "@id": "kenna:patch",
+      "@type": "xsd:boolean"
+    },
+    "patch_published_at": {
+      "@id": "kenna:patch_published_at"
+    },
+    "cve_description": {
+      "@id": "kenna:cve_description",
+      "@type": "xsd:string"
+    },
+    "cve_published_at": {
+      "@id": "kenna:cve_published_at",
+      "@type": "xsd:string"
+    },
+    "wasc_id": {
+      "@id": "kenna:wasc_id"
+    },
+    "severity": {
+      "@id": "kenna:severity",
+      "@type": "xsd:integer"
+    },
+    "threat": {
+      "@id": "kenna:threat",
+      "@type": "xsd:integer"
+    },
+    "popular_target": {
+      "@id": "kenna:popular_target",
+      "@type": "xsd:boolean"
+    },
+    "predicted_exploitable": {
+      "@id": "kenna:predicted_exploitable",
+      "@type": "xsd:boolean"
+    },
+    "platform_types": {
+      "@id": "kenna:platform_types",
+      "@container": "@list"
+    },
+    "first_found_on": {
+      "@id": "kenna:first_found_on",
+      "@type": "xsd:dateTime"
+    },
+    "top_priority": {
+      "@id": "kenna:top_priority",
+      "@type": "xsd:boolean"
+    },
+    "closed": {
+      "@id": "kenna:closed",
+      "@type": "xsd:boolean"
+    },
+    "cvss_v2": {
+      "@id": "kenna:cvss_v2",
+      "@type": "@id"
+    },
+    "cvss_v3": {
+      "@id": "kenna:cvss_v3",
+      "@type": "@id"
+    },
+    "assets_bulk_request_body_schema": "kenna:assets_bulk_request_body_schema",
+    "asset_ids": {
+      "@id": "kenna:asset_ids",
+      "@container": "@list"
+    },
+    "realtime": {
+      "@id": "kenna:realtime",
+      "@type": "xsd:boolean"
+    },
+    "assets_updated_put_response_schema": "kenna:assets_updated_put_response_schema",
+    "assets_updated": {
+      "@id": "kenna:assets_updated",
+      "@type": "xsd:integer"
+    },
+    "assets_zip_get_response_schema": "kenna:assets_zip_get_response_schema",
+    "valid_asset_search_get_response_schema": "kenna:valid_asset_search_get_response_schema",
+    "valid": {
+      "@id": "kenna:valid",
+      "@type": "xsd:boolean"
+    },
+    "suggested_query": {
+      "@id": "kenna:suggested_query",
+      "@type": "xsd:string"
+    },
+    "asset_tags_schema": "kenna:asset_tags_schema",
+    "tags_get_response_schema": "kenna:tags_get_response_schema",
+    "tag_info": {
+      "@id": "kenna:tag_info",
+      "@container": "@list"
+    },
+    "connector_run_status_schema": "kenna:connector_run_status_schema",
+    "start_time": {
+      "@id": "kenna:start_time",
+      "@type": "xsd:dateTime"
+    },
+    "end_time": {
+      "@id": "kenna:end_time",
+      "@type": "xsd:dateTime"
+    },
+    "total_payload_count": {
+      "@id": "kenna:total_payload_count",
+      "@type": "xsd:integer"
+    },
+    "processed_payload_count": {
+      "@id": "kenna:processed_payload_count",
+      "@type": "xsd:integer"
+    },
+    "failed_payload_count": {
+      "@id": "kenna:failed_payload_count",
+      "@type": "xsd:integer"
+    },
+    "processed_assets_count": {
+      "@id": "kenna:processed_assets_count",
+      "@type": "xsd:integer"
+    },
+    "assets_with_tags_reset_count": {
+      "@id": "kenna:assets_with_tags_reset_count",
+      "@type": "xsd:integer"
+    },
+    "processed_scanner_vuln_count": {
+      "@id": "kenna:processed_scanner_vuln_count",
+      "@type": "xsd:integer"
+    },
+    "updated_scanner_vuln_count": {
+      "@id": "kenna:updated_scanner_vuln_count",
+      "@type": "xsd:integer"
+    },
+    "created_scanner_vuln_count": {
+      "@id": "kenna:created_scanner_vuln_count",
+      "@type": "xsd:integer"
+    },
+    "closed_scanner_vuln_count": {
+      "@id": "kenna:closed_scanner_vuln_count",
+      "@type": "xsd:integer"
+    },
+    "autoclosed_scanner_vuln_count": {
+      "@id": "kenna:autoclosed_scanner_vuln_count",
+      "@type": "xsd:integer"
+    },
+    "reopened_scanner_vuln_count": {
+      "@id": "kenna:reopened_scanner_vuln_count",
+      "@type": "xsd:integer"
+    },
+    "closed_vuln_count": {
+      "@id": "kenna:closed_vuln_count",
+      "@type": "xsd:integer"
+    },
+    "autoclosed_vuln_count": {
+      "@id": "kenna:autoclosed_vuln_count",
+      "@type": "xsd:integer"
+    },
+    "reopened_vuln_count": {
+      "@id": "kenna:reopened_vuln_count",
+      "@type": "xsd:integer"
+    },
+    "file_request_body_schema": "kenna:file_request_body_schema",
+    "encoding": {
+      "@id": "kenna:encoding",
+      "@type": "xsd:string"
+    },
+    "run": {
+      "@id": "kenna:run",
+      "@type": "xsd:boolean"
+    },
+    "file_upload_response_schema": "kenna:file_upload_response_schema",
+    "data_file": {
+      "@id": "kenna:data_file",
+      "@type": "xsd:integer"
+    },
+    "run_url": {
+      "@id": "kenna:run_url",
+      "@type": "xsd:string"
+    },
+    "success_run_get_response_schema": "kenna:success_run_get_response_schema",
+    "connector_run_id": {
+      "@id": "kenna:connector_run_id",
+      "@type": "xsd:integer"
+    },
+    "connector_request_body_schema": "kenna:connector_request_body_schema",
+    "host": {
+      "@id": "kenna:host",
+      "@type": "xsd:string"
+    },
+    "username": {
+      "@id": "kenna:username",
+      "@type": "xsd:string"
+    },
+    "password": {
+      "@id": "kenna:password",
+      "@type": "xsd:string"
+    },
+    "api_key": {
+      "@id": "kenna:api_key",
+      "@type": "xsd:string"
+    },
+    "scan_policy": {
+      "@id": "kenna:scan_policy",
+      "@type": "xsd:string"
+    },
+    "scan_list": {
+      "@id": "kenna:scan_list",
+      "@type": "xsd:string"
+    },
+    "success_put_response_schema": "kenna:success_put_response_schema",
+    "dashboard_group_get_response_schema": "kenna:dashboard_group_get_response_schema",
+    "asset_search_ids": {
+      "@id": "kenna:asset_search_ids",
+      "@container": "@list"
+    },
+    "asset_search_order": {
+      "@id": "kenna:asset_search_order",
+      "@type": "xsd:string"
+    },
+    "order": {
+      "@id": "kenna:order"
+    },
+    "user_id": {
+      "@id": "kenna:user_id",
+      "@type": "xsd:integer"
+    },
+    "editable": {
+      "@id": "kenna:editable",
+      "@type": "xsd:boolean"
+    },
+    "starred": {
+      "@id": "kenna:starred",
+      "@type": "xsd:boolean"
+    },
+    "share_method": {
+      "@id": "kenna:share_method",
+      "@type": "xsd:string"
+    },
+    "role_ids": {
+      "@id": "kenna:role_ids",
+      "@container": "@list"
+    },
+    "dashboard_group_put_request_body_schema": "kenna:dashboard_group_put_request_body_schema",
+    "dashboard_group": {
+      "@id": "kenna:dashboard_group"
+    },
+    "dashboard_group_post_request_body_schema": "kenna:dashboard_group_post_request_body_schema",
+    "export_get_asset_response_schema": "kenna:export_get_asset_response_schema",
+    "export_get_finding_response_schema": "kenna:export_get_finding_response_schema",
+    "application_identifier": {
+      "@id": "kenna:application_identifier",
+      "@type": "xsd:string"
+    },
+    "external_unique_id": {
+      "@id": "kenna:external_unique_id",
+      "@type": "xsd:string"
+    },
+    "kenna_risk_score": {
+      "@id": "kenna:kenna_risk_score",
+      "@type": "xsd:integer"
+    },
+    "file_locator": {
+      "@id": "kenna:file_locator",
+      "@type": "xsd:string"
+    },
+    "url_locator": {
+      "@id": "kenna:url_locator",
+      "@type": "xsd:string"
+    },
+    "found_on": {
+      "@id": "kenna:found_on",
+      "@type": "xsd:dateTime"
+    },
+    "triage_state": {
+      "@id": "kenna:triage_state",
+      "@type": "xsd:string"
+    },
+    "finding_age": {
+      "@id": "kenna:finding_age",
+      "@type": "xsd:integer"
+    },
+    "time_to_remediate": {
+      "@id": "kenna:time_to_remediate",
+      "@type": "xsd:integer"
+    },
+    "export_get_fix_response_schema": "kenna:export_get_fix_response_schema",
+    "asset_count_display_string": {
+      "@id": "kenna:asset_count_display_string",
+      "@type": "xsd:string"
+    },
+    "export_get_vulnerability_response_schema": "kenna:export_get_vulnerability_response_schema",
+    "status_changed_at": {
+      "@id": "kenna:status_changed_at",
+      "@type": "xsd:dateTime"
+    },
+    "export_settings_request_body_schema": "kenna:export_settings_request_body_schema",
+    "export_settings": {
+      "@id": "kenna:export_settings"
+    },
+    "max_risk_meter_score": {
+      "@id": "kenna:max_risk_meter_score",
+      "@type": "xsd:integer"
+    },
+    "records_updated_since": {
+      "@id": "kenna:records_updated_since",
+      "@type": "xsd:string"
+    },
+    "records_updated_until": {
+      "@id": "kenna:records_updated_until",
+      "@type": "xsd:string"
+    },
+    "search_id": {
+      "@id": "kenna:search_id",
+      "@type": "xsd:integer"
+    },
+    "service_names": {
+      "@id": "kenna:service_names",
+      "@container": "@list"
+    },
+    "service_products": {
+      "@id": "kenna:service_products",
+      "@container": "@list"
+    },
+    "classification": {
+      "@id": "kenna:classification",
+      "@container": "@list"
+    },
+    "connector_names": {
+      "@id": "kenna:connector_names",
+      "@container": "@list"
+    },
+    "connector_types": {
+      "@id": "kenna:connector_types",
+      "@container": "@list"
+    },
+    "has_known_exploits": {
+      "@id": "kenna:has_known_exploits",
+      "@container": "@list"
+    },
+    "has_known_malware": {
+      "@id": "kenna:has_known_malware",
+      "@container": "@list"
+    },
+    "max_rounded_risk_meter_score": {
+      "@id": "kenna:max_rounded_risk_meter_score",
+      "@type": "xsd:integer"
+    },
+    "max_severity": {
+      "@id": "kenna:max_severity",
+      "@type": "xsd:integer"
+    },
+    "max_threat": {
+      "@id": "kenna:max_threat",
+      "@type": "xsd:integer"
+    },
+    "min_rounded_risk_meter_score": {
+      "@id": "kenna:min_rounded_risk_meter_score",
+      "@type": "xsd:integer"
+    },
+    "min_severity": {
+      "@id": "kenna:min_severity",
+      "@type": "xsd:integer"
+    },
+    "min_threat": {
+      "@id": "kenna:min_threat",
+      "@type": "xsd:integer"
+    },
+    "no_vulnerability_definition_id": {
+      "@id": "kenna:no_vulnerability_definition_id",
+      "@container": "@list"
+    },
+    "pci_related": {
+      "@id": "kenna:pci_related",
+      "@container": "@list"
+    },
+    "prioritized": {
+      "@id": "kenna:prioritized",
+      "@container": "@list"
+    },
+    "service_ticket_status": {
+      "@id": "kenna:service_ticket_status",
+      "@container": "@list"
+    },
+    "top_exploit": {
+      "@id": "kenna:top_exploit",
+      "@container": "@list"
+    },
+    "trending": {
+      "@id": "kenna:trending",
+      "@container": "@list"
+    },
+    "vulnerability_class": {
+      "@id": "kenna:vulnerability_class",
+      "@container": "@list"
+    },
+    "vulnerability_definition_id": {
+      "@id": "kenna:vulnerability_definition_id",
+      "@container": "@list"
+    },
+    "wasc_classification": {
+      "@id": "kenna:wasc_classification",
+      "@container": "@list"
+    },
+    "zero_day": {
+      "@id": "kenna:zero_day",
+      "@container": "@list"
+    },
+    "files": {
+      "@id": "kenna:files",
+      "@container": "@list"
+    },
+    "search_id_post_response_schema": "kenna:search_id_post_response_schema",
+    "record_count": {
+      "@id": "kenna:record_count",
+      "@type": "xsd:integer"
+    },
+    "export_status_get_response_schema": "kenna:export_status_get_response_schema",
+    "additional_fields": "kenna:additional_fields",
+    "fields": {
+      "@id": "kenna:fields",
+      "@container": "@list"
+    },
+    "finding_get_response_schema": "kenna:finding_get_response_schema",
+    "application_locator": {
+      "@id": "kenna:application_locator",
+      "@type": "xsd:string"
+    },
+    "connector": {
+      "@id": "kenna:connector"
+    },
+    "last_found_on": {
+      "@id": "kenna:last_found_on",
+      "@type": "xsd:string"
+    },
+    "vulnerability_definition": {
+      "@id": "kenna:vulnerability_definition"
+    },
+    "finding_put_request_body_schema": "kenna:finding_put_request_body_schema",
+    "identifier": {
+      "@id": "kenna:identifier",
+      "@type": "xsd:string"
+    },
+    "remediation": {
+      "@id": "kenna:remediation",
+      "@type": "xsd:string"
+    },
+    "finding_put_response_schema": "kenna:finding_put_response_schema",
+    "finding_status": "kenna:finding_status",
+    "finding_post_response_schema": "kenna:finding_post_response_schema",
+    "finding_request_body_schema": "kenna:finding_request_body_schema",
+    "definition": {
+      "@id": "kenna:definition"
+    },
+    "fix_get_response_schema": "kenna:fix_get_response_schema",
+    "service_now_fix_get_response_schema": "kenna:service_now_fix_get_response_schema",
+    "service_now_vulnerability_get_response_schema": "kenna:service_now_vulnerability_get_response_schema",
+    "primary-locator": {
+      "@id": "kenna:primary-locator",
+      "@type": "xsd:string"
+    },
+    "ec2-locator": {
+      "@id": "kenna:ec2-locator",
+      "@type": "xsd:string"
+    },
+    "url-locator": {
+      "@id": "kenna:url-locator",
+      "@type": "xsd:string"
+    },
+    "file-locator": {
+      "@id": "kenna:file-locator",
+      "@type": "xsd:string"
+    },
+    "fqdn-locator": {
+      "@id": "kenna:fqdn-locator",
+      "@type": "xsd:string"
+    },
+    "database-locator": {
+      "@id": "kenna:database-locator",
+      "@type": "xsd:string"
+    },
+    "application-locator": {
+      "@id": "kenna:application-locator",
+      "@type": "xsd:string"
+    },
+    "ip-address-locator": {
+      "@id": "kenna:ip-address-locator",
+      "@type": "xsd:string"
+    },
+    "mac-address-locator": {
+      "@id": "kenna:mac-address-locator",
+      "@type": "xsd:string"
+    },
+    "asset-id": {
+      "@id": "kenna:asset-id",
+      "@type": "xsd:integer"
+    },
+    "asset-score": {
+      "@id": "kenna:asset-score",
+      "@type": "xsd:integer"
+    },
+    "last-seen-time": {
+      "@id": "kenna:last-seen-time",
+      "@type": "xsd:dateTime"
+    },
+    "fix-id": {
+      "@id": "kenna:fix-id",
+      "@type": "xsd:integer"
+    },
+    "first-found-on": {
+      "@id": "kenna:first-found-on",
+      "@type": "xsd:dateTime"
+    },
+    "vulnerability-score": {
+      "@id": "kenna:vulnerability-score",
+      "@type": "xsd:integer"
+    },
+    "cve-id": {
+      "@id": "kenna:cve-id",
+      "@type": "xsd:string"
+    },
+    "all-details-html": {
+      "@id": "kenna:all-details-html",
+      "@type": "xsd:string"
+    },
+    "latest-scanner-id": {
+      "@id": "kenna:latest-scanner-id",
+      "@type": "xsd:integer"
+    },
+    "last-scan-at": {
+      "@id": "kenna:last-scan-at",
+      "@type": "xsd:dateTime"
+    },
+    "remediation_score_get_response_schema": "kenna:remediation_score_get_response_schema",
+    "remediation_score": {
+      "@id": "kenna:remediation_score"
+    },
+    "sla_adherence_get_response_schema": "kenna:sla_adherence_get_response_schema",
+    "metric_name": {
+      "@id": "kenna:metric_name",
+      "@type": "xsd:string"
+    },
+    "last_calculated": {
+      "@id": "kenna:last_calculated",
+      "@type": "xsd:date"
+    },
+    "values": {
+      "@id": "kenna:values",
+      "@container": "@list"
+    },
+    "vulnerability_densities_get_response_schema": "kenna:vulnerability_densities_get_response_schema",
+    "industry_name": {
+      "@id": "kenna:industry_name",
+      "@type": "xsd:string"
+    },
+    "client_name": {
+      "@id": "kenna:client_name",
+      "@type": "xsd:string"
+    },
+    "metrics": {
+      "@id": "kenna:metrics",
+      "@container": "@list"
+    },
+    "role_get_response_schema": "kenna:role_get_response_schema",
+    "access_level": {
+      "@id": "kenna:access_level",
+      "@type": "xsd:string"
+    },
+    "role_type": {
+      "@id": "kenna:role_type",
+      "@type": "xsd:string"
+    },
+    "update_request_body_schema": "kenna:update_request_body_schema",
+    "role": {
+      "@id": "kenna:role"
+    },
+    "add_applications_request_body_schema": "kenna:add_applications_request_body_schema",
+    "add_asset_groups_request_body_schema": "kenna:add_asset_groups_request_body_schema",
+    "custom_permissions_request_body_schema": "kenna:custom_permissions_request_body_schema",
+    "role_put_204_response_schema": "kenna:role_put_204_response_schema",
+    "custom_permissions": {
+      "@id": "kenna:custom_permissions",
+      "@container": "@list"
+    },
+    "role_post_response_schema": "kenna:role_post_response_schema",
+    "role_request_body_schema": "kenna:role_request_body_schema",
+    "bulk_update_permission_request_body_schema": "kenna:bulk_update_permission_request_body_schema",
+    "roles": {
+      "@id": "kenna:roles",
+      "@container": "@list"
+    },
+    "stack_get_response_schema": "kenna:stack_get_response_schema",
+    "stack_name": {
+      "@id": "kenna:stack_name",
+      "@type": "xsd:string"
+    },
+    "stack_id": {
+      "@id": "kenna:stack_id",
+      "@type": "xsd:integer"
+    },
+    "persistent_searches": {
+      "@id": "kenna:persistent_searches",
+      "@container": "@list"
+    },
+    "stack_put_response_schema": "kenna:stack_put_response_schema",
+    "stack": {
+      "@id": "kenna:stack"
+    },
+    "stack_request_body_schema": "kenna:stack_request_body_schema",
+    "stack_stats_applications_response_schema": "kenna:stack_stats_applications_response_schema",
+    "application_score": {
+      "@id": "kenna:application_score"
+    },
+    "findings_count": {
+      "@id": "kenna:findings_count"
+    },
+    "stack_stats_asset_groups_response_schema": "kenna:stack_stats_asset_groups_response_schema",
+    "asset_group_score": {
+      "@id": "kenna:asset_group_score"
+    },
+    "assets_count": {
+      "@id": "kenna:assets_count"
+    },
+    "stacks_get_response_schema": "kenna:stacks_get_response_schema",
+    "application_count_in_stack": {
+      "@id": "kenna:application_count_in_stack",
+      "@type": "xsd:integer"
+    },
+    "risk_group_count_in_stack": {
+      "@id": "kenna:risk_group_count_in_stack",
+      "@type": "xsd:integer"
+    },
+    "risk_group_score": {
+      "@id": "kenna:risk_group_score",
+      "@type": "xsd:integer"
+    },
+    "stacks_post_response_schema": "kenna:stacks_post_response_schema",
+    "application_ids": {
+      "@id": "kenna:application_ids",
+      "@container": "@list"
+    },
+    "stacks_request_body_schema": "kenna:stacks_request_body_schema",
+    "users_put_request_body_schema": "kenna:users_put_request_body_schema",
+    "user": {
+      "@id": "kenna:user"
+    },
+    "users_get_response_schema": "kenna:users_get_response_schema",
+    "last_sign_in_at": {
+      "@id": "kenna:last_sign_in_at",
+      "@type": "xsd:string"
+    },
+    "email": {
+      "@id": "kenna:email",
+      "@type": "xsd:string"
+    },
+    "firstname": {
+      "@id": "kenna:firstname",
+      "@type": "xsd:string"
+    },
+    "lastname": {
+      "@id": "kenna:lastname",
+      "@type": "xsd:string"
+    },
+    "phone": {
+      "@id": "kenna:phone",
+      "@type": "xsd:string"
+    },
+    "users_post_request_body_schema": "kenna:users_post_request_body_schema",
+    "show_vulnerability_get_response_schema": "kenna:show_vulnerability_get_response_schema",
+    "talos_zero_day": {
+      "@id": "kenna:talos_zero_day",
+      "@type": "@id"
+    },
+    "talos_zero_day_schema": "kenna:talos_zero_day_schema",
+    "talos_id": {
+      "@id": "kenna:talos_id",
+      "@type": "xsd:string"
+    },
+    "cve": {
+      "@id": "kenna:cve",
+      "@type": "xsd:string"
+    },
+    "cvss": {
+      "@id": "kenna:cvss",
+      "@type": "xsd:string"
+    },
+    "cpes": {
+      "@id": "kenna:cpes",
+      "@container": "@list"
+    },
+    "snort_rules": {
+      "@id": "kenna:snort_rules",
+      "@container": "@list"
+    },
+    "service_ticket_request_schema": "kenna:service_ticket_request_schema",
+    "update_vulnerability_request_body_schema": "kenna:update_vulnerability_request_body_schema",
+    "vulnerability": {
+      "@id": "kenna:vulnerability"
+    },
+    "scanner_vulnerabilities_get_response_schema": "kenna:scanner_vulnerabilities_get_response_schema",
+    "vulnerabilities_bulk_delete_response_schema": "kenna:vulnerabilities_bulk_delete_response_schema",
+    "vulnerabilities_deleted": {
+      "@id": "kenna:vulnerabilities_deleted",
+      "@type": "xsd:integer"
+    },
+    "vulnerability_ids_request_body_schema": "kenna:vulnerability_ids_request_body_schema",
+    "vulnerability_ids": {
+      "@id": "kenna:vulnerability_ids",
+      "@container": "@list"
+    },
+    "bulk_update_request_body_schema": "kenna:bulk_update_request_body_schema",
+    "vulnerabilities_bulk_updated_put_response_schema": "kenna:vulnerabilities_bulk_updated_put_response_schema",
+    "vulnerabilities_updated": {
+      "@id": "kenna:vulnerabilities_updated",
+      "@type": "xsd:integer"
+    },
+    "valid_get_response_schema": "kenna:valid_get_response_schema",
+    "create_vulnerability_request_body_schema": "kenna:create_vulnerability_request_body_schema",
+    "cwe_id": {
+      "@id": "kenna:cwe_id",
+      "@type": "xsd:string"
+    },
+    "jira_key": {
+      "@id": "kenna:jira_key",
+      "@type": "xsd:string"
+    },
+    "vulnerability_definition_schema": "kenna:vulnerability_definition_schema",
+    "exploits": {
+      "@id": "kenna:exploits",
+      "@container": "@list"
+    },
+    "fixes": {
+      "@id": "kenna:fixes",
+      "@container": "@list"
+    },
+    "threat_actors": {
+      "@id": "kenna:threat_actors",
+      "@container": "@list"
+    },
+    "daily_trend": {
+      "@id": "kenna:daily_trend",
+      "@type": "xsd:string"
+    },
+    "predicted_exploitable_confidence": {
+      "@id": "kenna:predicted_exploitable_confidence",
+      "@type": "xsd:decimal"
+    },
+    "successful_exploitations": {
+      "@id": "kenna:successful_exploitations",
+      "@type": "xsd:integer"
+    },
+    "velocity_day": {
+      "@id": "kenna:velocity_day",
+      "@type": "xsd:integer"
+    },
+    "velocity_month": {
+      "@id": "kenna:velocity_month",
+      "@type": "xsd:integer"
+    },
+    "velocity_week": {
+      "@id": "kenna:velocity_week",
+      "@type": "xsd:integer"
+    },
+    "chatter_count": {
+      "@id": "kenna:chatter_count",
+      "@type": "xsd:integer"
+    },
+    "pre_nvd_chatter": {
+      "@id": "kenna:pre_nvd_chatter",
+      "@type": "xsd:boolean"
+    },
+    "state": {
+      "@id": "kenna:state",
+      "@type": "xsd:string"
+    },
+    "stride_threat": {
+      "@id": "kenna:stride_threat",
+      "@container": "@list"
+    },
+    "vulnerability_type": {
+      "@id": "kenna:vulnerability_type",
+      "@container": "@list"
+    },
+    "exploitation_methodology": {
+      "@id": "kenna:exploitation_methodology",
+      "@container": "@list"
+    },
+    "affected_source_file_module": {
+      "@id": "kenna:affected_source_file_module",
+      "@container": "@list"
+    },
+    "chatter_get_response_schema": "kenna:chatter_get_response_schema",
+    "chatter": {
+      "@id": "kenna:chatter"
+    },
+    "malware_hash_get_response_schema": "kenna:malware_hash_get_response_schema",
+    "malware": {
+      "@id": "kenna:malware",
+      "@container": "@list"
+    },
+    "cve_identifiers_get_response_schema": "kenna:cve_identifiers_get_response_schema",
+    "cve_identifiers": {
+      "@id": "kenna:cve_identifiers",
+      "@container": "@list"
+    },
+    "qids_get_response_schema": "kenna:qids_get_response_schema",
+    "qids": {
+      "@id": "kenna:qids"
+    },
+    "trends_schema": "kenna:trends_schema",
+    "trends": {
+      "@id": "kenna:trends",
+      "@container": "@list"
+    },
+    "vulnerability_definition_with_mitre_attack_schema": "kenna:vulnerability_definition_with_mitre_attack_schema",
+    "mitre_attack": {
+      "@id": "kenna:mitre_attack"
+    }
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "Kenna Security API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects Kenna Security's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-14) from openapi/kenna-security-inference-api-openapi.yml, openapi/kenna-security-platform-api-openapi.yml.",
+  "dcterms:created": "2026-10-14",
+  "dcterms:source": [
+    "openapi/kenna-security-inference-api-openapi.yml",
+    "openapi/kenna-security-platform-api-openapi.yml"
+  ]
+}

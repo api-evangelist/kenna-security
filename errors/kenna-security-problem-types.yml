@@ -1,0 +1,68 @@
+generated: '2026-10-14'
+method: derived
+generator: derive-problem-types.py
+source:
+- openapi/kenna-security-inference-api-openapi.yml
+- openapi/kenna-security-platform-api-openapi.yml
+format: custom
+envelope:
+  media_type: application/json
+  schema: error_response
+coverage:
+  operations: 120
+  statuses_declared: 7
+problems:
+- status: 400
+  title: Bad Request
+  description: '400'
+  operations: 64
+  media_types:
+  - application/json
+  - application/gzip
+  - application/xml
+  schema: error_response
+- status: 401
+  title: Unauthorized
+  description: '401'
+  operations: 3
+  media_types:
+  - application/json
+  schema: error_response
+- status: 403
+  title: Forbidden
+  description: '403'
+  operations: 21
+  media_types:
+  - application/json
+  schema: error_response
+- status: 404
+  title: Not Found
+  description: '404'
+  operations: 14
+  media_types:
+  - application/json
+  schema: error_response
+- status: 410
+  title: Gone
+  description: Resource not available
+  operations: 2
+  media_types:
+  - application/json
+  - application/gzip
+  schema: error_response
+- status: 422
+  title: Unprocessable Content
+  description: '422'
+  operations: 19
+  media_types:
+  - application/json
+  - application/gzip
+  schema: error_response
+- status: 500
+  title: Internal Server Error
+  description: '500'
+  operations: 4
+  media_types:
+  - application/json
+  - application/gzip
+  schema: error_response

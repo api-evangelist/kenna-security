@@ -1,0 +1,438 @@
+generated: '2026-10-14'
+method: derived
+generator: derive-vocabulary.py
+source:
+- openapi/kenna-security-inference-api-openapi.yml
+- openapi/kenna-security-platform-api-openapi.yml
+vocabulary:
+  name: Kenna Security Domain Vocabulary
+  description: 'Terms declared by Kenna Security''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-14'
+  terms:
+  - term: os_inference_response_schema
+    definition: 'Object declared by the contract with fields: meta, os, applications, success, errors, has_application_errors.'
+    tags:
+    - Object
+    source: openapi/kenna-security-inference-api-openapi.yml#/components/schemas/os_inference_response_schema
+  - term: v3_os_inference_response_schema
+    definition: 'Object declared by the contract with fields: meta, os, applications, success, errors, warnings, has_application_errors, inferred_kbs.'
+    tags:
+    - Object
+    source: openapi/kenna-security-inference-api-openapi.yml#/components/schemas/v3_os_inference_response_schema
+  - term: odata_cve_response_schema
+    definition: 'Object declared by the contract with fields: __metadata, cve_id, remote_code_execution, cvss_access_complexity, cvss_access_vector,
+      cvss_authentication, cvss_availability_impact, cvss_confidentiality_impact, cvss_integrity_impact, cvss_score, cvss_exploit_subscore, cvss_impact_subscore.
+      (20 more)'
+    tags:
+    - Object
+    source: openapi/kenna-security-inference-api-openapi.yml#/components/schemas/odata_cve_response_schema
+  - term: odata_error_response_schema
+    definition: 'Object declared by the contract with fields: code, message, target, details.'
+    tags:
+    - Object
+    source: openapi/kenna-security-inference-api-openapi.yml#/components/schemas/odata_error_response_schema
+  - term: app_inference_request_body_schema
+    definition: 'Object declared by the contract with fields: arch, os_type, os_name, os_version, software, min_risk_meter_score.'
+    tags:
+    - Object
+    source: openapi/kenna-security-inference-api-openapi.yml#/components/schemas/app_inference_request_body_schema
+  - term: error_response
+    definition: 'Object declared by the contract with fields: error, message, success.'
+    tags:
+    - Object
+    source: openapi/kenna-security-inference-api-openapi.yml#/components/schemas/error_response
+  - term: microsoft_vuln_inferenece_post_response_schema
+    definition: An array of malware family information.
+    tags:
+    - Object
+    source: openapi/kenna-security-inference-api-openapi.yml#/components/schemas/microsoft_vuln_inferenece_post_response_schema
+  - term: os_inference_request_body_schema
+    definition: 'Object declared by the contract with fields: arch, os_type, os_name, os_version, min_risk_meter_score, include_unverified_versions,
+      installed_kbs.'
+    tags:
+    - Object
+    source: openapi/kenna-security-inference-api-openapi.yml#/components/schemas/os_inference_request_body_schema
+  - term: application_get_response_schema
+    definition: 'Object declared by the contract with fields: application.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/application_get_response_schema
+  - term: application_put_response_schema
+    definition: 'Object declared by the contract with fields: application.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/application_put_response_schema
+  - term: application_update_request_body_schema
+    definition: 'Object declared by the contract with fields: application.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/application_update_request_body_schema
+  - term: page_metadata
+    definition: 'Object declared by the contract with fields: meta.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/page_metadata
+  - term: application_post_response_schema
+    definition: 'Object declared by the contract with fields: application.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/application_post_response_schema
+  - term: application_request_body_schema
+    definition: 'Object declared by the contract with fields: application.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/application_request_body_schema
+  - term: applications_findings_mttr_get_response_schema
+    definition: 'Object declared by the contract with fields: id, name, mttr.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/applications_findings_mttr_get_response_schema
+  - term: findings_mttr_schema
+    definition: Findings Mean Time to Remediate.
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/findings_mttr_schema
+  - term: applications_vuln_mttr_get_response_schema
+    definition: 'Object declared by the contract with fields: id, name, mttr.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/applications_vuln_mttr_get_response_schema
+  - term: vuln_mttr_schema
+    definition: Vulnerability Mean Time to Remediate.
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/vuln_mttr_schema
+  - term: applications_historical_vuln_counts_by_risk_level_schema
+    definition: 'Object declared by the contract with fields: id, name, historical_vulnerability_count_by_risk.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/applications_historical_vuln_counts_by_risk_level_schema
+  - term: low_medium_high_counts_schema
+    definition: The key is a year, month, and day (YYYY-MM-DD).
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/low_medium_high_counts_schema
+  - term: asset_groups_put_request_body_schema
+    definition: 'Object declared by the contract with fields: name, query.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/asset_groups_put_request_body_schema
+  - term: asset_groups_query_schema
+    definition: 'Object declared by the contract with fields: exclude_child_filter, id, min_priority, max_priority, min_risk_meter_score, operating_system,
+      primary_locator, q, service_ports, service_protocols, status, tags. (2 more)'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/asset_groups_query_schema
+  - term: service_protocols
+    definition: An array of service protocols relating to your asset.
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/service_protocols
+  - term: asset_group_get_response_schema
+    definition: 'Object declared by the contract with fields: parent, child_ids, id, resource, name, querystring, created_at, updated_at, risk_meter_score,
+      true_risk_meter_score, asset_count, unique_open_cve_count. (8 more)'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/asset_group_get_response_schema
+  - term: fix_info_schema
+    definition: 'Object declared by the contract with fields: alternative_visible, assets, category, consequence, cves, diagnosis, exact_match,
+      id, max_vuln_score, patch_publication_date, reference_links, scanner_ids. (7 more)'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/fix_info_schema
+  - term: show_top_fix_groups_schema
+    definition: 'Object declared by the contract with fields: id, name, risk_meter_score, top_fixes.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/show_top_fix_groups_schema
+  - term: top_fixes_info_schema
+    definition: 'Object declared by the contract with fields: assets, category, consequence, cves, diagnosis, id, solution, title, urls.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/top_fixes_info_schema
+  - term: asset_group_post_response_schema
+    definition: 'Object declared by the contract with fields: parent_id, parent, child_ids, client_id, id, resource, name, querystring, created_at,
+      updated_at, risk_meter_score, asset_count. (1 more)'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/asset_group_post_response_schema
+  - term: asset_group_request_body_schema
+    definition: 'Object declared by the contract with fields: name, historical, query.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/asset_group_request_body_schema
+  - term: asset_groups_findings_mttr_by_risk_level_get_response_schema
+    definition: 'Object declared by the contract with fields: id, name, mttr.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/asset_groups_findings_mttr_by_risk_level_get_response_schema
+  - term: asset_groups_average_vuln_counts_by_risk_level_schema
+    definition: 'Object declared by the contract with fields: id, name, historical_avg_days_open_vulnerabilities_by_risk_level.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/asset_groups_average_vuln_counts_by_risk_level_schema
+  - term: asset_groups_false_positive_by_risk_level_schema
+    definition: 'Object declared by the contract with fields: id, name, historical_false_positives_by_risk_level.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/asset_groups_false_positive_by_risk_level_schema
+  - term: asset_groups_mttr_by_risk_level_schema
+    definition: 'Object declared by the contract with fields: id, name, mttr.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/asset_groups_mttr_by_risk_level_schema
+  - term: asset_groups_vulnerability_count_by_risk_schema
+    definition: 'Object declared by the contract with fields: id, name, historical_vulnerabilitiy_count_by_risk.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/asset_groups_vulnerability_count_by_risk_schema
+  - term: asset_groups_historical_past_due_vulns_by_risk_level_schema
+    definition: 'Object declared by the contract with fields: id, name, historical_past_due_vulnerabilities_by_risk_level.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/asset_groups_historical_past_due_vulns_by_risk_level_schema
+  - term: asset_groups_risk_meter_scores_schema
+    definition: 'Object declared by the contract with fields: id, name, risk_meter_scores.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/asset_groups_risk_meter_scores_schema
+  - term: asset_groups_risk_accepted_over_time_schema
+    definition: 'Object declared by the contract with fields: id, name, risk_accepted_over_time.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/asset_groups_risk_accepted_over_time_schema
+  - term: asset_groups_total_past_due_vulns_by_risk_level_schema
+    definition: 'Object declared by the contract with fields: id, name, total_past_due_vulnerabilities_by_risk_level.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/asset_groups_total_past_due_vulns_by_risk_level_schema
+  - term: asset_groups_vulns_by_due_date_schema
+    definition: 'Object declared by the contract with fields: id, name, vulnerabilities_by_due_date.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/asset_groups_vulns_by_due_date_schema
+  - term: message_response_schema
+    definition: 'Object declared by the contract with fields: message.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/message_response_schema
+  - term: asset_request_body_schema
+    definition: 'Object declared by the contract with fields: asset.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/asset_request_body_schema
+  - term: assets_get_response_schema
+    definition: 'Object declared by the contract with fields: id, created_at, last_seen_time, operating_system, last_booted_at, ipv6, locator,
+      primary_locator, network_ports, tags, vulnerabilities_count, inactive_at. (20 more)'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/assets_get_response_schema
+  - term: custom_fields_schema
+    definition: The custom field array.
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/custom_fields_schema
+  - term: cvss_v2_schema
+    definition: 'Object declared by the contract with fields: score, exploit_subscore, impact_subscore, temporal_score.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/cvss_v2_schema
+  - term: cvss_v3_schema
+    definition: 'Object declared by the contract with fields: score, exploit_subscore, impact_subscore, temporal_score.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/cvss_v3_schema
+  - term: service_ticket_response_schema
+    definition: Service ticket object to associate with a vulnerability.
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/service_ticket_response_schema
+  - term: vulnerability_get_response_schema
+    definition: 'Object declared by the contract with fields: id, status, closed_at, created_at, due_date, notes, port, priority, identifiers,
+      custom_fields, last_seen_time, scanner_score. (29 more)'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/vulnerability_get_response_schema
+  - term: assets_bulk_request_body_schema
+    definition: 'Object declared by the contract with fields: asset_ids, asset, realtime.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/assets_bulk_request_body_schema
+  - term: assets_updated_put_response_schema
+    definition: 'Object declared by the contract with fields: assets_updated.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/assets_updated_put_response_schema
+  - term: assets_zip_get_response_schema
+    definition: 'Object declared by the contract with fields: assets, meta.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/assets_zip_get_response_schema
+  - term: valid_asset_search_get_response_schema
+    definition: 'Object declared by the contract with fields: valid, query, suggested_query.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/valid_asset_search_get_response_schema
+  - term: asset_tags_schema
+    definition: 'Object declared by the contract with fields: asset.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/asset_tags_schema
+  - term: tags_get_response_schema
+    definition: 'Object declared by the contract with fields: tags, tag_info.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/tags_get_response_schema
+  - term: connector_run_status_schema
+    definition: 'Object declared by the contract with fields: id, start_time, end_time, success, total_payload_count, processed_payload_count,
+      failed_payload_count, processed_assets_count, assets_with_tags_reset_count, processed_scanner_vuln_count, updated_scanner_vuln_count, created_scanner_vuln_count.
+      (6 more)'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/connector_run_status_schema
+  - term: file_request_body_schema
+    definition: 'Object declared by the contract with fields: encoding, file, run.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/file_request_body_schema
+  - term: file_upload_response_schema
+    definition: 'Object declared by the contract with fields: success, data_file, run_url.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/file_upload_response_schema
+  - term: success_run_get_response_schema
+    definition: 'Object declared by the contract with fields: connector_run_id, success.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/success_run_get_response_schema
+  - term: connector_request_body_schema
+    definition: 'Object declared by the contract with fields: name, host, username, password, api_key, scan_policy, scan_list.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/connector_request_body_schema
+  - term: success_put_response_schema
+    definition: 'Object declared by the contract with fields: success.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/success_put_response_schema
+  - term: dashboard_group_get_response_schema
+    definition: 'Object declared by the contract with fields: id, name, asset_search_ids, asset_search_order, client_id, order, user_id, created_at,
+      updated_at, editable, starred, share_method. (1 more)'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/dashboard_group_get_response_schema
+  - term: dashboard_group_put_request_body_schema
+    definition: 'Object declared by the contract with fields: dashboard_group.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/dashboard_group_put_request_body_schema
+  - term: dashboard_group_post_request_body_schema
+    definition: 'Object declared by the contract with fields: dashboard_group.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/dashboard_group_post_request_body_schema
+  - term: exported_asset
+    definition: 'Object declared by the contract with fields: id, created_at, priority, operating_system, notes, last_booted_at, primary_locator,
+      locator, vulnerabilities_count, status, last_seen_time, network_ports. (20 more)'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/export_get_asset_response_schema
+  - term: exported_finding
+    definition: 'Object declared by the contract with fields: id, name, application_identifier, external_unique_id, kenna_risk_score, severity,
+      file_locator, url_locator, created_at, found_on, last_seen_time, due_date. (7 more)'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/export_get_finding_response_schema
+  - term: exported_fix
+    definition: 'Object declared by the contract with fields: asset_count, asset_count_display_string, assets, category, consequence, cves, diagnosis,
+      id, max_vuln_score, patch_publication_date, reference_links, scanner_ids. (7 more)'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/export_get_fix_response_schema
+  - term: exported_vulnerability
+    definition: 'Object declared by the contract with fields: id, status, closed_at, created_at, due_date, notes, port, priority, identifiers,
+      last_seen_time, scanner_score, fix_id. (31 more)'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/export_get_vulnerability_response_schema
+  - term: export_settings_request_body_schema
+    definition: 'Object declared by the contract with fields: export_settings, id, max_priority, max_risk_meter_score, min_priority, min_risk_meter_score,
+      q, records_updated_since, records_updated_until, status, exclude_child_filter, operating_system. (40 more)'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/export_settings_request_body_schema
+  - term: search_id_post_response_schema
+    definition: 'Object declared by the contract with fields: search_id, record_count.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/search_id_post_response_schema
+  - term: export_status_get_response_schema
+    definition: 'Object declared by the contract with fields: message.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/export_status_get_response_schema
+  - term: additional_fields
+    definition: Any additional information you want associated with the Finding.
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/additional_fields
+  - term: finding_get_response_schema
+    definition: 'Object declared by the contract with fields: application_locator, asset_id, closed_at, connector, created_at, due_date, external_unique_id,
+      file_locator, id, identifiers, last_found_on, additional_fields. (5 more)'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/finding_get_response_schema
+  - term: finding_put_request_body_schema
+    definition: 'Object declared by the contract with fields: asset_id, external_unique_id, identifier, closed_at, due_date, found_on, last_found_on,
+      additional_fields, remediation, scanner_score, status.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/finding_put_request_body_schema
+  - term: finding_put_response_schema
+    definition: 'Object declared by the contract with fields: application_locator, asset_id, closed_at, connector, created_at, due_date, external_unique_id,
+      file_locator, id, identifiers, last_found_on, additional_fields. (5 more)'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/finding_put_response_schema
+  - term: finding_status
+    definition: 'Enumeration declared by the contract with values: duplicate, false_positive, in_progress, new, not_a_security_issue, resolved,
+      risk_accepted, triaged.'
+    tags:
+    - Enumeration
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/finding_status
+  - term: finding_post_response_schema
+    definition: 'Object declared by the contract with fields: application_locator, asset_id, closed_at, connector, created_at, due_date, external_unique_id,
+      file_locator, id, identifiers, last_found_on, additional_fields. (5 more)'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/finding_post_response_schema
+  - term: finding_request_body_schema
+    definition: 'Object declared by the contract with fields: asset_id, external_unique_id, identifier, definition, closed_at, due_date, found_on,
+      last_found_on, additional_fields, remediation, scanner_score, status.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/finding_request_body_schema
+  - term: fix_get_response_schema
+    definition: 'Object declared by the contract with fields: asset_count, asset_count_display_string, assets, category, consequence, cves, diagnosis,
+      id, max_vuln_score, patch_publication_date, reference_links, scanner_ids. (7 more)'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/fix_get_response_schema
+  - term: service_now_fix_get_response_schema
+    definition: 'Object declared by the contract with fields: category, consequence, diagnosis, id, patch_publication_date, title, solution, url,
+      vendor.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/service_now_fix_get_response_schema
+  - term: service_now_vulnerability_get_response_schema
+    definition: 'Object declared by the contract with fields: primary-locator, ec2-locator, url-locator, file-locator, fqdn-locator, database-locator,
+      application-locator, ip-address-locator, mac-address-locator, asset-id, asset-score, id. (10 more)'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/service_now_vulnerability_get_response_schema
+  - term: remediation_score_get_response_schema
+    definition: 'Object declared by the contract with fields: remediation_score.'
+    tags:
+    - Object
+    source: openapi/kenna-security-platform-api-openapi.yml#/components/schemas/remediation_score_get_response_schema

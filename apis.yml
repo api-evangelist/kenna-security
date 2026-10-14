@@ -1,4 +1,5 @@
 aid: kenna-security
+
 deliveryModel:
   model: library
   open_source: false
@@ -10,6 +11,7 @@ deliveryModel:
   - none
   generated: '2026-08-28'
   method: derived
+
 accessModel:
   pricing: unknown
   onboarding: unknown
@@ -21,32 +23,49 @@ accessModel:
   source:
   - authentication
   - security
-  - {url: 'https://www.kennasecurity.com', status: 301, note: 'declared website redirects to https://www.cisco.com/site/us/en/products/security/vulnerability-management/kenna-is-part-of-cisco/index.html — a different registrable domain (kennasecurity.com -> cisco.com), possible rename or acquisition (probed 2026-09-03, roadmap#169)'}
+  - url: https://www.kennasecurity.com
+    status: 301
+    note: declared website redirects to https://www.cisco.com/site/us/en/products/security/vulnerability-management/kenna-is-part-of-cisco/index.html
+      — a different registrable domain (kennasecurity.com -> cisco.com), possible rename or acquisition (probed 2026-09-03, roadmap#169)
   generated: '2026-09-03'
   method: derived
+
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/kenna-security.png
+
 name: Kenna Security
-description: 'Kenna Security is the risk-based vulnerability management platform now part of Cisco as Cisco Vulnerability
-  Management. Founded in Chicago and acquired by Cisco in 2021, the platform ingests scanner, asset, and threat-intelligence
-  data to prioritize vulnerabilities by real-world exploitability and business risk. It exposes a REST API (the
-  Kenna / Cisco Vulnerability Management API) at api.kennasecurity.com covering assets, asset groups, applications,
-  findings, fixes, vulnerabilities, vulnerability intelligence, connectors, data exports, dashboards, metrics, roles,
-  and users. The API uses an X-Risk-Token API-key header over HTTPS, page-number pagination, and JSON payloads.
-  Kenna also publishes a first-party open-source Scripting Toolkit on GitHub for building connectors and integrations.
-  Sector: cybersecurity / vulnerability management.'
+
+description: 'Kenna Security is the risk-based vulnerability management platform now part of Cisco as Cisco Vulnerability Management. Founded
+  in Chicago and acquired by Cisco in 2021, the platform ingests scanner, asset, and threat-intelligence data to prioritize vulnerabilities by
+  real-world exploitability and business risk. It exposes a REST API (the Kenna / Cisco Vulnerability Management API) at api.kennasecurity.com
+  covering assets, asset groups, applications, findings, fixes, vulnerabilities, vulnerability intelligence, connectors, data exports, dashboards,
+  metrics, roles, and users. The API uses an X-Risk-Token API-key header over HTTPS, page-number pagination, and JSON payloads. Kenna also publishes
+  a first-party open-source Scripting Toolkit on GitHub for building connectors and integrations. Sector: cybersecurity / vulnerability management.'
+
 url: https://raw.githubusercontent.com/api-evangelist/kenna-security/refs/heads/main/apis.yml
+
 x-type: company
+
 x-source: vc-portfolio
+
 x-backed-by:
 - bessemer-venture-partners
+
 x-tier: stub
+
 x-tier-reason: portfolio-lead
+
 specificationVersion: '0.23'
+
 created: '2026-07-17'
+
 modified: '2026-08-19'
+
 x-docs-platform: readme
+
 x-docs-platform-confidence: high
+
 x-docs-platform-checked: 2026-10-03
+
 tags:
 - Company
 - Cybersecurity
@@ -56,27 +75,36 @@ tags:
 - Security
 - Cisco
 - REST API
+
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
-apis:
-- name: Cisco Vulnerability Management API (Kenna)
-  description: 'REST API for the Kenna / Cisco Vulnerability Management platform: manage assets, asset groups, applications,
-    findings, fixes, vulnerabilities, vulnerability intelligence, connectors, data exports, dashboards, metrics,
-    roles, and users. Authenticated with an X-Risk-Token API-key header over HTTPS; JSON request/response with page-number
-    pagination.'
-  humanURL: https://apidocs.kennasecurity.com/reference
-  baseURL: https://api.kennasecurity.com
-  properties:
-  - type: APIReference
-    url: https://apidocs.kennasecurity.com/reference
-  - type: Documentation
-    url: https://apidocs.kennasecurity.com/docs/getting-started
-  - type: Authentication
-    url: https://apidocs.kennasecurity.com/reference/api-authentication
+
 common:
+- type: AgenticAccess
+  url: agentic-access/kenna-security-agentic-access.yml
+- type: Spectral
+  url: rules/kenna-security-rules.yml
+- type: JSONLD
+  url: json-ld/kenna-security-context.jsonld
+- type: Vocabulary
+  url: vocabulary/kenna-security-vocabulary.yml
+- type: DataModel
+  url: data-model/kenna-security-data-model.yml
+- type: ErrorCatalog
+  url: errors/kenna-security-problem-types.yml
+- type: Conformance
+  url: conformance/kenna-security-conformance.yml
+- type: AgentCard
+  url: a2a/kenna-security-a2a.yml
+- type: Hosts
+  url: hosts/kenna-security-hosts.yml
+- type: Vendors
+  url: vendors/kenna-security-vendors.yml
+- type: SDKs
+  url: packages/kenna-security-packages.yml
 - type: ParentCompany
   url: https://apis.io/providers/cisco/
   name: Cisco
@@ -121,11 +149,81 @@ common:
   url: llms/kenna-security-llms.txt
 - type: DomainSecurity
   url: security/kenna-security-domain-security.yml
+
+apis:
+- name: Cisco Vulnerability Management API (Kenna)
+  description: 'REST API for the Kenna / Cisco Vulnerability Management platform: manage assets, asset groups, applications, findings, fixes,
+    vulnerabilities, vulnerability intelligence, connectors, data exports, dashboards, metrics, roles, and users. Authenticated with an X-Risk-Token
+    API-key header over HTTPS; JSON request/response with page-number pagination.'
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  properties:
+  - type: APIReference
+    url: https://apidocs.kennasecurity.com/reference
+  - type: Documentation
+    url: https://apidocs.kennasecurity.com/docs/getting-started
+  - type: Authentication
+    url: https://apidocs.kennasecurity.com/reference/api-authentication
+  aid: kenna-security:cisco-vulnerability-management-api-kenna
+- aid: kenna-security:kenna-security-inference-api
+  name: Kenna Security Security Inference API
+  description: The Security Inference API from Kenna Security — 5 operation(s) for security inference.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - Security Inference
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-inference-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+- aid: kenna-security:kenna-security-platform-api
+  name: Kenna Security Security Platform API
+  description: The Security Platform API from Kenna Security — 88 operation(s) for security platform.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - Security Platform
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-platform-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+
 x-enrichment:
   date: '2026-07-19'
   status: backfilled
   pass: local-v1
   note: backfilled from .gitignore signal + verified work evidence
+
 x-parent: cisco
+
 x-relationship: acquisition
+
 x-acquired: 2021
+
+x-readme-harvest:
+  date: '2026-10-14'
+  ops: 120
+  tool: harvest-readme-openapi.py
+  portal: https://apidocs.kennasecurity.com

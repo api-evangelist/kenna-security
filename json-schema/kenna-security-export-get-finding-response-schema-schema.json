@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kenna-security/main/json-schema/kenna-security-export-get-finding-response-schema-schema.json",
+  "title": "exported_finding",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/kenna-security-platform-api-openapi.yml#/components/schemas/export_get_finding_response_schema",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "application_identifier": {
+      "type": "string"
+    },
+    "external_unique_id": {
+      "type": "string"
+    },
+    "kenna_risk_score": {
+      "type": "integer",
+      "description": "An integer between 0 and 100"
+    },
+    "severity": {
+      "type": "number",
+      "format": "float",
+      "description": "A number between 0.0 and 10.0"
+    },
+    "file_locator": {
+      "type": "string"
+    },
+    "url_locator": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "found_on": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_seen_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "closed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "duplicate",
+        "false_positive",
+        "not_a_security_issue",
+        "resolved",
+        "risk_accepted",
+        "open",
+        "in_progress",
+        "new",
+        "triaged"
+      ]
+    },
+    "triage_state": {
+      "type": "string",
+      "enum": [
+        "Closed",
+        "Open",
+        "Risk Accepted",
+        "Unknown Status"
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "finding_age": {
+      "description": "Number of days since the finding was created.",
+      "type": "integer"
+    },
+    "time_to_remediate": {
+      "description": "Number of days to close the finding. Null is returned if the finding is not a closed status or has no found_on or created_at date.",
+      "type": "integer"
+    },
+    "custom_fields": {
+      "description": "Array of custom fields matching known custom fields defintions.  Specific custom fields may be picked by requesting a field with the prefix 'custom_fields:' and name of custom field as a suffix; for example: 'custom_fields:my custom field'",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "custom_field_definition_id": {
+            "description": "ID of the custom field definition associated with the custom field.",
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "description": "Name of the custom field",
+            "type": "string"
+          },
+          "value": {
+            "description": "Value of the custom field corresponding to the type set within the custom field defintion",
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "boolean"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

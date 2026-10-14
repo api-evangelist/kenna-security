@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kenna-security/main/json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json",
+  "title": "51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd_post_response_schema",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/kenna-security-inference-api-openapi.yml#/components/schemas/51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd_post_response_schema",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "integer",
+        "default": 0
+      },
+      "cve_description": {
+        "type": "string"
+      },
+      "cvss_access_complexity": {
+        "type": "string"
+      },
+      "cvss_access_vector": {
+        "type": "string"
+      },
+      "cvss_authentication": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "risk_meter_score": {
+        "type": "number",
+        "default": 0
+      },
+      "solution": {},
+      "cvss_availability_impact": {
+        "type": "string"
+      },
+      "cvss_confidentiality_impact": {
+        "type": "string"
+      },
+      "cvss_integrity_impact": {
+        "type": "string"
+      },
+      "easily_exploitable": {
+        "type": "boolean",
+        "default": true
+      },
+      "malware_exploitable": {
+        "type": "boolean",
+        "default": true
+      },
+      "active_internet_breach": {
+        "type": "boolean",
+        "default": true
+      },
+      "cve_id": {
+        "type": "string"
+      },
+      "cvss_score": {
+        "type": "number",
+        "default": 0
+      },
+      "cvss_exploit_subscore": {
+        "type": "number",
+        "default": 0
+      },
+      "cvss_impact_subscore": {
+        "type": "integer",
+        "default": 0
+      },
+      "cvss_vector": {
+        "type": "string"
+      },
+      "cvss_temporal_score": {
+        "type": "number",
+        "default": 0
+      },
+      "cvss_v3_score": {},
+      "cvss_v3_exploit_subscore": {},
+      "cvss_v3_impact_subscore": {},
+      "cvss_v3_vector": {},
+      "cvss_v3_temporal_score": {},
+      "last_modified": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "published": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "vulnerable_products": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

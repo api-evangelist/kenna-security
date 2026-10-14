@@ -1,0 +1,97 @@
+generated: '2026-10-14'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 8
+  own: 5
+  other_domain: 2
+  platform: 1
+  roles:
+  - api
+  - marketing
+  - portal
+  - source
+  - status
+  - support
+  - website
+hosts:
+- host: api.kennasecurity.com
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: kennasecurity.com
+  role: api
+  relation: own
+- host: apidocs.kennasecurity.com
+  found_by:
+  - pointer
+  - apis[]
+  types:
+  - DeveloperPortal
+  - Documentation
+  - APIReference
+  - GettingStarted
+  - ChangeLog
+  - Deprecation
+  serves:
+  - docs
+  registrable_domain: kennasecurity.com
+  role: portal
+  relation: own
+- host: apis.io
+  found_by:
+  - pointer
+  types:
+  - ParentCompany
+  serves: []
+  registrable_domain: apis.io
+  role: api
+  relation: other-domain
+- host: github.com
+  found_by:
+  - pointer
+  types:
+  - GitHubOrganization
+  serves: []
+  registrable_domain: github.com
+  role: source
+  relation: platform
+- host: help.kennasecurity.com
+  found_by:
+  - pointer
+  types:
+  - Support
+  serves: []
+  registrable_domain: kennasecurity.com
+  role: support
+  relation: own
+- host: learn-cloudsecurity.cisco.com
+  found_by:
+  - pointer
+  types:
+  - Blog
+  serves: []
+  registrable_domain: cisco.com
+  role: marketing
+  relation: other-domain
+- host: status.kennasecurity.com
+  found_by:
+  - pointer
+  types:
+  - StatusPage
+  serves: []
+  registrable_domain: kennasecurity.com
+  role: status
+  relation: own
+- host: www.kennasecurity.com
+  found_by:
+  - pointer
+  types:
+  - Website
+  serves: []
+  registrable_domain: kennasecurity.com
+  role: website
+  relation: own

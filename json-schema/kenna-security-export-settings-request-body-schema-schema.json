@@ -1,0 +1,383 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kenna-security/main/json-schema/kenna-security-export-settings-request-body-schema-schema.json",
+  "title": "export_settings_request_body_schema",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/kenna-security-platform-api-openapi.yml#/components/schemas/export_settings_request_body_schema",
+  "type": "object",
+  "properties": {
+    "export_settings": {
+      "type": "object",
+      "required": [
+        "format",
+        "model"
+      ],
+      "properties": {
+        "format": {
+          "type": "string",
+          "description": "The format of the returned data.",
+          "enum": [
+            "json",
+            "jsonl",
+            "xml"
+          ],
+          "default": "jsonl"
+        },
+        "model": {
+          "type": "string",
+          "description": "The type of data requested and returned.",
+          "enum": [
+            "asset",
+            "finding",
+            "fix",
+            "vulnerability"
+          ]
+        },
+        "slim": {
+          "type": "boolean",
+          "description": "If `true`, applies a predetermined set of fields consisting of `id`, `status`, `closed_at`, `port`, `status_changed_at`, `last_seen_time`, `asset_id`, `cve_id`, `severity`, `cvss_v2`, `cvss_v3`, and `first_found_on`. This field only applies to the vulnerability model.",
+          "default": false
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "An array of fields that will be returned in requested export. If empty array is provided, all the supported fields are returned. Supported fields are located in the [Retrieve Data Exports](https://apidocs.kennasecurity.com/reference/retrieve-data-export) API, \"Responses\" under the appropriate model. The `id` field is always returned. Note: If you use this field to export custom fields, you need to specify the custom field name and prefix it with “custom_fields:”. For example, if you have a custom field named “reopen-date” you would use the following syntax: “custom_fields:reopen-date”"
+        }
+      }
+    },
+    "id": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "*Valid for asset, vulnerability, finding, and fix models.*  Dependent on the `model`, an array of asset, vulnerability, finding, or fix IDs"
+    },
+    "max_priority": {
+      "type": "integer",
+      "description": "*Valid for asset model.*  Search for all assets that have a priority less than this value."
+    },
+    "max_risk_meter_score": {
+      "type": "integer",
+      "description": "*Valid for asset, vulnerability, finding, and fix models.*  Search for all assets that have a risk meter score less than this value."
+    },
+    "min_priority": {
+      "type": "integer",
+      "description": "*Valid for asset model.*  Search for all assets that have a priority greater than this value."
+    },
+    "min_risk_meter_score": {
+      "type": "integer",
+      "description": "*Valid for asset, vulnerability, finding, and fix models.*  Search for all assets that have a risk meter score greater than this value."
+    },
+    "q": {
+      "type": "string",
+      "description": "*Valid for asset, vulnerability, and fix models.*  Additional text search parameters, as documented at: [Cisco Vulnerability Management Search Terms](https://help.kennasecurity.com/hc/en-us/articles/206280593-Kenna-Search-Terms).  Use the section that matches the model.*  Example q=tag:(mytag+AND+thetag)."
+    },
+    "records_updated_since": {
+      "type": "string",
+      "description": "*Valid for asset, vulnerability and fix models.*  Supports **Incremental Exports**. It will fetch all records updated since that time. This can be added to both asset and vulnerabilities.  The format can be an offset date (\"now-2d\") following [this format](https://www.elastic.co/guide/en/elasticsearch/reference/current/common-options.html#date-math), a date (\"2020-09-09\") or a date-time (\"2020-10-10 12:30:00\")."
+    },
+    "records_updated_until": {
+      "type": "string",
+      "description": "*Valid for asset, vulnerability and fix models.*  Effective only when `records_updated_since` is specified. It will fetch all records updated since `records_updated_since` (inclusive) datetime until `records_update_until` datetime (exclusive). The format is the same to `records_update_since` parameter."
+    },
+    "status": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "active",
+          "inactive",
+          "open",
+          "closed",
+          "risk accepted",
+          "false positive"
+        ]
+      },
+      "description": "*Valid for asset, vulnerability, finding, and fix models.*  An array of statuses. For the asset model, 'active' and 'inactive' are valid.  The asset model default is 'active'.  For the vulnerability and fix models, 'open', 'closed', 'risk accepted', and 'false positive' are valid.  The vulnerability and fix models default is 'open'. For the finding model, 'duplicate', 'false positive', 'not a security issue', 'resolved', 'risk accepted', 'in progress', 'new', 'triaged', 'open', 'closed', and 'all' are valid."
+    },
+    "exclude_child_filter": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "*Valid for asset model.*  If you want to include all assets regardless of vulnerability filters, pass a value of `[\"Include all assets\"]`; or if you want to include assets without vulnerabilities, pass the value `[\"Assets without Vulnerabilities\"]`.  Otherwise, omit this parameter."
+    },
+    "operating_system": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "*Valid for asset model.*  An array of the names of the operating systems associated with a set of assets."
+    },
+    "primary_locator": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "*Valid for asset model.*  The primary locator used for an asset. This should be one of the following values: ip_address, hostname, database, url, mac_address, netbios, fqdn, file, or application"
+    },
+    "search_id": {
+      "type": "integer",
+      "description": "*Valid for asset and vulnerability models.*  A risk meter ID. Other risk meter parameters are ignored. Child risk meters are not supported."
+    },
+    "service_names": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "*Valid for asset model.*  An array of service names relating to your assets. Make sure all letters are lowercase."
+    },
+    "service_ports": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "*Valid for asset model.*  An array of ports relating to your assets."
+    },
+    "service_products": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "*Valid for asset model.*  An array of service products relating to your assets. Make sure all letters are lowercase."
+    },
+    "service_protocols": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "*Valid for asset model.*  An array of service protocols relating to your assets. Make sure all letters are lowercase."
+    },
+    "status_set_manually": {
+      "type": "array",
+      "items": {
+        "type": "boolean"
+      },
+      "description": "*Valid for asset model.*  A boolean to indicate whether an asset's active/inactive status was set automatically by Cisco Vulnerability Management or manually by a human."
+    },
+    "tag_boolean_mode": {
+      "type": "string",
+      "description": "*Valid for asset model.*  Set this to \"all\" if you would like to return assets that contain all of the tags in your query rather than assets that contain any of the tags."
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "*Valid for asset model.*  An array of tag names associated with your assets."
+    },
+    "active_internet_breach": {
+      "type": "array",
+      "items": {
+        "type": "boolean"
+      },
+      "description": "*Valid for vulnerability and fix models.*  An array of booleans to filter by vulnerabilities that have seen trending breach activity."
+    },
+    "classification": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "Informational",
+          "CVE",
+          "CWE",
+          "WASC"
+        ]
+      },
+      "description": "*Valid for vulnerability and fix models.*  Find all vulnerabilities matching the specified classifications."
+    },
+    "connector_names": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "*Valid for vulnerability, finding, and fixes models.*  An array of connector names related to your vulnerabilities or findings."
+    },
+    "connector_types": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "*Valid for vulnerability, finding, and fixes models.*  An array of connector types related to your vulnerabilities or findings."
+    },
+    "easily_exploitable": {
+      "type": "array",
+      "items": {
+        "type": "boolean"
+      },
+      "description": "*Valid for vulnerability models*  An array of booleans for filtering your vulnerabilities by those that are easy to exploit."
+    },
+    "has_known_exploits": {
+      "type": "array",
+      "items": {
+        "type": "boolean"
+      },
+      "description": "*Deprecated:* Please use the `easily_exploitable` body parameter."
+    },
+    "has_known_malware": {
+      "type": "array",
+      "items": {
+        "type": "boolean"
+      },
+      "description": "*Deprecated:* Please use the `malware_exploitable` body parameter."
+    },
+    "malware_exploitable": {
+      "type": "array",
+      "items": {
+        "type": "boolean"
+      },
+      "description": "*Valid for vulnerability and fix models.*  An array of booleans for filtering your vulnerabilities by those that have had pieces of malware identified."
+    },
+    "max_rounded_risk_meter_score": {
+      "type": "integer",
+      "description": "*Valid for vulnerability, finding, and fixes models.*  Similar to max_risk_meter_score, rounded to the nearest integer."
+    },
+    "max_severity": {
+      "type": "integer",
+      "description": "*Valid for vulnerability, finding, and fixes models.*  Find all vulnerabilities or findings with severity levels less than this value."
+    },
+    "max_threat": {
+      "type": "integer",
+      "description": "*Valid for vulnerability and fix models.*  Find all vulnerabilities with threat levels less than this value."
+    },
+    "min_rounded_risk_meter_score": {
+      "type": "integer",
+      "description": "*Valid for vulnerability, finding, and fixes models.*  Similar to min_risk_meter_score, rounded to the nearest integer."
+    },
+    "min_severity": {
+      "type": "integer",
+      "description": "*Valid for vulnerability, finding, and fixes models.*  Find all vulnerabilities or findings with severity levels greater than this value."
+    },
+    "min_threat": {
+      "type": "integer",
+      "description": "*Valid for vulnerability and fix models.*  Find all vulnerabilities with threat levels greater than this value."
+    },
+    "no_vulnerability_definition_id": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "*Valid for vulnerability and fix models.*  Exclude all vulnerabilities for the identified definition IDs."
+    },
+    "pci_related": {
+      "type": "array",
+      "items": {
+        "type": "boolean"
+      },
+      "description": "*Valid for vulnerability and fix models.*  An array of booleans for filtering your vulnerabilities by those that are Payment Card Industry related"
+    },
+    "port": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "*Valid for vulnerability and fix models.*  An array of ports associated with your vulnerabilities."
+    },
+    "predicted_exploitable": {
+      "type": "array",
+      "items": {
+        "type": "boolean"
+      },
+      "description": "*Valid for vulnerability and fix models.*  An array of booleans for filtering your vulnerabilities by those that have been predicted to be exploited."
+    },
+    "prioritized": {
+      "type": "array",
+      "items": {
+        "type": "boolean"
+      },
+      "description": "*Deprecated:* Please use the `top_priority` body parameter."
+    },
+    "remote_code_execution": {
+      "type": "array",
+      "items": {
+        "type": "boolean"
+      },
+      "description": "*Valid for vulnerability and fix models.*  An array of booleans for filtering your vulnerabilities by those that can be executed remotely."
+    },
+    "service_ticket_status": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "*Valid for vulnerability and fix models.*  An array of strings that represent the statuses of all service tickets connected to your vulnerabilities."
+    },
+    "top_exploit": {
+      "type": "array",
+      "items": {
+        "type": "boolean"
+      },
+      "description": "*Deprecated:* Please use the `active_internet_breach` body parameter."
+    },
+    "top_priority": {
+      "type": "array",
+      "items": {
+        "type": "boolean"
+      },
+      "description": "*Valid for vulnerability and fix models.*  An array of booleans for filtering your vulnerabilities by those that Cisco Vulnerability Management recommends should be a top priority to fix."
+    },
+    "trending": {
+      "type": "array",
+      "items": {
+        "type": "boolean"
+      },
+      "description": "*Valid for vulnerability and fix models.*  An array of booleans for filtering by vulnerabilities that are trending."
+    },
+    "vulnerability_class": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "Web app",
+          "Host or network"
+        ]
+      },
+      "description": "*Valid for vulnerability and fix models.*  An array of strings for filtering by vulnerability classification."
+    },
+    "vulnerability_definition_id": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "*Valid for vulnerability and fix models.*  Find all vulnerabilities for the identified definition IDs."
+    },
+    "wasc_classification": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "*Valid for vulnerability and fix models.*  An array to filter your vulnerabilities by specified WASC classifications."
+    },
+    "zero_day": {
+      "type": "array",
+      "items": {
+        "type": "boolean"
+      },
+      "description": "*Valid for vulnerability and fixes models.*  An array of booleans for filtering by vulnerabilities that have zero days."
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "*Valid for findings model.*  An array of file locators."
+    },
+    "applications": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "*Valid for findings model.* An array of application locators."
+    },
+    "urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "*Valid for findings model.* An array of url locators."
+    }
+  }
+}
