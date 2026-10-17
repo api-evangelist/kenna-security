@@ -1,0 +1,481 @@
+openapi: 3.2.0
+info:
+  title: Kenna Platform INTEGRATIONS API
+  description: OpenAPI specification for Kenna Security
+  version: '1.0'
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: api.kennasecurity.com
+tags:
+- name: INTEGRATIONS
+paths:
+  /integrations/service_now/fixes.xml:
+    get:
+      summary: ServiceNow List Fixes
+      description: 'List fixes in a ServiceNow format.
+
+
+        Attribute Value
+
+
+        Maximum Pages Allowed ∞
+
+
+        Maximum Page Size 1,000
+
+
+        Default Page Size 1,000
+
+
+        Total Count Present in meta object Yes
+
+
+        See the Pagination Section for more details.
+
+
+        Note: The functionality of this ServiceNow fix endpoint is intended to be migrated in the future. Updates and instructions on new endpoint will be provided in advance of any migration.'
+      operationId: service-now-list-fixes
+      security:
+      - X-Risk-Token: []
+      tags:
+      - INTEGRATIONS
+      parameters:
+      - name: page
+        in: query
+        description: The requested page number. Page 1 is the first page.
+        required: false
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        description: The page size up to 1,000.  Default is 1,000.
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/xml:
+              examples:
+                example_0:
+                  value: "\n            <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n            <hash>\n              <fixes> type=\"array\">\n                <fix>\n                  <consequence>The OpenSSH server can crash</consequence>\n                  <diagnosis>This security vulnerability have been identified in OpenSSH: A race condition in OpenSSH before Version 4.4 can be exploited to cause a crash. (CVE-2006-5051)</diagnosis>\n                  <id type=\"integer\">1235813</id>\n                  <solution>Upgrade to OpenSSH 4.4 or later, available at &lt;a href=&quot;http://www.openssh.org/&quot;&gt;OpenSSH/&lt;/a&gt;. &lt;p&gt; Several vendors have issued fixes.</solution>\n                  <title>OpenSSH Signal Handling Vulnerability</title>\n                </fix>\n              </fixes>>\n              <meta>\n                <total-count type=\"integer\">30330</total-count>\n                <page type=\"integer\">1</page>\n                <pages type=\"integer\">4</pages>\n              </meta>\n            </hash>"
+              schema:
+                type: object
+                properties:
+                  fixes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/service_now_fix_get_response_schema'
+                  meta:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                        description: The response current page number.
+                        default: 1
+                      pages:
+                        type: integer
+                        description: The total number of pages.
+                        default: 1
+                      total-count:
+                        type: integer
+                        description: The total number of items across all pages.
+                        default: 1
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /integrations/service_now/vulnerabilities.xml:
+    get:
+      summary: ServiceNow Search Vulnerabilities
+      description: 'Filters vulnerabilities by a given set of parameters and returns the filtered vulnerabilities as well as the total number of vulnerabilities in the filtered set.
+
+
+        By default, only open vulnerabilities with active assets are returned. Each unique parameter is combined using AND while each of values passed in a single array will be combined using OR. For example, if you search for all vulnerabilities with status=["open"] and classification[]=CVE you will receive all open vulnerabilities that have CVEs.
+
+
+        Attribute Value
+
+
+        Maximum Result Allowed When search_id is not provided ∞
+
+
+        Maximum Result Allowed When search_id is provided 200,000
+
+
+        Maximum Page Size 10,000
+
+
+        Default Page Size 10,000
+
+
+        Total Count Present in meta object Yes
+
+
+        See the Pagination Section for more details.
+
+
+        Note: The functionality of this ServiceNow vulnerability endpoint is intended to be migrated in the future. Updates and instructions on new endpoint will be provided in advance of any migration.'
+      operationId: service-now-search-vulnerabilities
+      security:
+      - X-Risk-Token: []
+      tags:
+      - INTEGRATIONS
+      parameters:
+      - name: classification[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - Informational
+            - CVE
+            - CWE
+            - WASC
+        description: Find all vulnerabilities matching the specified classifications.
+      - name: page
+        in: query
+        description: The page number starting from 1.  Pages must be requested sequentially, in serial, for accurate results.
+        required: false
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        description: The page size from 500 to 10,000.  Default is 10,000.
+        required: false
+        schema:
+          type: integer
+      - name: q
+        in: query
+        description: 'Additional text search parameters, as documented at: [Cisco Vulnerability Management Search Terms](https://help.kennasecurity.com/hc/en-us/articles/206280593-Kenna-Search-Terms), section "Vulnerability Terms".  Example q=tag:(mytag+AND+thetag).'
+        schema:
+          type: string
+      - name: search_id
+        in: query
+        description: The ID of a risk meter group to retrieve vulnerabilities for. Other parameters are ignored if search_id is provided.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/xml:
+              examples:
+                example_0:
+                  value: "\n            <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n            <hash>\n              <vulnerabilities type=\"array\">\n                <vulnerability>\n                  <primary-locator>hostname</primary-locator>\n                  <ec2-locator nil=\"true\"/>\n                  <url-locator nil=\"true\"/>\n                  <file-locator nil=\"true\"/>\n                  <fqdn-locator nil=\"true\"/>\n                  <external-id-locator nil=\"true\"/>\n                  <database-locator nil=\"true\"/>\n                  <application-locator nil=\"true\"/>\n                  <asset-id type=\"integer\">19550126</asset-id>\n                  <asset-score type=\"integer\">1000</asset-score>\n                  <ip-address-locator>10.7.1.27</ip-address-locator>\n                  <mac-address-locator nil=\"true\"/>\n                  <netbios-locator nil=\"true\"/>\n                  <hostname-locator>kemast-aws-win19-1</hostname-locator>\n                  <id type=\"integer\">3618408139</id>\n                  <status>open</status>\n                  <last-seen-time>2022-08-08T11:51:22.000Z</last-seen-time>\n                  <fix-id type=\"integer\">2147579</fix-id>\n                  <first-found-on>2022-11-16T00:17:56Z</first-found-on>\n                  <vulnerability-score type=\"integer\">100</vulnerability-score>\n                  <name>CVE-2021-40444</name>\n                  <cve-id>CVE-2021-40444</cve-id>\n                  <all-details-html></all-details-html>\n                  <latest-scanner-id type=\"integer\">39241</latest-scanner-id>\n                  <last-scan-at>2022-07-24T11:23:58.000Z</last-scan-at>\n                </vulnerability>\n              </vulnerabilities>\n              <meta>\n                <total-count type=\"integer\">30330</total-count>\n                <page type=\"integer\">1</page>\n                <pages type=\"integer\">4</pages>\n              </meta>\n            </hash>"
+              schema:
+                type: object
+                properties:
+                  vulnerabilities:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/service_now_vulnerability_get_response_schema'
+                  meta:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                        description: The response current page number.
+                        default: 1
+                      pages:
+                        type: integer
+                        description: The total number of pages.
+                        default: 1
+                      total-count:
+                        type: integer
+                        description: The total number of items across all pages.
+                        default: 1
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/error_response'
+components:
+  schemas:
+    service_now_vulnerability_get_response_schema:
+      type: object
+      properties:
+        primary-locator:
+          type: string
+          description: 'The primary locator used for the corresponding asset. This is required to associate the vulnerability with the asset it was found on. This should be one of the following values: application, ec2, external_id, database, fqdn, hostname, ip-address, mac-address, netbios, or url.  Use this value with ''-locator'' to find the primary locator field.  For example, the value ''hostname'' would have a field ''hostname-locator''.'
+        ec2-locator:
+          type: string
+          description: Asset Amazon EC2 identifier.
+        url-locator:
+          type: string
+          description: Asset URL.
+        file-locator:
+          type: string
+          description: File name of the asset.
+        fqdn-locator:
+          type: string
+          description: Fully Qualified Domain Name (FQDN) of the asset.
+        database-locator:
+          type: string
+          description: Asset database.
+        application-locator:
+          type: string
+          description: Application name of the asset.
+        ip-address-locator:
+          type: string
+          description: The IP address of the asset.
+        mac-address-locator:
+          type: string
+          description: The MAC address of the asset
+        asset-id:
+          type: integer
+          description: The asset ID associated with the vulnerability.
+          example: 808408
+        asset-score:
+          type: integer
+          description: The the asset score between 0 and 1000.
+          example: 1000
+        id:
+          type: integer
+          description: The vulnerability ID.
+          example: 709836
+        status:
+          type: string
+          description: The status of the vulnerability.
+          enum:
+          - closed
+          - closed_by_human
+          - false_positive_by_human
+          - open
+          - open_by_api
+          - risk_accepted_by_human
+          example: open
+        last-seen-time:
+          type: string
+          description: The date of the vulnerability was last seen in ISO 8601 format.
+          format: date-time
+          example: '2021-02-04T21:47:50.000Z'
+        fix-id:
+          type: integer
+          description: The fix ID of the vulnerability if there is one.
+          example: 1841225
+        first-found-on:
+          type: string
+          description: The date the vulnerability was first found in ISO 8601 format.
+          format: date-time
+          example: '2021-02-23T13:38:57Z'
+        vulnerability-score:
+          type: integer
+          description: The vulnerability score from 0 to 100.
+          example: 100
+        name:
+          type: string
+          description: The name on the vulnerability.
+          example: CVE-2019-11043
+        cve-id:
+          type: string
+          description: The CVE ID.
+          example: CVE-2019-11043
+        all-details-html:
+          type: string
+          description: Vulnerability details.
+          example: '&lt;h1&gt;Security Scorecard KDI&lt;/h1&gt;&lt;pre&gt;{ &amp;quot;parent_domain&amp;quot;: &amp;quot;thalesgroup.com&amp;quot;,&amp;quot;type&amp;quot;: &amp;quot;patching_cadence_medium&amp;quot; }&lt;/pre&gt;'
+        latest-scanner-id:
+          type: integer
+          description: The ID of the scanner that found this vulnerability and ran most recently.
+          example: 39241
+        last-scan-at:
+          type: string
+          description: The date and time of the most recent run of any scanner that found this vulnerability.
+          format: date-time
+          example: '2022-07-24T11:23:58.000Z'
+    error_response:
+      type: object
+      properties:
+        error:
+          type: string
+          description: The HTTP error message.
+        message:
+          type: string
+          description: The specific error message.
+        success:
+          type: string
+          description: Indicates success, usually 'false'.
+    service_now_fix_get_response_schema:
+      type: object
+      properties:
+        category:
+          type: string
+          description: The fix category.
+          example: Windows
+        consequence:
+          type: string
+          description: The consequence if the fix is not enabled.
+          example: Successful exploitation of these vulnerabilities could allow a denial-of-service condition or could lead to execution of arbitrary code.
+        diagnosis:
+          type: string
+          description: Fix description.
+          example: An OpenSSH server race condition.
+        id:
+          type: integer
+          description: The fix ID.
+          example: 126890
+        patch_publication_date:
+          type: string
+          format: date-time
+          description: The date in ISO-8601 format that the patch was available.
+          example: '2021-02-04T21:47:50.000Z'
+        title:
+          type: string
+          description: The fix title.
+          example: OpenSSH Signal Handling Vulnerability
+        solution:
+          type: string
+          description: The fix solution. Could be multiple solutions from different vendors.
+        url:
+          type: string
+          description: The solution URL.
+          example: https://www.cisa.gov/news-events/ics-advisories/icsa-22-349-21
+        vendor:
+          type: string
+          description: A comma separated list of solution vendors.
+          example: ubuntu
+  securitySchemes:
+    X-Risk-Token:
+      type: apiKey
+      name: X-Risk-Token
+      in: header
+x-provenance:
+  method: searched
+  source: https://apidocs.kennasecurity.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://apidocs.kennasecurity.com/reference/add-applications-to-role.md
+  - https://apidocs.kennasecurity.com/reference/add-asset-groups-to-role.md
+  - https://apidocs.kennasecurity.com/reference/application-findings-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/application-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/application-historical-vulnerability-count-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/asset-groups-findings-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/audit-log-search.md
+  - https://apidocs.kennasecurity.com/reference/average-days-open-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/bulk-delete-findings.md
+  - https://apidocs.kennasecurity.com/reference/bulk-delete-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/bulk-update-assets.md
+  - https://apidocs.kennasecurity.com/reference/bulk-update-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/calculate-asset-group-metric.md
+  - https://apidocs.kennasecurity.com/reference/check-data-export-status.md
+  - https://apidocs.kennasecurity.com/reference/check-remediation-score.md
+  - https://apidocs.kennasecurity.com/reference/check-sla-adherence-metrics.md
+  - https://apidocs.kennasecurity.com/reference/check-vulnerability-densities-metrics.md
+  - https://apidocs.kennasecurity.com/reference/create-application.md
+  - https://apidocs.kennasecurity.com/reference/create-asset-group-and-risk-meter.md
+  - https://apidocs.kennasecurity.com/reference/create-asset.md
+  - https://apidocs.kennasecurity.com/reference/create-child-asset-group-and-risk-meter.md
+  - https://apidocs.kennasecurity.com/reference/create-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/create-finding.md
+  - https://apidocs.kennasecurity.com/reference/create-role.md
+  - https://apidocs.kennasecurity.com/reference/create-stack.md
+  - https://apidocs.kennasecurity.com/reference/create-user.md
+  - https://apidocs.kennasecurity.com/reference/create-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/delete-application.md
+  - https://apidocs.kennasecurity.com/reference/delete-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/delete-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/delete-role.md
+  - https://apidocs.kennasecurity.com/reference/delete-stack.md
+  - https://apidocs.kennasecurity.com/reference/delete-user.md
+  - https://apidocs.kennasecurity.com/reference/delete-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/download-zipped-asset-data.md
+  - https://apidocs.kennasecurity.com/reference/download-zipped-vuln-data.md
+  - https://apidocs.kennasecurity.com/reference/entitlements-overage.md
+  - https://apidocs.kennasecurity.com/reference/false-positive-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/get-refresh-reporting-status.md
+  - https://apidocs.kennasecurity.com/reference/historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/historical-risk-meter-scores.md
+  - https://apidocs.kennasecurity.com/reference/historical-vulnerability-risk-category-counts.md
+  - https://apidocs.kennasecurity.com/reference/kill-running-data-export.md
+  - https://apidocs.kennasecurity.com/reference/list-applications.md
+  - https://apidocs.kennasecurity.com/reference/list-asset-groups.md
+  - https://apidocs.kennasecurity.com/reference/list-assets.md
+  - https://apidocs.kennasecurity.com/reference/list-connector-runs.md
+  - https://apidocs.kennasecurity.com/reference/list-connectors.md
+  - https://apidocs.kennasecurity.com/reference/list-cve-identifiers.md
+  - https://apidocs.kennasecurity.com/reference/list-dashboard-groups.md
+  - https://apidocs.kennasecurity.com/reference/list-fix-alternatives.md
+  - https://apidocs.kennasecurity.com/reference/list-fixes.md
+  - https://apidocs.kennasecurity.com/reference/list-roles.md
+  - https://apidocs.kennasecurity.com/reference/list-stacks.md
+  - https://apidocs.kennasecurity.com/reference/list-tags.md
+  - https://apidocs.kennasecurity.com/reference/list-users.md
+  - https://apidocs.kennasecurity.com/reference/list-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/list-vulnerability-definitions.md
+  - https://apidocs.kennasecurity.com/reference/past-due-vulnerabilities-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/refresh-reporting-data.md
+  - https://apidocs.kennasecurity.com/reference/request-data-export.md
+  - https://apidocs.kennasecurity.com/reference/retrieve-data-export.md
+  - https://apidocs.kennasecurity.com/reference/risk-accepted-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/run-connector.md
+  - https://apidocs.kennasecurity.com/reference/search-assets.md
+  - https://apidocs.kennasecurity.com/reference/search-findings.md
+  - https://apidocs.kennasecurity.com/reference/search-fixes.md
+  - https://apidocs.kennasecurity.com/reference/search-for-vulnerability-definitions.md
+  - https://apidocs.kennasecurity.com/reference/search-users.md
+  - https://apidocs.kennasecurity.com/reference/search-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/service-now-list-fixes.md
+  - https://apidocs.kennasecurity.com/reference/service-now-search-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/show-all-fixes.md
+  - https://apidocs.kennasecurity.com/reference/show-application.md
+  - https://apidocs.kennasecurity.com/reference/show-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/show-asset-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/show-asset.md
+  - https://apidocs.kennasecurity.com/reference/show-chatter.md
+  - https://apidocs.kennasecurity.com/reference/show-connector-run.md
+  - https://apidocs.kennasecurity.com/reference/show-cve-history.md
+  - https://apidocs.kennasecurity.com/reference/show-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/show-finding.md
+  - https://apidocs.kennasecurity.com/reference/show-fix.md
+  - https://apidocs.kennasecurity.com/reference/show-malware-hashes.md
+  - https://apidocs.kennasecurity.com/reference/show-role.md
+  - https://apidocs.kennasecurity.com/reference/show-scanner-vulnerability-details.md
+  - https://apidocs.kennasecurity.com/reference/show-stack.md
+  - https://apidocs.kennasecurity.com/reference/show-top-fix-groups.md
+  - https://apidocs.kennasecurity.com/reference/show-user.md
+  - https://apidocs.kennasecurity.com/reference/show-vulnerability-definition.md
+  - https://apidocs.kennasecurity.com/reference/show-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/stack-applications-statistics.md
+  - https://apidocs.kennasecurity.com/reference/stack-asset-groups-statistics.md
+  - https://apidocs.kennasecurity.com/reference/tag-an-asset.md
+  - https://apidocs.kennasecurity.com/reference/total-past-due-vulnerabilities-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/trends.md
+  - https://apidocs.kennasecurity.com/reference/untag-an-asset.md
+  - https://apidocs.kennasecurity.com/reference/update-application.md
+  - https://apidocs.kennasecurity.com/reference/update-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/update-asset.md
+  - https://apidocs.kennasecurity.com/reference/update-connector.md
+  - https://apidocs.kennasecurity.com/reference/update-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/update-findings.md
+  - https://apidocs.kennasecurity.com/reference/update-permissions-in-bulk.md
+  - https://apidocs.kennasecurity.com/reference/update-role-custom-permissions.md
+  - https://apidocs.kennasecurity.com/reference/update-role.md
+  - https://apidocs.kennasecurity.com/reference/update-stack.md
+  - https://apidocs.kennasecurity.com/reference/update-user.md
+  - https://apidocs.kennasecurity.com/reference/update-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/upload-data-file.md
+  - https://apidocs.kennasecurity.com/reference/validate-asset-search-query.md
+  - https://apidocs.kennasecurity.com/reference/validate-vulnerability-search-query.md
+  - https://apidocs.kennasecurity.com/reference/vi-data-snapshot.md
+  - https://apidocs.kennasecurity.com/reference/vulnerabilities-by-due-date.md
+  - https://apidocs.kennasecurity.com/reference/vulnerability-definitions-with-significant-score-change.md
+  merge:
+    pages: 115
+    deduped: 272
+    conflicts_kept_first: 0

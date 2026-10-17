@@ -1,0 +1,998 @@
+openapi: 3.2.0
+info:
+  title: Kenna Platform ASSET GROUP REPORTING API
+  description: OpenAPI specification for Kenna Security
+  version: '1.0'
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: api.kennasecurity.com
+tags:
+- name: ASSET GROUP REPORTING
+paths:
+  /asset_groups/{id}/report_query/findings/historical_mean_time_to_remediate_by_risk_level:
+    get:
+      summary: Historical Mean Time To Remediate Findings by Risk Level
+      description: Returns a list of Mean Time To Remediate (MTTR) findings in days based on the Risk Level for the provided Asset Group ID.
+      operationId: asset-groups-findings-historical-mean-time-to-remediate-by-risk-level
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSET GROUP REPORTING
+      parameters:
+      - name: id
+        in: path
+        description: The asset group identification number.
+        required: true
+        schema:
+          type: integer
+      - name: all_time
+        in: query
+        description: Setting this parameter to any value will retrieve the MTTR for the asset group for its whole lifetime. This parameter overrides the start_date and end_date parameters.
+        schema:
+          type: boolean
+      - name: start_date
+        in: query
+        description: The ISO-8601 timestamp (YYYY-MM-DD) of the start date of the period you want to report on. Defaults to 30 days ago.
+        schema:
+          type: string
+      - name: end_date
+        in: query
+        description: The ISO-8601 timestamp (YYYY-MM-DD) of the end date of the period you want to report on. Defaults to today.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    id: 183
+                    name: test asset group
+                    mttr:
+                      All findings: 10
+                      High risk: 0
+                      Medium risk: 4
+                      Low risk: 6
+              schema:
+                $ref: '#/components/schemas/asset_groups_findings_mttr_by_risk_level_get_response_schema'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /asset_groups/{id}/report_query/historical_avg_days_open_vulnerabilities_by_risk_level:
+    get:
+      summary: Average Days Open by Risk Level Over Time
+      description: Returns the average days open of vulnerabilities by risk status in each level (low, medium, and high) for a given Asset Group over time.
+      operationId: average-days-open-by-risk-level-over-time
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSET GROUP REPORTING
+      parameters:
+      - name: id
+        in: path
+        description: The asset group or risk meter ID.
+        required: true
+        schema:
+          type: integer
+      - name: start_date
+        in: query
+        description: The ISO timestamp of the start date of the period you want to report on.  Defaults to 30 days ago.
+        schema:
+          type: string
+      - name: end_date
+        in: query
+        description: The ISO timestamp of the end date of the period you want to report on.  Defaults to today.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    id: 183
+                    name: A risk meter
+                    historical_avg_days_open_vulnerabilities_by_risk_level:
+                      '2020-05-24':
+                        low: 9
+                        medium: 6
+                        high: 3
+                      '2020-05-25':
+                        low: 9
+                        medium: 6
+                        high: 3
+                      '2020-05-26':
+                        low: 9
+                        medium: 6
+                        high: 2
+              schema:
+                $ref: '#/components/schemas/asset_groups_average_vuln_counts_by_risk_level_schema'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /asset_groups/{id}/report_query/historical_false_positives_by_risk_level:
+    get:
+      summary: False Positives by Risk Level Over Time
+      description: Returns the count of vulnerabilities manually marked as false positive for a given date range, grouped by risk level.
+      operationId: false-positive-by-risk-level-over-time
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSET GROUP REPORTING
+      parameters:
+      - name: id
+        in: path
+        description: The asset group or risk meter ID.
+        required: true
+        schema:
+          type: integer
+      - name: start_date
+        in: query
+        description: The ISO timestamp of the start date of the period you want to report on.  Defaults to 30 days ago.
+        schema:
+          type: string
+      - name: end_date
+        in: query
+        description: The ISO timestamp of the end date of the period you want to report on.  Defaults to today.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    id: 183
+                    name: A risk meter
+                    historical_false_positives_by_risk_level:
+                      '2020-05-24':
+                        low: 5
+                        medium: 2
+                        high: 1
+                      '2020-05-25':
+                        low: 5
+                        medium: 2
+                        high: 0
+                      '2020-05-26':
+                        low: 5
+                        medium: 0
+                        high: 0
+              schema:
+                $ref: '#/components/schemas/asset_groups_false_positive_by_risk_level_schema'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /asset_groups/{id}/report_query/historical_mean_time_to_remediate_by_risk_level:
+    get:
+      summary: Historical Mean Time To Remediate Vulnerabilities by Risk Level
+      description: Returns a list of Mean Time To Remediate (MTTR) vulnerabilities in days by Risk Level specified by the Asset Group ID.
+      operationId: historical-mean-time-to-remediate-by-risk-level
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSET GROUP REPORTING
+      parameters:
+      - name: id
+        in: path
+        description: The asset group or risk meter ID.
+        required: true
+        schema:
+          type: integer
+      - name: all_time
+        in: query
+        description: Setting this parameter to any value will retrieve the MTTR for the asset group for its whole lifetime. This parameter overrides the start_date and end_date parameters.
+        schema:
+          type: boolean
+      - name: start_date
+        in: query
+        description: The ISO-8601 timestamp (YYYY-MM-DD) of the start date of the period you want to report on. Defaults to 30 days ago.
+        schema:
+          type: string
+      - name: end_date
+        in: query
+        description: The ISO-8601 timestamp (YYYY-MM-DD) of the end date of the period you want to report on. Defaults to today.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    id: 183
+                    name: name
+                    mttr:
+                      All vulnerabilities: 12
+                      High risk: 10
+                      Medium risk: 11
+                      Low risk: 17
+              schema:
+                $ref: '#/components/schemas/asset_groups_mttr_by_risk_level_schema'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /asset_groups/{id}/report_query/historical_open_vulnerability_count_by_risk_level:
+    get:
+      summary: Historical Vulnerability Risk Category Counts
+      description: Returns a list of the historical Vulnerability Risk Category ("High", "Medium", "Low") counts for the Asset Group ID provided. If a start or end date is not provided, this endpoint defaults to returning data for all time for the specified Asset Group.
+      operationId: historical-vulnerability-risk-category-counts
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSET GROUP REPORTING
+      parameters:
+      - name: id
+        in: path
+        description: The asset group or risk meter ID.
+        required: true
+        schema:
+          type: integer
+      - name: start_date
+        in: query
+        description: The ISO timestamp of the start date of the period you want to report on.  Defaults to 30 days ago.
+        schema:
+          type: string
+      - name: end_date
+        in: query
+        description: The ISO timestamp of the end date of the period you want to report on.  Defaults to today.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    id: 5500
+                    name: A risk meter
+                    historical_vulnerability_count_by_risk:
+                      '2017-07-02':
+                        low: 440
+                        medium: 330
+                        high: 100
+                      '2017-07-03':
+                        low: 440
+                        medium: 320
+                        high: 50
+                      '2017-07-04':
+                        low: 438
+                        medium: 300
+                        high: 42
+              schema:
+                $ref: '#/components/schemas/asset_groups_vulnerability_count_by_risk_schema'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /asset_groups/{id}/report_query/historical_past_due_vulnerabilities_by_risk_level:
+    get:
+      summary: Past Due Vulnerabilities by Risk Level Over Time
+      description: Returns the count of vulnerabilities that are past their due date for a given date range, grouped by risk level.
+      operationId: past-due-vulnerabilities-by-risk-level-over-time
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSET GROUP REPORTING
+      parameters:
+      - name: id
+        in: path
+        description: The asset group or risk meter ID.
+        required: true
+        schema:
+          type: integer
+      - name: start_date
+        in: query
+        description: The ISO timestamp of the start date of the period you want to report on.  Defaults to 30 days ago.
+        schema:
+          type: string
+      - name: end_date
+        in: query
+        description: The ISO timestamp of the end date of the period you want to report on.  Defaults to today.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    id: 183
+                    name: A risk meter
+                    historical_past_due_vulnerabilities_by_risk_level:
+                      '2020-05-24':
+                        low: 24048
+                        medium: 2
+                        high: 1
+                      '2020-05-25':
+                        low: 240485
+                        medium: 2
+                        high: 0
+                      '2020-05-26':
+                        low: 240481
+                        medium: 0
+                        high: 0
+              schema:
+                $ref: '#/components/schemas/asset_groups_historical_past_due_vulns_by_risk_level_schema'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /asset_groups/{id}/report_query/historical_risk_meter_scores:
+    get:
+      summary: Historical Risk Meter Scores
+      description: Returns a list of the historical Risk Meter scores for the Asset Group ID provided. If a start or end date is not provided, this endpoint defaults to returning risk meter scores for all time for the specified Asset Group.
+      operationId: historical-risk-meter-scores
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSET GROUP REPORTING
+      parameters:
+      - name: id
+        in: path
+        description: The asset group or risk meter ID.
+        required: true
+        schema:
+          type: integer
+      - name: start_date
+        in: query
+        description: The ISO timestamp of the start date of the period you want to report on.  Defaults to 30 days ago.
+        schema:
+          type: string
+      - name: end_date
+        in: query
+        description: The ISO timestamp of the end date of the period you want to report on.  Defaults to today.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    id: 5500
+                    name: A risk meter
+                    risk_meter_scores:
+                      '2021-09-21': 800
+                      '2021-09-22': 400
+                      '2021-09-23': 300
+                      '2021-09-24': 200
+                      '2021-09-25': 100
+              schema:
+                $ref: '#/components/schemas/asset_groups_risk_meter_scores_schema'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /asset_groups/{id}/report_query/risk_accepted_over_time:
+    get:
+      summary: Risk Accepted by Risk Level Over Time
+      description: Returns the count of vulnerabilities with risk-accepted status in each level (low, medium, and high) for a given Asset Group over time.
+      operationId: risk-accepted-by-risk-level-over-time
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSET GROUP REPORTING
+      parameters:
+      - name: id
+        in: path
+        description: The asset group or risk meter ID.
+        required: true
+        schema:
+          type: integer
+      - name: start_date
+        in: query
+        description: The ISO timestamp of the start date of the period you want to report on.  Defaults to 30 days ago.
+        schema:
+          type: string
+      - name: end_date
+        in: query
+        description: The ISO timestamp of the end date of the period you want to report on.  Defaults to today.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    id: 183
+                    name: A risk meter
+                    risk_accepted_over_time:
+                      '2021-06-22':
+                        low: 101
+                        medium: 6
+                        high: 1
+                      '2021-06-23':
+                        low: 101
+                        medium: 4
+                        high: 0
+                      '2021-06-24':
+                        low: 101
+                        medium: 0
+                        high: 0
+              schema:
+                $ref: '#/components/schemas/asset_groups_risk_accepted_over_time_schema'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /asset_groups/{id}/report_query/total_past_due_vulnerabilities_by_risk_level:
+    get:
+      summary: Total Past Due Vulnerabilities by Risk Level
+      description: Returns the count of vulnerabilities for an asset group that are past their assigned due dates, sorted by high, medium and low risk vulnerabilities.
+      operationId: total-past-due-vulnerabilities-by-risk-level
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSET GROUP REPORTING
+      parameters:
+      - name: id
+        in: path
+        description: The asset group or risk meter ID.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    id: 183
+                    name: A risk meter
+                    total_past_due_vulnerabilities_by_risk_level:
+                      high: 0
+                      medium: 1
+                      low: 2300
+              schema:
+                $ref: '#/components/schemas/asset_groups_total_past_due_vulns_by_risk_level_schema'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /asset_groups/{id}/report_query/vulnerabilities_by_due_date:
+    get:
+      summary: Vulnerabilities by Due Date
+      description: Returns the count of vulnerabilities for a given Asset Group categorized by when they are due.
+      operationId: vulnerabilities-by-due-date
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSET GROUP REPORTING
+      parameters:
+      - name: id
+        in: path
+        description: The asset group or risk meter ID.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    id: 183
+                    name: A risk meter
+                    vulnerabilities_by_due_date:
+                    - name: Due in 30+ Days
+                      count: 0
+                    - name: Due in 0 to 30 Days
+                      count: 0
+                    - name: Past Due 1 to 30 Days
+                      count: 67
+                    - name: Past Due 30 to 60 Days
+                      count: 29
+                    - name: Past Due 60 to 90 Days
+                      count: 0
+                    - name: Past Due 90+ Days
+                      count: 89446
+              schema:
+                $ref: '#/components/schemas/asset_groups_vulns_by_due_date_schema'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /clients/refresh_reports:
+    post:
+      summary: Refresh Reporting Data
+      description: Refresh all reporting data. Only one client report refresh can be run at a time. If the scheduled client report refresh or a manual refresh is already running, you will not be able to manually start a new one until the one that is currently running is finished.
+      operationId: refresh-reporting-data
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSET GROUP REPORTING
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    message: Client report refresh started
+              schema:
+                $ref: '#/components/schemas/message_response_schema'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    error: unprocessable_entity
+                    message: There is currently a client report refresh running
+                    success: 'false'
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /clients/refresh_reports_status:
+    get:
+      summary: Get Refresh Reporting Status
+      description: Get the status of the reporting data refresh. Only one client report refresh can be run at a time. If the scheduled client report refresh or a manual refresh is already running, you will not be able to manually start a new one until the one that is currently running is finished.
+      operationId: get-refresh-reporting-status
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSET GROUP REPORTING
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    message: Client report refresh running
+              schema:
+                $ref: '#/components/schemas/message_response_schema'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+components:
+  schemas:
+    asset_groups_vulns_by_due_date_schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The asset group ID.
+          example: 4002
+        name:
+          type: string
+          description: The asset group name.
+          example: Sydney Assets
+        vulnerabilities_by_due_date:
+          type: array
+          description: An array of due dates with the associated number of vulnerabilities.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The due date.
+                example: Due in 0 to 30 Days
+              count:
+                type: integer
+                description: The number of vulnerabilities.
+                example: 2
+    asset_groups_risk_accepted_over_time_schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The asset group ID.
+          example: 13806
+        name:
+          type: string
+          description: The asset group name.
+          example: Caracas Assets
+        risk_accepted_over_time:
+          $ref: '#/components/schemas/low_medium_high_counts_schema'
+    error_response:
+      type: object
+      properties:
+        error:
+          type: string
+          description: The HTTP error message.
+        message:
+          type: string
+          description: The specific error message.
+        success:
+          type: string
+          description: Indicates success, usually 'false'.
+    asset_groups_vulnerability_count_by_risk_schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The asset group ID.
+          example: 6621
+        name:
+          type: string
+          description: The asset group name.
+          example: San Jose Assets
+        historical_vulnerabilitiy_count_by_risk:
+          $ref: '#/components/schemas/low_medium_high_counts_schema'
+    asset_groups_average_vuln_counts_by_risk_level_schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The asset group ID.
+          example: 6621
+        name:
+          type: string
+          description: The asset group name.
+          example: San Jose Assets
+        historical_avg_days_open_vulnerabilities_by_risk_level:
+          $ref: '#/components/schemas/low_medium_high_counts_schema'
+    asset_groups_mttr_by_risk_level_schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The asset group ID.
+          example: 2718
+        name:
+          type: string
+          description: The asset group name.
+          example: Chicago Assets
+        mttr:
+          type: object
+          description: Vulnerability Mean Time to Remediate.
+          properties:
+            All Vulnerabilities:
+              type: integer
+              description: The historical mean time to remediate all vulnerabilities in days.
+              example: 66
+            High risk:
+              type: integer
+              description: The historical mean time to remediate for high risk vulnerabilities in days.
+              example: 30
+            Medium risk:
+              type: integer
+              description: The historical mean time to remediate for medium risk vulnerabilities in days.
+              example: 48
+            Low risk:
+              type: integer
+              description: The historical mean time to remediate for low risk vulnerabilities in days.
+              example: 121
+    message_response_schema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: An informative message.
+    asset_groups_findings_mttr_by_risk_level_get_response_schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The Asset group ID.
+          example: 2
+        name:
+          type: string
+          description: The asset group name.
+          example: Demo Asset Group
+        mttr:
+          type: object
+          properties:
+            All findings:
+              type: integer
+              example: 0
+              default: 0
+            High risk:
+              type: integer
+              example: 0
+              default: 0
+            Medium risk:
+              type: integer
+              example: 0
+              default: 0
+            Low risk:
+              type: integer
+              example: 0
+              default: 0
+    asset_groups_historical_past_due_vulns_by_risk_level_schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The asset group ID.
+          example: 314159
+        name:
+          type: string
+          description: The asset group name.
+          example: Amsterdam Assets
+        historical_past_due_vulnerabilities_by_risk_level:
+          $ref: '#/components/schemas/low_medium_high_counts_schema'
+    low_medium_high_counts_schema:
+      type: object
+      description: The key is a year, month, and day (YYYY-MM-DD).
+      additionalProperties:
+        type: object
+        properties:
+          low:
+            type: number
+            format: float
+            description: The low count.
+            example: 125
+          medium:
+            type: number
+            format: float
+            description: The medium count.
+            example: 75
+          high:
+            type: number
+            format: float
+            description: The high count.
+            example: 25
+    asset_groups_total_past_due_vulns_by_risk_level_schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The asset group ID.
+          example: 2718
+        name:
+          type: string
+          description: The asset group name.
+          example: Chicago Assets
+        total_past_due_vulnerabilities_by_risk_level:
+          type: object
+          description: Total past due vulnerabilities by risk level.
+          properties:
+            high:
+              type: integer
+              description: The past due vulnerabilities for high risk scores.
+              example: 753
+            medium:
+              type: integer
+              description: The past due vulnerabilities for medium risk scores.
+              example: 5
+            low:
+              type: integer
+              description: The past due vulnerabilities for low risk scores.
+              example: 1
+    asset_groups_false_positive_by_risk_level_schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The asset group ID.
+          example: 1602
+        name:
+          type: string
+          description: The asset group name.
+          example: San Francisco Assets
+        historical_false_positives_by_risk_level:
+          $ref: '#/components/schemas/low_medium_high_counts_schema'
+    asset_groups_risk_meter_scores_schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The asset group ID.
+          example: 1618
+        name:
+          type: string
+          description: The asset group name.
+          example: Kyoto Assets
+        risk_meter_scores:
+          type: object
+          description: Associtive array with date keys and risk meter score vaules.
+          additionalProperties:
+            type: number
+            format: float
+            description: The risk meter score.
+            example: 670
+  securitySchemes:
+    X-Risk-Token:
+      type: apiKey
+      name: X-Risk-Token
+      in: header
+x-provenance:
+  method: searched
+  source: https://apidocs.kennasecurity.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://apidocs.kennasecurity.com/reference/add-applications-to-role.md
+  - https://apidocs.kennasecurity.com/reference/add-asset-groups-to-role.md
+  - https://apidocs.kennasecurity.com/reference/application-findings-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/application-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/application-historical-vulnerability-count-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/asset-groups-findings-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/audit-log-search.md
+  - https://apidocs.kennasecurity.com/reference/average-days-open-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/bulk-delete-findings.md
+  - https://apidocs.kennasecurity.com/reference/bulk-delete-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/bulk-update-assets.md
+  - https://apidocs.kennasecurity.com/reference/bulk-update-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/calculate-asset-group-metric.md
+  - https://apidocs.kennasecurity.com/reference/check-data-export-status.md
+  - https://apidocs.kennasecurity.com/reference/check-remediation-score.md
+  - https://apidocs.kennasecurity.com/reference/check-sla-adherence-metrics.md
+  - https://apidocs.kennasecurity.com/reference/check-vulnerability-densities-metrics.md
+  - https://apidocs.kennasecurity.com/reference/create-application.md
+  - https://apidocs.kennasecurity.com/reference/create-asset-group-and-risk-meter.md
+  - https://apidocs.kennasecurity.com/reference/create-asset.md
+  - https://apidocs.kennasecurity.com/reference/create-child-asset-group-and-risk-meter.md
+  - https://apidocs.kennasecurity.com/reference/create-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/create-finding.md
+  - https://apidocs.kennasecurity.com/reference/create-role.md
+  - https://apidocs.kennasecurity.com/reference/create-stack.md
+  - https://apidocs.kennasecurity.com/reference/create-user.md
+  - https://apidocs.kennasecurity.com/reference/create-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/delete-application.md
+  - https://apidocs.kennasecurity.com/reference/delete-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/delete-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/delete-role.md
+  - https://apidocs.kennasecurity.com/reference/delete-stack.md
+  - https://apidocs.kennasecurity.com/reference/delete-user.md
+  - https://apidocs.kennasecurity.com/reference/delete-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/download-zipped-asset-data.md
+  - https://apidocs.kennasecurity.com/reference/download-zipped-vuln-data.md
+  - https://apidocs.kennasecurity.com/reference/entitlements-overage.md
+  - https://apidocs.kennasecurity.com/reference/false-positive-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/get-refresh-reporting-status.md
+  - https://apidocs.kennasecurity.com/reference/historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/historical-risk-meter-scores.md
+  - https://apidocs.kennasecurity.com/reference/historical-vulnerability-risk-category-counts.md
+  - https://apidocs.kennasecurity.com/reference/kill-running-data-export.md
+  - https://apidocs.kennasecurity.com/reference/list-applications.md
+  - https://apidocs.kennasecurity.com/reference/list-asset-groups.md
+  - https://apidocs.kennasecurity.com/reference/list-assets.md
+  - https://apidocs.kennasecurity.com/reference/list-connector-runs.md
+  - https://apidocs.kennasecurity.com/reference/list-connectors.md
+  - https://apidocs.kennasecurity.com/reference/list-cve-identifiers.md
+  - https://apidocs.kennasecurity.com/reference/list-dashboard-groups.md
+  - https://apidocs.kennasecurity.com/reference/list-fix-alternatives.md
+  - https://apidocs.kennasecurity.com/reference/list-fixes.md
+  - https://apidocs.kennasecurity.com/reference/list-roles.md
+  - https://apidocs.kennasecurity.com/reference/list-stacks.md
+  - https://apidocs.kennasecurity.com/reference/list-tags.md
+  - https://apidocs.kennasecurity.com/reference/list-users.md
+  - https://apidocs.kennasecurity.com/reference/list-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/list-vulnerability-definitions.md
+  - https://apidocs.kennasecurity.com/reference/past-due-vulnerabilities-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/refresh-reporting-data.md
+  - https://apidocs.kennasecurity.com/reference/request-data-export.md
+  - https://apidocs.kennasecurity.com/reference/retrieve-data-export.md
+  - https://apidocs.kennasecurity.com/reference/risk-accepted-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/run-connector.md
+  - https://apidocs.kennasecurity.com/reference/search-assets.md
+  - https://apidocs.kennasecurity.com/reference/search-findings.md
+  - https://apidocs.kennasecurity.com/reference/search-fixes.md
+  - https://apidocs.kennasecurity.com/reference/search-for-vulnerability-definitions.md
+  - https://apidocs.kennasecurity.com/reference/search-users.md
+  - https://apidocs.kennasecurity.com/reference/search-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/service-now-list-fixes.md
+  - https://apidocs.kennasecurity.com/reference/service-now-search-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/show-all-fixes.md
+  - https://apidocs.kennasecurity.com/reference/show-application.md
+  - https://apidocs.kennasecurity.com/reference/show-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/show-asset-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/show-asset.md
+  - https://apidocs.kennasecurity.com/reference/show-chatter.md
+  - https://apidocs.kennasecurity.com/reference/show-connector-run.md
+  - https://apidocs.kennasecurity.com/reference/show-cve-history.md
+  - https://apidocs.kennasecurity.com/reference/show-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/show-finding.md
+  - https://apidocs.kennasecurity.com/reference/show-fix.md
+  - https://apidocs.kennasecurity.com/reference/show-malware-hashes.md
+  - https://apidocs.kennasecurity.com/reference/show-role.md
+  - https://apidocs.kennasecurity.com/reference/show-scanner-vulnerability-details.md
+  - https://apidocs.kennasecurity.com/reference/show-stack.md
+  - https://apidocs.kennasecurity.com/reference/show-top-fix-groups.md
+  - https://apidocs.kennasecurity.com/reference/show-user.md
+  - https://apidocs.kennasecurity.com/reference/show-vulnerability-definition.md
+  - https://apidocs.kennasecurity.com/reference/show-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/stack-applications-statistics.md
+  - https://apidocs.kennasecurity.com/reference/stack-asset-groups-statistics.md
+  - https://apidocs.kennasecurity.com/reference/tag-an-asset.md
+  - https://apidocs.kennasecurity.com/reference/total-past-due-vulnerabilities-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/trends.md
+  - https://apidocs.kennasecurity.com/reference/untag-an-asset.md
+  - https://apidocs.kennasecurity.com/reference/update-application.md
+  - https://apidocs.kennasecurity.com/reference/update-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/update-asset.md
+  - https://apidocs.kennasecurity.com/reference/update-connector.md
+  - https://apidocs.kennasecurity.com/reference/update-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/update-findings.md
+  - https://apidocs.kennasecurity.com/reference/update-permissions-in-bulk.md
+  - https://apidocs.kennasecurity.com/reference/update-role-custom-permissions.md
+  - https://apidocs.kennasecurity.com/reference/update-role.md
+  - https://apidocs.kennasecurity.com/reference/update-stack.md
+  - https://apidocs.kennasecurity.com/reference/update-user.md
+  - https://apidocs.kennasecurity.com/reference/update-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/upload-data-file.md
+  - https://apidocs.kennasecurity.com/reference/validate-asset-search-query.md
+  - https://apidocs.kennasecurity.com/reference/validate-vulnerability-search-query.md
+  - https://apidocs.kennasecurity.com/reference/vi-data-snapshot.md
+  - https://apidocs.kennasecurity.com/reference/vulnerabilities-by-due-date.md
+  - https://apidocs.kennasecurity.com/reference/vulnerability-definitions-with-significant-score-change.md
+  merge:
+    pages: 115
+    deduped: 272
+    conflicts_kept_first: 0

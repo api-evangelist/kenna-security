@@ -1,0 +1,802 @@
+openapi: 3.2.0
+info:
+  title: Kenna Platform ROLES API
+  description: OpenAPI specification for Kenna Security
+  version: '1.0'
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: api.kennasecurity.com
+tags:
+- name: ROLES
+paths:
+  /roles:
+    get:
+      summary: List Roles
+      description: Returns a list of all of your roles.
+      operationId: list-roles
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ROLES
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    roles:
+                    - id: 267
+                      created_at: '2016-02-23T17:45:13Z'
+                      updated_at: '2016-03-01T16:00:08Z'
+                      name: Demo
+                      description: A demo role
+                      access_level: write
+                      asset_groups:
+                      - id: 5317
+                        name: all_3_tags
+                      role_type: custom_write
+                    - id: 101
+                      created_at: '2013-05-08T20:39:33Z'
+                      updated_at: '2016-03-01T16:00:05Z'
+                      name: role 2
+                      description: The second role
+                      access_level: custom
+                      asset_groups:
+                      - id: 5281
+                        name: windows
+                      role_type: custom_custom
+                      custom_permissions:
+                      - edit_asset_notes
+                      - edit_vulnerability_status
+              schema:
+                $ref: '#/components/schemas/roles_get_response_schema'
+        '403':
+          description: '403'
+  /roles/:
+    post:
+      summary: Create Role
+      description: Creates a single role and returns the record.
+      operationId: create-role
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ROLES
+      parameters: []
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    role:
+                      id: 2
+                      created_at: '2016-02-26T17:41:28Z'
+                      updated_at: '2016-02-26T17:41:28Z'
+                      name: Demo
+                      description: A demo role
+                      access_level: read
+                      asset_groups:
+                      - id: 5317
+                        name: java
+              schema:
+                $ref: '#/components/schemas/role_post_response_schema'
+        '403':
+          description: '403'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/role_request_body_schema'
+  /roles/update_permissions_in_bulk:
+    put:
+      summary: Bulk Update Permissions
+      description: Allow admins to bulk update permissions of custom roles. Currently the end point supports enabling/disabling home page and AppSec reporting page access for custom roles. Update limit is 10,000 permissions at a time. By default we will index the permissions in the background and it responds with {"result":"Your request to update permissions in bulk is being processed in the background."} after receiving the request, updated changes can be seen in the UI under "Roles" or by invoking the "List Roles" API. In order to index your permissions synchronously, pass in the "realtime" parameter and set it to true.
+      operationId: update-permissions-in-bulk
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ROLES
+      parameters: []
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    roles_updated: 4
+              schema:
+                $ref: '#/components/schemas/roles_updated_put_response_schema'
+        '403':
+          description: '403'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/bulk_update_permission_request_body_schema'
+  /roles/{id}:
+    get:
+      summary: Show Role
+      description: Returns information about a single role by ID.
+      operationId: show-role
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ROLES
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    role:
+                      id: 267
+                      created_at: '2016-02-23T17:45:13Z'
+                      updated_at: '2016-03-01T16:00:08Z'
+                      name: Demo
+                      description: A demo role
+                      access_level: write
+                      asset_groups:
+                      - id: 5317
+                        name: all_3_tags
+                      role_type: custom_write
+              schema:
+                $ref: '#/components/schemas/role_get_response_schema'
+        '403':
+          description: '403'
+    put:
+      summary: Update Role
+      description: Update a single role's attributes by ID. When updating asset groups for a role, all current asset groups for a role will be over written by the array passed in the update params. To add asset groups to a role without overwriting a role's current asset groups use the add_asset_groups endpoint. If you would like to update custom role permissions, please use the custom_permissions endpoint.
+      operationId: update-role
+      tags:
+      - ROLES
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: '204'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/update_request_body_schema'
+    delete:
+      summary: Delete Role
+      description: Delete a role using its ID. A role cannot be deleted if it is connected to a user.
+      operationId: delete-role
+      tags:
+      - ROLES
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: '204'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /roles/{id}/add_applications:
+    put:
+      summary: Add Application(s) to Role
+      description: Add applications to a role by ID.
+      operationId: add-applications-to-role
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ROLES
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: '204'
+        '403':
+          description: '403'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/add_applications_request_body_schema'
+  /roles/{id}/add_asset_groups:
+    put:
+      summary: Add Asset Group(s) to Role
+      description: Add asset groups to a role by ID.
+      operationId: add-asset-groups-to-role
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ROLES
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: '204'
+        '403':
+          description: '403'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/add_asset_groups_request_body_schema'
+  /roles/{id}/custom_permissions:
+    put:
+      summary: Update Role Custom Permissions
+      description: Update the custom permissions by role ID.
+      operationId: update-role-custom-permissions
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ROLES
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: '204'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    role:
+                      id: 2
+                      created_at: '2016-02-26T17:41:28Z'
+                      updated_at: '2016-02-26T17:41:28Z'
+                      name: Demo
+                      description: A demo role
+                      access_level: read
+                      asset_groups:
+                      - id: 5317
+                        name: java
+                      custom_permissions:
+                      - edit_asset_notes
+              schema:
+                $ref: '#/components/schemas/role_put_204_response_schema'
+        '403':
+          description: '403'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/custom_permissions_request_body_schema'
+components:
+  schemas:
+    role_post_response_schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+          default: 0
+        created_at:
+          type: string
+          example: '2016-02-26T17:41:28Z'
+        updated_at:
+          type: string
+          example: '2016-02-26T17:41:28Z'
+        name:
+          type: string
+          example: Demo
+        description:
+          type: string
+          example: A demo role
+        access_level:
+          type: string
+          example: read
+        asset_groups:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 5317
+                default: 0
+              name:
+                type: string
+                example: java
+    error_response:
+      type: object
+      properties:
+        error:
+          type: string
+          description: The HTTP error message.
+        message:
+          type: string
+          description: The specific error message.
+        success:
+          type: string
+          description: Indicates success, usually 'false'.
+    update_request_body_schema:
+      type: object
+      required:
+      - role
+      properties:
+        role:
+          type: object
+          properties:
+            name:
+              type: string
+              description: The name of the role.
+              default: new role
+            description:
+              type: string
+              description: The description of the role.
+            access_level:
+              type: string
+              enum:
+              - read
+              - write
+              - custom
+              description: The access level of the modified role.  This must be "read", "write", or "custom".
+              default: read
+            asset_group_ids:
+              type: array
+              description: An array of asset group IDs that you want associated with the role. If an asset group cannot cannot be found an error will be returned.
+              items:
+                type: integer
+                format: int32
+            applications:
+              type: array
+              description: An array of application names to add to a role's set of applications.
+              default:
+              - valid application name
+              - another valid application name
+              items:
+                type: string
+            asset_groups [DEPRECATED]:
+              type: array
+              description: An array of asset group names that you want associated with the role. If an asset group with a matching name cannot be found or more than one asset group shares the same name an error will be returned. Because name conflicts will cause an error, we suggest using asset_group_ids instead.
+              default: []
+              items:
+                type: string
+    role_request_body_schema:
+      type: object
+      required:
+      - role
+      properties:
+        role:
+          type: object
+          required:
+          - name
+          - access_level
+          properties:
+            name:
+              type: string
+              description: The name of the role.
+              default: Demo
+            description:
+              type: string
+              description: The description of the role.
+            access_level:
+              type: string
+              enum:
+              - read
+              - write
+              - custom
+              description: The access level assigned to the role. This must be "read", "write", or "custom".
+              default: read
+            asset_group_ids:
+              type: array
+              description: An array of asset group IDs that you want associated with the role. If an asset group cannot cannot be found an error will be returned.
+              default:
+              - 66260
+              - 29979
+              items:
+                type: integer
+                format: int32
+            applications:
+              type: array
+              description: An array of application names to add to a role's set of applications.
+              default:
+              - Valid application name
+              - Another application name
+              items:
+                type: string
+            asset_groups [DEPRECATED]:
+              type: array
+              description: An array of asset group names that you want associated with the role. If an asset group with a matching name cannot be found or more than one asset group shares the same name an error will be returned. Because name conflicts will cause an error, we suggest using asset_group_ids instead.
+              default: []
+              items:
+                type: string
+    roles_get_response_schema:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            example: 267
+            default: 0
+          created_at:
+            type: string
+            example: '2016-02-23T17:45:13Z'
+          updated_at:
+            type: string
+            example: '2016-03-01T16:00:08Z'
+          name:
+            type: string
+            example: Demo
+          description:
+            type: string
+            example: A demo role
+          access_level:
+            type: string
+            example: write
+          asset_groups:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 5317
+                  default: 0
+                name:
+                  type: string
+                  example: all_3_tags
+          role_type:
+            type: string
+            example: custom_write
+    add_asset_groups_request_body_schema:
+      type: object
+      required:
+      - role
+      properties:
+        role:
+          type: object
+          required:
+          - asset_group_ids
+          properties:
+            asset_group_ids:
+              type: array
+              description: An array of asset group ids that you want associated with the role. If an asset group cannot cannot be found an error will be returned.
+              default:
+              - 4857
+              - 2718
+              items:
+                type: integer
+                format: int32
+    custom_permissions_request_body_schema:
+      type: object
+      properties:
+        role:
+          type: object
+          properties:
+            permissions:
+              type: object
+              properties:
+                edit_asset_groups:
+                  type: boolean
+                create_service_ticket:
+                  type: boolean
+                share_fixes:
+                  type: boolean
+                export_data:
+                  type: boolean
+                edit_asset_status:
+                  type: boolean
+                edit_asset_locators:
+                  type: boolean
+                edit_asset_priority:
+                  type: boolean
+                edit_asset_notes:
+                  type: boolean
+                edit_asset_tags:
+                  type: boolean
+                edit_asset_owner:
+                  type: boolean
+                edit_asset_operating_system:
+                  type: boolean
+                edit_vulnerability_notes:
+                  type: boolean
+                edit_vulnerability_status:
+                  type: boolean
+                edit_vulnerability_custom_fields:
+                  type: boolean
+                edit_vulnerability_score_override:
+                  type: boolean
+                edit_vulnerability_due_date:
+                  type: boolean
+    bulk_update_permission_request_body_schema:
+      type: object
+      properties:
+        roles:
+          type: array
+          items:
+            properties:
+              id:
+                type: integer
+                description: Custom Role ID
+                format: int32
+              permissions:
+                type: object
+                properties:
+                  view_home_page:
+                    type: boolean
+                    default: 'false'
+                  view_appsec_reporting_page:
+                    type: boolean
+                    default: 'false'
+            type: object
+        realtime:
+          type: boolean
+          default: true
+          description: Roles' permissions will be updated synchronously if "realtime" is true. Please note that there is a limit of no more than 1000 roles per realtime bulk update request.
+    roles_updated_put_response_schema:
+      type: integer
+      example: 4
+      default: 0
+    add_applications_request_body_schema:
+      type: object
+      required:
+      - role
+      properties:
+        role:
+          type: object
+          required:
+          - applications
+          properties:
+            applications:
+              type: array
+              description: An array of application names to add to a role's set of applications.
+              default:
+              - Valid application name
+              - Another valid application name
+              items:
+                type: string
+    role_get_response_schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 267
+          default: 0
+        created_at:
+          type: string
+          example: '2016-02-23T17:45:13Z'
+        updated_at:
+          type: string
+          example: '2016-03-01T16:00:08Z'
+        name:
+          type: string
+          example: Demo
+        description:
+          type: string
+          example: A demo role
+        access_level:
+          type: string
+          example: write
+        asset_groups:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 5317
+                default: 0
+              name:
+                type: string
+                example: all_3_tags
+        role_type:
+          type: string
+          example: custom_write
+    role_put_204_response_schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+          default: 0
+        created_at:
+          type: string
+          example: '2016-02-26T17:41:28Z'
+        updated_at:
+          type: string
+          example: '2016-02-26T17:41:28Z'
+        name:
+          type: string
+          example: Demo
+        access_level:
+          type: string
+          example: read
+        asset_groups:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 5317
+                default: 0
+              name:
+                type: string
+                example: java
+        custom_permissions:
+          type: array
+          items:
+            type: string
+            example: edit_asset_notes
+  securitySchemes:
+    X-Risk-Token:
+      type: apiKey
+      name: X-Risk-Token
+      in: header
+x-provenance:
+  method: searched
+  source: https://apidocs.kennasecurity.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://apidocs.kennasecurity.com/reference/add-applications-to-role.md
+  - https://apidocs.kennasecurity.com/reference/add-asset-groups-to-role.md
+  - https://apidocs.kennasecurity.com/reference/application-findings-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/application-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/application-historical-vulnerability-count-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/asset-groups-findings-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/audit-log-search.md
+  - https://apidocs.kennasecurity.com/reference/average-days-open-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/bulk-delete-findings.md
+  - https://apidocs.kennasecurity.com/reference/bulk-delete-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/bulk-update-assets.md
+  - https://apidocs.kennasecurity.com/reference/bulk-update-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/calculate-asset-group-metric.md
+  - https://apidocs.kennasecurity.com/reference/check-data-export-status.md
+  - https://apidocs.kennasecurity.com/reference/check-remediation-score.md
+  - https://apidocs.kennasecurity.com/reference/check-sla-adherence-metrics.md
+  - https://apidocs.kennasecurity.com/reference/check-vulnerability-densities-metrics.md
+  - https://apidocs.kennasecurity.com/reference/create-application.md
+  - https://apidocs.kennasecurity.com/reference/create-asset-group-and-risk-meter.md
+  - https://apidocs.kennasecurity.com/reference/create-asset.md
+  - https://apidocs.kennasecurity.com/reference/create-child-asset-group-and-risk-meter.md
+  - https://apidocs.kennasecurity.com/reference/create-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/create-finding.md
+  - https://apidocs.kennasecurity.com/reference/create-role.md
+  - https://apidocs.kennasecurity.com/reference/create-stack.md
+  - https://apidocs.kennasecurity.com/reference/create-user.md
+  - https://apidocs.kennasecurity.com/reference/create-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/delete-application.md
+  - https://apidocs.kennasecurity.com/reference/delete-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/delete-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/delete-role.md
+  - https://apidocs.kennasecurity.com/reference/delete-stack.md
+  - https://apidocs.kennasecurity.com/reference/delete-user.md
+  - https://apidocs.kennasecurity.com/reference/delete-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/download-zipped-asset-data.md
+  - https://apidocs.kennasecurity.com/reference/download-zipped-vuln-data.md
+  - https://apidocs.kennasecurity.com/reference/entitlements-overage.md
+  - https://apidocs.kennasecurity.com/reference/false-positive-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/get-refresh-reporting-status.md
+  - https://apidocs.kennasecurity.com/reference/historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/historical-risk-meter-scores.md
+  - https://apidocs.kennasecurity.com/reference/historical-vulnerability-risk-category-counts.md
+  - https://apidocs.kennasecurity.com/reference/kill-running-data-export.md
+  - https://apidocs.kennasecurity.com/reference/list-applications.md
+  - https://apidocs.kennasecurity.com/reference/list-asset-groups.md
+  - https://apidocs.kennasecurity.com/reference/list-assets.md
+  - https://apidocs.kennasecurity.com/reference/list-connector-runs.md
+  - https://apidocs.kennasecurity.com/reference/list-connectors.md
+  - https://apidocs.kennasecurity.com/reference/list-cve-identifiers.md
+  - https://apidocs.kennasecurity.com/reference/list-dashboard-groups.md
+  - https://apidocs.kennasecurity.com/reference/list-fix-alternatives.md
+  - https://apidocs.kennasecurity.com/reference/list-fixes.md
+  - https://apidocs.kennasecurity.com/reference/list-roles.md
+  - https://apidocs.kennasecurity.com/reference/list-stacks.md
+  - https://apidocs.kennasecurity.com/reference/list-tags.md
+  - https://apidocs.kennasecurity.com/reference/list-users.md
+  - https://apidocs.kennasecurity.com/reference/list-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/list-vulnerability-definitions.md
+  - https://apidocs.kennasecurity.com/reference/past-due-vulnerabilities-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/refresh-reporting-data.md
+  - https://apidocs.kennasecurity.com/reference/request-data-export.md
+  - https://apidocs.kennasecurity.com/reference/retrieve-data-export.md
+  - https://apidocs.kennasecurity.com/reference/risk-accepted-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/run-connector.md
+  - https://apidocs.kennasecurity.com/reference/search-assets.md
+  - https://apidocs.kennasecurity.com/reference/search-findings.md
+  - https://apidocs.kennasecurity.com/reference/search-fixes.md
+  - https://apidocs.kennasecurity.com/reference/search-for-vulnerability-definitions.md
+  - https://apidocs.kennasecurity.com/reference/search-users.md
+  - https://apidocs.kennasecurity.com/reference/search-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/service-now-list-fixes.md
+  - https://apidocs.kennasecurity.com/reference/service-now-search-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/show-all-fixes.md
+  - https://apidocs.kennasecurity.com/reference/show-application.md
+  - https://apidocs.kennasecurity.com/reference/show-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/show-asset-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/show-asset.md
+  - https://apidocs.kennasecurity.com/reference/show-chatter.md
+  - https://apidocs.kennasecurity.com/reference/show-connector-run.md
+  - https://apidocs.kennasecurity.com/reference/show-cve-history.md
+  - https://apidocs.kennasecurity.com/reference/show-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/show-finding.md
+  - https://apidocs.kennasecurity.com/reference/show-fix.md
+  - https://apidocs.kennasecurity.com/reference/show-malware-hashes.md
+  - https://apidocs.kennasecurity.com/reference/show-role.md
+  - https://apidocs.kennasecurity.com/reference/show-scanner-vulnerability-details.md
+  - https://apidocs.kennasecurity.com/reference/show-stack.md
+  - https://apidocs.kennasecurity.com/reference/show-top-fix-groups.md
+  - https://apidocs.kennasecurity.com/reference/show-user.md
+  - https://apidocs.kennasecurity.com/reference/show-vulnerability-definition.md
+  - https://apidocs.kennasecurity.com/reference/show-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/stack-applications-statistics.md
+  - https://apidocs.kennasecurity.com/reference/stack-asset-groups-statistics.md
+  - https://apidocs.kennasecurity.com/reference/tag-an-asset.md
+  - https://apidocs.kennasecurity.com/reference/total-past-due-vulnerabilities-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/trends.md
+  - https://apidocs.kennasecurity.com/reference/untag-an-asset.md
+  - https://apidocs.kennasecurity.com/reference/update-application.md
+  - https://apidocs.kennasecurity.com/reference/update-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/update-asset.md
+  - https://apidocs.kennasecurity.com/reference/update-connector.md
+  - https://apidocs.kennasecurity.com/reference/update-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/update-findings.md
+  - https://apidocs.kennasecurity.com/reference/update-permissions-in-bulk.md
+  - https://apidocs.kennasecurity.com/reference/update-role-custom-permissions.md
+  - https://apidocs.kennasecurity.com/reference/update-role.md
+  - https://apidocs.kennasecurity.com/reference/update-stack.md
+  - https://apidocs.kennasecurity.com/reference/update-user.md
+  - https://apidocs.kennasecurity.com/reference/update-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/upload-data-file.md
+  - https://apidocs.kennasecurity.com/reference/validate-asset-search-query.md
+  - https://apidocs.kennasecurity.com/reference/validate-vulnerability-search-query.md
+  - https://apidocs.kennasecurity.com/reference/vi-data-snapshot.md
+  - https://apidocs.kennasecurity.com/reference/vulnerabilities-by-due-date.md
+  - https://apidocs.kennasecurity.com/reference/vulnerability-definitions-with-significant-score-change.md
+  merge:
+    pages: 115
+    deduped: 272
+    conflicts_kept_first: 0

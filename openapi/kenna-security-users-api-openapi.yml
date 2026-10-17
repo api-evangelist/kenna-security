@@ -1,0 +1,638 @@
+openapi: 3.2.0
+info:
+  title: Kenna Platform USERS API
+  description: OpenAPI specification for Kenna Security
+  version: '1.0'
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: api.kennasecurity.com
+tags:
+- name: Users
+paths:
+  /users:
+    post:
+      summary: Create User
+      description: Creates a single user and returns the record.You can assign up to ten roles per user with the new "Multiple Roles Per User" feature. Please use "roles" or "role_ids" in the request, "role" is no longer supported after Sep 08, 2021.
+      operationId: create-user
+      security:
+      - X-Risk-Token: []
+      tags:
+      - Users
+      parameters: []
+      responses:
+        '201':
+          description: '201'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    user:
+                      id: 2
+                      created_at: '2016-02-26T17:41:28Z'
+                      updated_at: '2016-02-26T17:41:28Z'
+                      last_sign_in_at: '2016-03-26T17:41:28Z'
+                      email: demo@test.com
+                      external_id: geology
+                      firstname: Demo
+                      lastname: John
+                      phone: 888.316.3933
+                      role: normal user
+                      roles:
+                      - normal user
+                      - custom_user
+                      role_ids:
+                      - 4422
+                      - 4433
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/users_get_response_schema'
+        '403':
+          description: '403'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/users_post_request_body_schema'
+    get:
+      summary: List Users
+      description: 'Returns a paginated list of all of your users.
+
+
+        Attribute Value
+
+
+        Maximum Pages Allowed ∞
+
+
+        Maximum Page Size 5000
+
+
+        Default Page Size 500
+
+
+        Total Count Present in meta object Yes
+
+
+        See the Pagination Section for more details.'
+      operationId: list-users
+      security:
+      - X-Risk-Token: []
+      tags:
+      - Users
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: The specific page being requested from 1 to the total number of pages returned in the `meta` object.
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        required: false
+        description: Number of Users per page. The default is 500 and the maximum page size is 5000.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    users:
+                    - id: 2
+                      created_at: '2009-04-23T12:20:06Z'
+                      updated_at: '2016-02-26T17:41:28Z'
+                      last_sign_in_at: '2016-03-26T17:41:28Z'
+                      email: demo+1@kennasecurity.com
+                      external_id: geology
+                      firstname: Demo
+                      lastname: John
+                      phone: 888.316.3933
+                      roles:
+                      - custom_role_1
+                      - custom_role_2
+                      role_ids:
+                      - 404
+                      - 405
+                    - id: 44
+                      created_at: '2010-05-13T14:36:02Z'
+                      updated_at: '2016-02-18T15:58:49Z'
+                      email: testuser2@honeyapps.com
+                      external_id: chemistry
+                      firstname: Jane
+                      lastname: Doze
+                      phone: 800-555-1212
+                      roles:
+                      - Linux Test Environment
+                      role_ids:
+                      - 8244
+                    meta:
+                      total_count: 34
+                      page: 1
+                      pages: 4
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/users_get_response_schema'
+                  meta:
+                    $ref: '#/components/schemas/page_metadata'
+        '403':
+          description: '403'
+  /users/search:
+    get:
+      summary: Search Users
+      description: 'Filters users by a given set of input parameters and returns the filtered users and the total number of users in the filtered set.
+
+
+        Attribute Value
+
+
+        Maximum Pages Allowed ∞
+
+
+        Maximum Page Size 5000
+
+
+        Default Page Size 50
+
+
+        Total Count Present in meta object Yes
+
+
+        See the Pagination Section for more details.'
+      operationId: search-users
+      security:
+      - X-Risk-Token: []
+      tags:
+      - Users
+      parameters:
+      - name: firstname
+        in: query
+        description: Search for all users that have this first name.
+        schema:
+          type: string
+      - name: lastname
+        in: query
+        description: Search for all users that have this last name.
+        schema:
+          type: string
+      - name: email
+        in: query
+        description: Search for the user that has this email address.
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        description: The specific page being requested from 1 to the total number of pages returned in the `meta` object.
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        required: false
+        description: Number of Users per page. The default is 500 and the maximum page size is 5000.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    users:
+                    - id: 2
+                      created_at: '2009-04-23T12:20:06Z'
+                      updated_at: '2016-02-26T17:41:28Z'
+                      last_sign_in_at: '2016-03-26T17:41:28Z'
+                      email: demo+1@kennasecurity.com
+                      external_id: geology
+                      firstname: Demo
+                      lastname: John
+                      phone: 888.316.3933
+                      roles:
+                      - custom_role_1
+                      - custom_role_2
+                      role_ids:
+                      - 404
+                      - 405
+                    meta:
+                      page: 1
+                      pages: 1
+                      total_count: 1
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/users_get_response_schema'
+                  meta:
+                    $ref: '#/components/schemas/page_metadata'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /users/{id}:
+    put:
+      summary: Update User
+      description: 'Update a single user''s attributes by ID. You can assign up to ten roles per user with the new "Multiple Roles Per User" feature.
+
+
+        Please use roles or role_ids in the request, role is no longer supported after Sep 08, 2021.
+
+
+        Important: all of the user''s roles or role_ids should be provided in the arrays including the existing ones and the new ones, any existing roles or role_ids that are not included in the arrays will be unassigned from the user. For more details, please see the blog Updating Users with Multiple Roles, section "Update user".'
+      operationId: update-user
+      security:
+      - X-Risk-Token: []
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: '204'
+        '403':
+          description: '403'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/users_put_request_body_schema'
+    delete:
+      summary: Delete User
+      description: Delete a user using their ID.
+      operationId: delete-user
+      security:
+      - X-Risk-Token: []
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: '204'
+        '403':
+          description: '403'
+    get:
+      summary: Show User
+      description: Returns information about a single user by ID.
+      operationId: show-user
+      security:
+      - X-Risk-Token: []
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    user:
+                      id: 2
+                      created_at: '2009-04-23T12:20:06Z'
+                      updated_at: '2016-02-26T17:41:28Z'
+                      last_sign_in_at: '2016-03-26T17:41:28Z'
+                      email: demo+1@kennasecurity.com
+                      external_id: geology
+                      firstname: Demo
+                      lastname: John
+                      phone: 888.316.3933
+                      roles:
+                      - custom_role_1
+                      - custom_role_2
+                      role_ids:
+                      - 404
+                      - 405
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/users_get_response_schema'
+        '403':
+          description: '403'
+components:
+  schemas:
+    page_metadata:
+      type: object
+      properties:
+        meta:
+          type: object
+          required:
+          - page
+          - pages
+          properties:
+            page:
+              type: integer
+              description: The response current page number.
+              default: 1
+            pages:
+              type: integer
+              description: The total number of pages.
+              default: 1
+            total_count:
+              type: integer
+              description: The total number of items across all pages.
+              default: 1
+    error_response:
+      type: object
+      properties:
+        error:
+          type: string
+          description: The HTTP error message.
+        message:
+          type: string
+          description: The specific error message.
+        success:
+          type: string
+          description: Indicates success, usually 'false'.
+    users_put_request_body_schema:
+      type: object
+      properties:
+        user:
+          type: object
+          properties:
+            email:
+              type: string
+              description: The user will need an email address in order to login to Cisco Vulnerability Management.
+            firstname:
+              type: string
+              description: First Name of the user
+            lastname:
+              type: string
+              description: Last Name of the user
+            roles:
+              type: array
+              description: The roles assigned to a user, required if `role_ids` is not provided
+              default: []
+              items:
+                type: string
+            role_ids:
+              type: array
+              description: The role IDs assigned to a user, required if `roles` is not provided
+              default: []
+              items:
+                type: integer
+                format: int32
+            external_id:
+              type: string
+              description: A client defined string; for example, an internal Active Directory account name.
+            phone:
+              type: string
+              description: The user's phone number
+            current_password:
+              type: string
+              description: Existing password.
+            password:
+              type: string
+              description: New password. The `current_password` must be provided correctly, or this operation will fail.
+    users_post_request_body_schema:
+      type: object
+      properties:
+        user:
+          type: object
+          required:
+          - email
+          - firstname
+          - lastname
+          - roles
+          - role_ids
+          properties:
+            email:
+              type: string
+              description: The user will need an email address in order to login to Cisco Vulnerability Management.
+            firstname:
+              type: string
+              description: First Name of the user
+            lastname:
+              type: string
+              description: Last Name of the user
+            roles:
+              type: array
+              description: The roles assigned to a user, required if `role_ids` is not provided
+              default: []
+              items:
+                type: string
+            role_ids:
+              type: array
+              description: The role IDs assigned to a user, required if `roles` is not provided
+              default: []
+              items:
+                type: integer
+                format: int32
+            external_id:
+              type: string
+              description: A client defined string; for example, an internal Active Directory account name.
+            phone:
+              type: string
+              description: The user's phone number
+    users_get_response_schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+          default: 0
+        created_at:
+          type: string
+          example: '2009-04-23T12:20:06Z'
+        updated_at:
+          type: string
+          example: '2016-02-26T17:41:28Z'
+        last_sign_in_at:
+          type: string
+          example: '2016-03-26T17:41:28Z'
+        email:
+          type: string
+          example: demo+1@kennasecurity.com
+        firstname:
+          type: string
+          example: Demo
+        lastname:
+          type: string
+          example: John
+        phone:
+          type: string
+          example: 888.555.3933
+        external_id:
+          type: string
+          description: A client defined string; for example, an internal Active Directory account name.
+        roles:
+          type: array
+          items:
+            type: string
+            example: custom_role_1
+        role_ids:
+          type: array
+          items:
+            type: integer
+            example: 2718
+            default: 0
+  securitySchemes:
+    X-Risk-Token:
+      type: apiKey
+      name: X-Risk-Token
+      in: header
+x-provenance:
+  method: searched
+  source: https://apidocs.kennasecurity.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://apidocs.kennasecurity.com/reference/add-applications-to-role.md
+  - https://apidocs.kennasecurity.com/reference/add-asset-groups-to-role.md
+  - https://apidocs.kennasecurity.com/reference/application-findings-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/application-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/application-historical-vulnerability-count-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/asset-groups-findings-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/audit-log-search.md
+  - https://apidocs.kennasecurity.com/reference/average-days-open-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/bulk-delete-findings.md
+  - https://apidocs.kennasecurity.com/reference/bulk-delete-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/bulk-update-assets.md
+  - https://apidocs.kennasecurity.com/reference/bulk-update-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/calculate-asset-group-metric.md
+  - https://apidocs.kennasecurity.com/reference/check-data-export-status.md
+  - https://apidocs.kennasecurity.com/reference/check-remediation-score.md
+  - https://apidocs.kennasecurity.com/reference/check-sla-adherence-metrics.md
+  - https://apidocs.kennasecurity.com/reference/check-vulnerability-densities-metrics.md
+  - https://apidocs.kennasecurity.com/reference/create-application.md
+  - https://apidocs.kennasecurity.com/reference/create-asset-group-and-risk-meter.md
+  - https://apidocs.kennasecurity.com/reference/create-asset.md
+  - https://apidocs.kennasecurity.com/reference/create-child-asset-group-and-risk-meter.md
+  - https://apidocs.kennasecurity.com/reference/create-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/create-finding.md
+  - https://apidocs.kennasecurity.com/reference/create-role.md
+  - https://apidocs.kennasecurity.com/reference/create-stack.md
+  - https://apidocs.kennasecurity.com/reference/create-user.md
+  - https://apidocs.kennasecurity.com/reference/create-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/delete-application.md
+  - https://apidocs.kennasecurity.com/reference/delete-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/delete-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/delete-role.md
+  - https://apidocs.kennasecurity.com/reference/delete-stack.md
+  - https://apidocs.kennasecurity.com/reference/delete-user.md
+  - https://apidocs.kennasecurity.com/reference/delete-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/download-zipped-asset-data.md
+  - https://apidocs.kennasecurity.com/reference/download-zipped-vuln-data.md
+  - https://apidocs.kennasecurity.com/reference/entitlements-overage.md
+  - https://apidocs.kennasecurity.com/reference/false-positive-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/get-refresh-reporting-status.md
+  - https://apidocs.kennasecurity.com/reference/historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/historical-risk-meter-scores.md
+  - https://apidocs.kennasecurity.com/reference/historical-vulnerability-risk-category-counts.md
+  - https://apidocs.kennasecurity.com/reference/kill-running-data-export.md
+  - https://apidocs.kennasecurity.com/reference/list-applications.md
+  - https://apidocs.kennasecurity.com/reference/list-asset-groups.md
+  - https://apidocs.kennasecurity.com/reference/list-assets.md
+  - https://apidocs.kennasecurity.com/reference/list-connector-runs.md
+  - https://apidocs.kennasecurity.com/reference/list-connectors.md
+  - https://apidocs.kennasecurity.com/reference/list-cve-identifiers.md
+  - https://apidocs.kennasecurity.com/reference/list-dashboard-groups.md
+  - https://apidocs.kennasecurity.com/reference/list-fix-alternatives.md
+  - https://apidocs.kennasecurity.com/reference/list-fixes.md
+  - https://apidocs.kennasecurity.com/reference/list-roles.md
+  - https://apidocs.kennasecurity.com/reference/list-stacks.md
+  - https://apidocs.kennasecurity.com/reference/list-tags.md
+  - https://apidocs.kennasecurity.com/reference/list-users.md
+  - https://apidocs.kennasecurity.com/reference/list-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/list-vulnerability-definitions.md
+  - https://apidocs.kennasecurity.com/reference/past-due-vulnerabilities-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/refresh-reporting-data.md
+  - https://apidocs.kennasecurity.com/reference/request-data-export.md
+  - https://apidocs.kennasecurity.com/reference/retrieve-data-export.md
+  - https://apidocs.kennasecurity.com/reference/risk-accepted-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/run-connector.md
+  - https://apidocs.kennasecurity.com/reference/search-assets.md
+  - https://apidocs.kennasecurity.com/reference/search-findings.md
+  - https://apidocs.kennasecurity.com/reference/search-fixes.md
+  - https://apidocs.kennasecurity.com/reference/search-for-vulnerability-definitions.md
+  - https://apidocs.kennasecurity.com/reference/search-users.md
+  - https://apidocs.kennasecurity.com/reference/search-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/service-now-list-fixes.md
+  - https://apidocs.kennasecurity.com/reference/service-now-search-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/show-all-fixes.md
+  - https://apidocs.kennasecurity.com/reference/show-application.md
+  - https://apidocs.kennasecurity.com/reference/show-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/show-asset-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/show-asset.md
+  - https://apidocs.kennasecurity.com/reference/show-chatter.md
+  - https://apidocs.kennasecurity.com/reference/show-connector-run.md
+  - https://apidocs.kennasecurity.com/reference/show-cve-history.md
+  - https://apidocs.kennasecurity.com/reference/show-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/show-finding.md
+  - https://apidocs.kennasecurity.com/reference/show-fix.md
+  - https://apidocs.kennasecurity.com/reference/show-malware-hashes.md
+  - https://apidocs.kennasecurity.com/reference/show-role.md
+  - https://apidocs.kennasecurity.com/reference/show-scanner-vulnerability-details.md
+  - https://apidocs.kennasecurity.com/reference/show-stack.md
+  - https://apidocs.kennasecurity.com/reference/show-top-fix-groups.md
+  - https://apidocs.kennasecurity.com/reference/show-user.md
+  - https://apidocs.kennasecurity.com/reference/show-vulnerability-definition.md
+  - https://apidocs.kennasecurity.com/reference/show-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/stack-applications-statistics.md
+  - https://apidocs.kennasecurity.com/reference/stack-asset-groups-statistics.md
+  - https://apidocs.kennasecurity.com/reference/tag-an-asset.md
+  - https://apidocs.kennasecurity.com/reference/total-past-due-vulnerabilities-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/trends.md
+  - https://apidocs.kennasecurity.com/reference/untag-an-asset.md
+  - https://apidocs.kennasecurity.com/reference/update-application.md
+  - https://apidocs.kennasecurity.com/reference/update-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/update-asset.md
+  - https://apidocs.kennasecurity.com/reference/update-connector.md
+  - https://apidocs.kennasecurity.com/reference/update-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/update-findings.md
+  - https://apidocs.kennasecurity.com/reference/update-permissions-in-bulk.md
+  - https://apidocs.kennasecurity.com/reference/update-role-custom-permissions.md
+  - https://apidocs.kennasecurity.com/reference/update-role.md
+  - https://apidocs.kennasecurity.com/reference/update-stack.md
+  - https://apidocs.kennasecurity.com/reference/update-user.md
+  - https://apidocs.kennasecurity.com/reference/update-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/upload-data-file.md
+  - https://apidocs.kennasecurity.com/reference/validate-asset-search-query.md
+  - https://apidocs.kennasecurity.com/reference/validate-vulnerability-search-query.md
+  - https://apidocs.kennasecurity.com/reference/vi-data-snapshot.md
+  - https://apidocs.kennasecurity.com/reference/vulnerabilities-by-due-date.md
+  - https://apidocs.kennasecurity.com/reference/vulnerability-definitions-with-significant-score-change.md
+  merge:
+    pages: 115
+    deduped: 272
+    conflicts_kept_first: 0

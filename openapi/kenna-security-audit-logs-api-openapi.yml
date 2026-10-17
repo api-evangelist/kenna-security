@@ -1,0 +1,196 @@
+openapi: 3.2.0
+info:
+  title: Kenna Platform AUDIT LOGS API
+  description: OpenAPI specification for Kenna Security
+  version: '1.0'
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: api.kennasecurity.com
+tags:
+- name: AUDIT LOGS
+paths:
+  /audit_logs/:
+    get:
+      summary: Audit Log Search
+      description: 'Returns a compressed (gzip) JSON lines file with all entries for the specified date range. If there are no audit logs for the specified period, the returned file will have no content. The date is in an ISO 8601 format. Only the day portion (YYYY-MM-DD) is used for both start_date and end_date.
+
+
+        For more details, refer to Downloading Export Files.'
+      operationId: audit-log-search
+      security:
+      - X-Risk-Token: []
+      tags:
+      - AUDIT LOGS
+      parameters:
+      - name: start_date
+        in: query
+        description: The start date of the period you want to receive audit logs from. Must be less than or equal to end_date. <b>Required<b>.
+        schema:
+          type: string
+      - name: end_date
+        in: query
+        description: The end date of the period you want to receive audit logs from. Must be greater than or equal to start_date. The date must be a full day before the current date. <b>Required<b>.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+        '422':
+          description: '422'
+          content:
+            application/gzip:
+              examples:
+                example_0:
+                  value:
+                    success: 'false'
+                    error: unprocessable_entity
+                    message: end_date must be one full day before the current date UTC
+              schema:
+                $ref: '#/components/schemas/error_response'
+components:
+  schemas:
+    error_response:
+      type: object
+      properties:
+        error:
+          type: string
+          description: The HTTP error message.
+        message:
+          type: string
+          description: The specific error message.
+        success:
+          type: string
+          description: Indicates success, usually 'false'.
+  securitySchemes:
+    X-Risk-Token:
+      type: apiKey
+      name: X-Risk-Token
+      in: header
+x-provenance:
+  method: searched
+  source: https://apidocs.kennasecurity.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://apidocs.kennasecurity.com/reference/add-applications-to-role.md
+  - https://apidocs.kennasecurity.com/reference/add-asset-groups-to-role.md
+  - https://apidocs.kennasecurity.com/reference/application-findings-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/application-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/application-historical-vulnerability-count-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/asset-groups-findings-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/audit-log-search.md
+  - https://apidocs.kennasecurity.com/reference/average-days-open-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/bulk-delete-findings.md
+  - https://apidocs.kennasecurity.com/reference/bulk-delete-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/bulk-update-assets.md
+  - https://apidocs.kennasecurity.com/reference/bulk-update-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/calculate-asset-group-metric.md
+  - https://apidocs.kennasecurity.com/reference/check-data-export-status.md
+  - https://apidocs.kennasecurity.com/reference/check-remediation-score.md
+  - https://apidocs.kennasecurity.com/reference/check-sla-adherence-metrics.md
+  - https://apidocs.kennasecurity.com/reference/check-vulnerability-densities-metrics.md
+  - https://apidocs.kennasecurity.com/reference/create-application.md
+  - https://apidocs.kennasecurity.com/reference/create-asset-group-and-risk-meter.md
+  - https://apidocs.kennasecurity.com/reference/create-asset.md
+  - https://apidocs.kennasecurity.com/reference/create-child-asset-group-and-risk-meter.md
+  - https://apidocs.kennasecurity.com/reference/create-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/create-finding.md
+  - https://apidocs.kennasecurity.com/reference/create-role.md
+  - https://apidocs.kennasecurity.com/reference/create-stack.md
+  - https://apidocs.kennasecurity.com/reference/create-user.md
+  - https://apidocs.kennasecurity.com/reference/create-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/delete-application.md
+  - https://apidocs.kennasecurity.com/reference/delete-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/delete-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/delete-role.md
+  - https://apidocs.kennasecurity.com/reference/delete-stack.md
+  - https://apidocs.kennasecurity.com/reference/delete-user.md
+  - https://apidocs.kennasecurity.com/reference/delete-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/download-zipped-asset-data.md
+  - https://apidocs.kennasecurity.com/reference/download-zipped-vuln-data.md
+  - https://apidocs.kennasecurity.com/reference/entitlements-overage.md
+  - https://apidocs.kennasecurity.com/reference/false-positive-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/get-refresh-reporting-status.md
+  - https://apidocs.kennasecurity.com/reference/historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/historical-risk-meter-scores.md
+  - https://apidocs.kennasecurity.com/reference/historical-vulnerability-risk-category-counts.md
+  - https://apidocs.kennasecurity.com/reference/kill-running-data-export.md
+  - https://apidocs.kennasecurity.com/reference/list-applications.md
+  - https://apidocs.kennasecurity.com/reference/list-asset-groups.md
+  - https://apidocs.kennasecurity.com/reference/list-assets.md
+  - https://apidocs.kennasecurity.com/reference/list-connector-runs.md
+  - https://apidocs.kennasecurity.com/reference/list-connectors.md
+  - https://apidocs.kennasecurity.com/reference/list-cve-identifiers.md
+  - https://apidocs.kennasecurity.com/reference/list-dashboard-groups.md
+  - https://apidocs.kennasecurity.com/reference/list-fix-alternatives.md
+  - https://apidocs.kennasecurity.com/reference/list-fixes.md
+  - https://apidocs.kennasecurity.com/reference/list-roles.md
+  - https://apidocs.kennasecurity.com/reference/list-stacks.md
+  - https://apidocs.kennasecurity.com/reference/list-tags.md
+  - https://apidocs.kennasecurity.com/reference/list-users.md
+  - https://apidocs.kennasecurity.com/reference/list-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/list-vulnerability-definitions.md
+  - https://apidocs.kennasecurity.com/reference/past-due-vulnerabilities-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/refresh-reporting-data.md
+  - https://apidocs.kennasecurity.com/reference/request-data-export.md
+  - https://apidocs.kennasecurity.com/reference/retrieve-data-export.md
+  - https://apidocs.kennasecurity.com/reference/risk-accepted-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/run-connector.md
+  - https://apidocs.kennasecurity.com/reference/search-assets.md
+  - https://apidocs.kennasecurity.com/reference/search-findings.md
+  - https://apidocs.kennasecurity.com/reference/search-fixes.md
+  - https://apidocs.kennasecurity.com/reference/search-for-vulnerability-definitions.md
+  - https://apidocs.kennasecurity.com/reference/search-users.md
+  - https://apidocs.kennasecurity.com/reference/search-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/service-now-list-fixes.md
+  - https://apidocs.kennasecurity.com/reference/service-now-search-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/show-all-fixes.md
+  - https://apidocs.kennasecurity.com/reference/show-application.md
+  - https://apidocs.kennasecurity.com/reference/show-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/show-asset-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/show-asset.md
+  - https://apidocs.kennasecurity.com/reference/show-chatter.md
+  - https://apidocs.kennasecurity.com/reference/show-connector-run.md
+  - https://apidocs.kennasecurity.com/reference/show-cve-history.md
+  - https://apidocs.kennasecurity.com/reference/show-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/show-finding.md
+  - https://apidocs.kennasecurity.com/reference/show-fix.md
+  - https://apidocs.kennasecurity.com/reference/show-malware-hashes.md
+  - https://apidocs.kennasecurity.com/reference/show-role.md
+  - https://apidocs.kennasecurity.com/reference/show-scanner-vulnerability-details.md
+  - https://apidocs.kennasecurity.com/reference/show-stack.md
+  - https://apidocs.kennasecurity.com/reference/show-top-fix-groups.md
+  - https://apidocs.kennasecurity.com/reference/show-user.md
+  - https://apidocs.kennasecurity.com/reference/show-vulnerability-definition.md
+  - https://apidocs.kennasecurity.com/reference/show-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/stack-applications-statistics.md
+  - https://apidocs.kennasecurity.com/reference/stack-asset-groups-statistics.md
+  - https://apidocs.kennasecurity.com/reference/tag-an-asset.md
+  - https://apidocs.kennasecurity.com/reference/total-past-due-vulnerabilities-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/trends.md
+  - https://apidocs.kennasecurity.com/reference/untag-an-asset.md
+  - https://apidocs.kennasecurity.com/reference/update-application.md
+  - https://apidocs.kennasecurity.com/reference/update-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/update-asset.md
+  - https://apidocs.kennasecurity.com/reference/update-connector.md
+  - https://apidocs.kennasecurity.com/reference/update-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/update-findings.md
+  - https://apidocs.kennasecurity.com/reference/update-permissions-in-bulk.md
+  - https://apidocs.kennasecurity.com/reference/update-role-custom-permissions.md
+  - https://apidocs.kennasecurity.com/reference/update-role.md
+  - https://apidocs.kennasecurity.com/reference/update-stack.md
+  - https://apidocs.kennasecurity.com/reference/update-user.md
+  - https://apidocs.kennasecurity.com/reference/update-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/upload-data-file.md
+  - https://apidocs.kennasecurity.com/reference/validate-asset-search-query.md
+  - https://apidocs.kennasecurity.com/reference/validate-vulnerability-search-query.md
+  - https://apidocs.kennasecurity.com/reference/vi-data-snapshot.md
+  - https://apidocs.kennasecurity.com/reference/vulnerabilities-by-due-date.md
+  - https://apidocs.kennasecurity.com/reference/vulnerability-definitions-with-significant-score-change.md
+  merge:
+    pages: 115
+    deduped: 272
+    conflicts_kept_first: 0

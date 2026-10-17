@@ -1,0 +1,1364 @@
+openapi: 3.2.0
+info:
+  title: Kenna Platform ASSET GROUPS API
+  description: OpenAPI specification for Kenna Security
+  version: '1.0'
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: api.kennasecurity.com
+tags:
+- name: ASSET GROUPS
+paths:
+  /asset_groups:
+    get:
+      summary: List Asset Groups
+      description: 'Returns a list of all of your asset groups.
+
+
+        Attribute Value
+
+
+        Maximum Pages Allowed ∞
+
+
+        Maximum Page Size 100
+
+
+        Default Page Size 30
+
+
+        Total Count Present in meta object Yes
+
+
+        See the Pagination Section for more details.'
+      operationId: list-asset-groups
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSET GROUPS
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: The specific page being requested from 1 to 20.
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        required: false
+        description: Number of Asset Groups per page. The default is 30 and the maximum page size is 100.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    meta:
+                      page: 4
+                      pages: 20
+                      total_count: 597
+                    asset_groups:
+                    - id: 132
+                      resource: asset
+                      name: name
+                      querystring: querystring=test&foo=bar
+                      created_at: '2015-02-04T21:25:49Z'
+                      updated_at: '2015-02-04T21:25:49Z'
+                      risk_meter_score: 880
+                      asset_count: 3
+                      unique_open_cve_count: 0
+                      predicted_exploitable_count: 0
+                      highest_score:
+                        date: '2015-02-04'
+                        score: 0
+                      lowest_score:
+                        date: '2015-02-04'
+                        score: 0
+                      score_last_week: null
+                      score_last_month:
+                        date: '2015-02-04'
+                        score: 0
+                        delta: 0
+                      score_90_days_ago:
+                        date: '2015-02-04'
+                        score: 0
+                        delta: 0
+                      vulnerability_density: 0
+                      historical_risk_meter_scores:
+                      - 0
+              schema:
+                type: object
+                properties:
+                  asset_groups:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/asset_group_get_response_schema'
+                  meta:
+                    $ref: '#/components/schemas/page_metadata'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+    post:
+      summary: Create Asset Group or Risk Meter
+      description: 'Creates a new Asset Group or Risk Meter.
+
+
+        This API converts all filters into a querystring that can''t exceed 8,000 characters.
+
+
+        When the "Skip Calculations During Risk Meter Creation" feature flag is enabled, "asset_count", "risk_meter_score", and "true_risk_meter_score" calculations are skipped on the response payload and the value is returned as null.'
+      operationId: create-asset-group-and-risk-meter
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSET GROUPS
+      parameters: []
+      responses:
+        '201':
+          description: '201'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    asset_group:
+                      asset_count: 3
+                      child_ids: []
+                      client_id: 17312
+                      created_at: '2022-01-18T01:13:23Z'
+                      full_query:
+                      - status:
+                        - active
+                        tags:
+                        - Cupertino
+                        vulnerability:
+                          status:
+                          - open
+                      id: 344099
+                      name: Cupertino
+                      parent: null
+                      parent_id: null
+                      querystring: status%5B%5D=active&tags%5B%5D=Cupertino&vulnerability%5Bstatus%5D%5B%5D=open
+                      resource: asset
+                      risk_meter_score: 880
+                      true_risk_meter_score: 0
+                      updated_at: '2022-01-18T01:13:23Z'
+              schema:
+                type: object
+                properties:
+                  asset_group:
+                    $ref: '#/components/schemas/asset_group_post_response_schema'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '422':
+          description: invalid request
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    error: unprocessable_entity
+                    message: Querystring is too long (maximum is 8000 characters)
+                    success: 'false'
+              schema:
+                $ref: '#/components/schemas/error_response'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/asset_group_request_body_schema'
+  /asset_groups/{id}:
+    put:
+      summary: Update Asset Group
+      description: 'Update a parent asset group or risk meter attributes by ID.
+
+
+        This API converts all filters into a querystring that can''t exceed 8,000 characters.'
+      operationId: update-asset-group
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSET GROUPS
+      parameters:
+      - name: id
+        in: path
+        description: The asset group or risk meter ID.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: '204'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '422':
+          description: invalid request
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    error: unprocessable_entity
+                    message: Querystring is too long (maximum is 8000 characters)
+                    success: 'false'
+              schema:
+                $ref: '#/components/schemas/error_response'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/asset_groups_put_request_body_schema'
+    get:
+      summary: Show Asset Group
+      description: Returns a single asset group by ID.
+      operationId: show-asset-group
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSET GROUPS
+      parameters:
+      - name: id
+        in: path
+        description: The asset group or risk meter ID.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    asset_group:
+                      parent: null
+                      child_ids: []
+                      id: 2
+                      resource: asset
+                      name: name
+                      querystring: querystring=test&foo=bar
+                      created_at: '2015-02-04T21:25:49Z'
+                      updated_at: '2015-02-04T21:25:49Z'
+                      risk_meter_score: 0
+                      true_risk_meter_score: 0
+                      asset_count: 0
+                      unique_open_cve_count: 0
+                      predicted_exploitable_count: 0
+                      highest_score:
+                        date: '2015-02-04'
+                        score: 0
+                      lowest_score:
+                        date: '2015-02-04'
+                        score: 0
+                      score_last_week: null
+                      score_last_month:
+                        date: '2015-02-04'
+                        score: 0
+                        delta: 0
+                      score_90_days_ago:
+                        date: '2015-02-04'
+                        score: 0
+                        delta: 0
+                      vulnerability_density: 0
+                      historical_risk_meter_scores:
+                      - 0
+              schema:
+                type: object
+                properties:
+                  asset_group:
+                    $ref: '#/components/schemas/asset_group_get_response_schema'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+    delete:
+      summary: Delete Asset Group
+      description: 'Delete an asset group or risk meter using its ID.
+
+
+        Note: A child or descendant asset group cannot be deleted via the API. Use the UI to delete the child or descendant asset group.'
+      operationId: delete-asset-group
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSET GROUPS
+      parameters:
+      - name: id
+        in: path
+        description: The asset group or risk meter ID.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: '204'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    success: 'false'
+                    message: forbidden
+                    error: Action is not allowed for Descendant Risk Meters.
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /asset_groups/{id}/fixes:
+    get:
+      summary: Show All Fixes
+      description: 'Returns a paginated list of fixes that are related to all of your open vulnerabilities within an asset group.
+
+
+        Attribute Value
+
+
+        Maximum Pages Allowed ∞
+
+
+        Maximum Page Size 100
+
+
+        Default Page Size 100
+
+
+        Total Count Present in meta object Yes
+
+
+        See the Pagination Section for more details.
+
+
+        This request may take longer to complete depending on the number of assets and vulnerabilities associated with your asset group.'
+      operationId: show-all-fixes
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSET GROUPS
+      parameters:
+      - name: id
+        in: path
+        description: The asset group or risk meter ID.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    fixes:
+                    - id: VendorAdvisory:111
+                      alternative_visible: true
+                      assets:
+                      - id: 555
+                        locator: localhost
+                        ip_address_locator: ip_address
+                        file_locator: file
+                        hostname_locator: hostname
+                        url_locator: url
+                        netbios_locator: netbios
+                      cves:
+                      - CVE-2006-4924
+                      - CVE-2006-5051
+                      exact_match: false
+                      updated_at: 5/19/2015
+                      patch_publication_date: 4/21/2009
+                      diagnosis: OpenSSH is OpenBSD's SSH (Secure SHell) protocol implementation. This package includes the core files ...
+                      solution: Download the patch for ELSA-2006:0697 from Oracle metalink account ...
+                      consequence: If these vulnerabilities are successfully exploited, an attacker can bypass certain security ...
+                      name: http://oss.oracle.com/pipermail/el-errata/2006-November/000010.html
+                      url: http://oss.oracle.com/pipermail/el-errata/2006-November/000010.html
+                      urls:
+                      - http://oss.oracle.com/pipermail/el-errata/2006-November/000010.html
+                      - http://oss.oracle.com/pipermail/el-errata/2006-November/123456.html
+                      title: Oracle Enterprise Linux Openssh security update (ELSA-2006:0697)
+                      vendor: oracle
+                      scanner_ids:
+                      - 1
+                      category: Ubuntu
+                      vuln_count: 7
+                    meta:
+                      total_count: 34
+                      page: 1
+                      pages: 4
+              schema:
+                type: object
+                properties:
+                  fixes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/fix_info_schema'
+                  meta:
+                    $ref: '#/components/schemas/page_metadata'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /asset_groups/{id}/metric_name/{metric_name}:
+    get:
+      summary: Calculate Asset Group Metric
+      tags:
+      - ASSET GROUPS
+      security:
+      - X-Risk-Token: []
+      description: Returns a newly calculated metric value for an asset group based on its ID and the specified metric name.
+      operationId: calculate-asset-group-metric
+      parameters:
+      - name: id
+        in: path
+        description: The asset group or risk meter ID.
+        required: true
+        schema:
+          type: integer
+      - name: metric_name
+        in: path
+        description: The name of the metric used to calculate the new value for the asset group. To see the available options, click on the drop-down list to the right.
+        schema:
+          type: string
+          enum:
+          - risk_meter_score
+          - asset_count
+          - vulnerability_count
+          - fix_count
+          - top_priority_count
+          - active_internet_breaches_count
+          - easily_exploitable_count
+          - malware_exploitable_count
+          - popular_targets_count
+          - zero_day_count
+          - predicted_exploitable_count
+          - highest_score
+          - lowest_score
+          - score_last_week
+          - score_last_month
+          - score_90_days_ago
+          - vulnerability_density
+        required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    id: 183
+                    name: A risk meter name
+                    risk_meter_score: 90
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  metric_name:
+                    type: integer
+                    description: The 'metric_name' in the response is dynamic and will be replaced with the actual metric name passed in the path parameter. For example, if the metric name that is provided in the path parameter is “risk_meter_score”, the risk meter score for the asset group will be returned in the response.
+        '401':
+          description: '401'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    error: unauthorized
+                    message: 401 Unauthorized.
+                    success: 'false'
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    success: 'false'
+                    error: not_found
+                    message: Metric not found.
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /asset_groups/{id}/top_fixes:
+    get:
+      summary: Show Top Fix Groups
+      description: Returns top fixes for an asset group ID. You can optionally hide assets and only return fix data by passing the hide_asset parameter and setting it equal to true.
+      operationId: show-top-fix-groups
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSET GROUPS
+      parameters:
+      - name: id
+        in: path
+        description: The asset group or risk meter ID.
+        required: true
+        schema:
+          type: integer
+      - name: fix_type
+        in: query
+        required: false
+        description: The type of fixes you wish to retrieve. Can be either "infrastructure" (default) or "appsec".
+        schema:
+          type: string
+          enum:
+          - infrastructure
+          - appsec
+      - name: hide_asset
+        in: query
+        required: false
+        description: Set to "true" to hide assets and only return fix data. Default is "false".
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    asset_group:
+                      id: 2
+                      name: name
+                      risk_meter_score: 580
+                      top_fixes:
+                      - fix_group_number: 1
+                        risk_score_reduction: 23
+                        fixes:
+                        - id: 36271
+                          title: Oracle Enterprise Linux Openssh security update (ELSA-2006:0697)
+                          diagnosis: OpenSSH is OpenBSD's SSH (Secure SHell) protocol implementation. This package includes the core files ...
+                          solution: Download the patch for ELSA-2006:0697 from Oracle metalink account ...
+                          consequence: null
+                          assets:
+                          - id: 1234
+                            locator: 127.0.0.1
+                            primary_locator: ip_address
+                            hostname: null
+                            mac_address: null
+                            netbios: null
+                            fqdn: null
+                            ip_address: 127.0.0.1
+                            url: null
+                            file: null
+                            database: null
+                            application: null
+                          cves:
+                          - CVE-2005-1083
+                          category: Ubuntu
+              schema:
+                type: object
+                properties:
+                  asset_group:
+                    $ref: '#/components/schemas/show_top_fix_groups_schema'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /asset_groups/{parent_id}/children:
+    post:
+      summary: Create Child Asset Group or Risk Meter
+      description: 'Creates a new child Asset Group or Risk Meter. The "Hierarchical Risk Meters" feature flag must be enabled to use this endpoint.
+
+
+        When the "Skip Calculations During Risk Meter Creation" feature flag is enabled, "asset_count", "risk_meter_score", and "true_risk_meter_score" calculations are skipped on the response payload and the value is returned as null.'
+      operationId: create-child-asset-group-and-risk-meter
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSET GROUPS
+      parameters:
+      - name: parent_id
+        in: path
+        description: The parent risk meter ID.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '201':
+          description: '201'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    asset_group:
+                      asset_count: 2
+                      child_ids: null
+                      client_id: 173
+                      created_at: '2022-01-18T01:13:23Z'
+                      full_query:
+                      - status:
+                        - active
+                        tags:
+                        - electric_grid
+                        vulnerability:
+                          status:
+                          - open
+                      - status:
+                        - active
+                        tags:
+                        - Cupertino
+                        vulnerability:
+                          status:
+                          - open
+                      id: 344100
+                      name: electric_grid
+                      parent:
+                        client_id: 173
+                        created_at: '2022-01-18T01:13:23.000Z'
+                        id: 344099
+                        name: Cupertino
+                        parent_id: null
+                        querystring: status%5B%5D=active&tags%5B%5D=Cupertino&vulnerability%5Bstatus%5D%5B%5D=open
+                        resource: asset
+                        updated_at: '2022-01-18T01:13:23.000Z'
+                      parent_id: 344099
+                      querystring: status%5B%5D=active&tags%5B%5D=electric_grid&vulnerability%5Bstatus%5D%5B%5D=open
+                      resource: asset
+                      risk_meter_score: 870
+                      true_risk_meter_score: 0
+                      updated_at: '2022-01-18T01:13:23Z'
+              schema:
+                $ref: '#/components/schemas/asset_group_post_response_schema'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/asset_group_request_body_schema'
+components:
+  schemas:
+    page_metadata:
+      type: object
+      properties:
+        meta:
+          type: object
+          required:
+          - page
+          - pages
+          properties:
+            page:
+              type: integer
+              description: The response current page number.
+              default: 1
+            pages:
+              type: integer
+              description: The total number of pages.
+              default: 1
+            total_count:
+              type: integer
+              description: The total number of items across all pages.
+              default: 1
+    error_response:
+      type: object
+      properties:
+        error:
+          type: string
+          description: The HTTP error message.
+        message:
+          type: string
+          description: The specific error message.
+        success:
+          type: string
+          description: Indicates success, usually 'false'.
+    asset_group_request_body_schema:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: The name of the asset group or risk meter.  It can be a parent or child asset group.
+        historical:
+          type: boolean
+          description: Boolean value indicating if the asset search should be populated with historical data. Defaults to true.
+        query:
+          $ref: '#/components/schemas/asset_groups_query_schema'
+    top_fixes_info_schema:
+      type: object
+      properties:
+        assets:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+                description: The asset ID.
+                example: 27183
+              application:
+                type: string
+                description: Asset's Application name.  The value will be `null` if not used.
+              database:
+                type: string
+                description: Asset's database name.  The value will be `null` if not used.
+              display_locator:
+                type: string
+                description: Indicates which locator is to be displayed in the Explore UI.
+                example: qtest-stg-appt1.gtie.dell.com
+              ec2:
+                type: string
+                description: Asset's Amazon EC2 name.  The value will be `null` if not used.
+              file:
+                type: string
+                description: Asset's file name.  The value will be `null` if not used.
+              fqdn:
+                type: string
+                description: The Fully Qualified Domain Name of the asset.  The value will be `null` if not used.
+                example: ak-qtest-stage.gtie.dell.com
+              hostname:
+                type: string
+                description: The host name of the asset.  The value will be `null` if not used
+                example: qtest-stg-appt1.gtie.dell.com
+              ip_address:
+                type: string
+                description: The IP address of the asset.  The value will be `null` if not used.
+                example: 143.166.81.55
+              netbios:
+                type: string
+                description: Net BIOS version.  The value will be `null` if not used.
+              locator:
+                type: string
+                description: Value associated with the primary locator of the asset.
+              mac_address:
+                type: string
+                description: The Media Access Control address of the asset.  The value will be `null` if not used.
+              operating_system:
+                type: string
+                description: The asset's operating system.  The value will be `null` if not available.
+                example: Linux - 4.0
+              url:
+                type: string
+                description: The asset's URL.  The value will be `null` if not used.
+        category:
+          type: string
+          example: Ubuntu
+        consequence:
+          type: string
+          example: If these vulnerabilities are successfully exploited, an attacker can bypass certain security ...
+        cves:
+          type: array
+          items:
+            type: string
+            example: CVE-2006-4924
+        diagnosis:
+          type: string
+          example: OpenSSH is OpenBSD's SSH (Secure SHell) protocol implementation. This package includes the core files ...
+        id:
+          type: integer
+          example: '48910'
+          format: int32
+        solution:
+          type: string
+          example: Download the patch for ELSA-2006:0697 from Oracle metalink account ...
+        title:
+          type: string
+          example: Oracle Enterprise Linux Openssh security update (ELSA-2006:0697)
+        urls:
+          type: array
+          items:
+            type: string
+            example:
+            - http://oss.oracle.com/pipermail/el-errata/2006-November/000010.html
+            - http://oss.oracle.com/pipermail/el-errata/2006-November/123456.html
+    asset_group_get_response_schema:
+      type: object
+      properties:
+        parent: {}
+        child_ids:
+          type: array
+          items:
+            type: integer
+        id:
+          type: integer
+          example: 2
+          default: 0
+        resource:
+          type: string
+          example: asset
+        name:
+          type: string
+          example: name
+        querystring:
+          type: string
+          example: querystring=test&foo=bar
+        created_at:
+          type: string
+          example: '2015-02-04T21:25:49Z'
+        updated_at:
+          type: string
+          example: '2015-02-04T21:25:49Z'
+        risk_meter_score:
+          type: integer
+          example: 0
+          default: 0
+        true_risk_meter_score:
+          type: integer
+          example: 0
+          default: 0
+        asset_count:
+          type: integer
+          example: 0
+          default: 0
+        unique_open_cve_count:
+          type: integer
+          example: 0
+          default: 0
+        predicted_exploitable_count:
+          type: integer
+          example: 0
+          default: 0
+        highest_score:
+          type: object
+          properties:
+            date:
+              type: string
+              example: '2015-02-04'
+            score:
+              type: integer
+              example: 0
+              default: 0
+        lowest_score:
+          type: object
+          properties:
+            date:
+              type: string
+              example: '2015-02-04'
+            score:
+              type: integer
+              example: 0
+              default: 0
+        score_last_week:
+          type: object
+          properties:
+            date:
+              type: string
+              example: '2015-02-04'
+            score:
+              type: integer
+              example: 0
+              default: 0
+            delta:
+              type: integer
+              example: 0
+              default: 0
+        score_last_month:
+          type: object
+          properties:
+            date:
+              type: string
+              example: '2015-02-04'
+            score:
+              type: integer
+              example: 0
+              default: 0
+            delta:
+              type: integer
+              example: 0
+              default: 0
+        score_90_days_ago:
+          type: object
+          properties:
+            date:
+              type: string
+              example: '2015-02-04'
+            score:
+              type: integer
+              example: 0
+              default: 0
+            delta:
+              type: integer
+              example: 0
+              default: 0
+        vulnerability_density:
+          type: integer
+          example: 0
+          default: 0
+        historical_risk_meter_scores:
+          type: array
+          items:
+            type: integer
+            example: 0
+            default: 0
+    asset_groups_put_request_body_schema:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the parent asset group or risk meter.
+        query:
+          $ref: '#/components/schemas/asset_groups_query_schema'
+    service_protocols:
+      type: array
+      description: An array of service protocols relating to your asset.
+      items:
+        type: string
+        enum:
+        - http
+        - tcp
+        - udp
+    asset_groups_query_schema:
+      type: object
+      properties:
+        exclude_child_filter:
+          type: array
+          description: Asset Groups and Risk Meters normally require that assets have open vulnerabilities. If you would like to include all assets, including assets without open vulnerabilities, pass an array with the value of ["Include all assets”].
+          default: []
+          items:
+            type: string
+        id:
+          type: array
+          description: Array of asset IDs.
+          default: []
+          items:
+            type: integer
+            format: int32
+        min_priority:
+          type: integer
+          description: Search for all assets that have a priority greater than this value.
+          format: int32
+        max_priority:
+          type: integer
+          description: Search for all assets that have a priority less than this value.
+          format: int32
+        min_risk_meter_score:
+          type: integer
+          description: Search for all assets that have a risk meter score greater than this value.
+          format: int32
+        operating_system:
+          type: array
+          description: An array of the names of the operating systems associated with a set of assets.
+          default: []
+          items:
+            type: string
+        primary_locator:
+          type: array
+          description: 'The primary locator used for an asset. This should be one of the following values: ip_address, hostname, database, url, mac_address, netbios, fqdn, file, or application.'
+          default: []
+          items:
+            type: string
+        q:
+          type: string
+          description: This can be any query string you want to search for, including a regex. We also have our own search syntax that enables you to search assets based on specific locators and fields. For more detailed documentation on our search syntax visit our Help Center. Below is an example of our search syntax being used to find all assets with the hostname foobar. As stated in our Help Center, it is also possible to use our search syntax on vulnerability fields. In order to apply a query for a vulnerability field to an asset search you must nest the query string under a vulnerability key. The example below shows how to search for all assets that relate to vulnerabilities that are connected to the Heartbleed CVE.
+        service_ports:
+          type: array
+          description: An array of ports relating to your assets.
+          default: []
+          items:
+            type: integer
+        service_protocols:
+          $ref: '#/components/schemas/service_protocols'
+        status:
+          type: array
+          description: 'An array of statuses for your assets which can include active and/or inactive. NOTE: By default, only active assets are returned when searching. You must specify the asset status you want in order to override that default.'
+          default: []
+          items:
+            type: string
+        tags:
+          type: array
+          description: An array of tag names associated with your assets.
+          default: []
+          items:
+            type: string
+        tag_boolean_mode:
+          type: string
+          description: Set this to 'all' if you would like to return assets that contain all of the tags in your query rather than assets that contain any tags.
+        'vulnerability: {id: []}':
+          type: array
+          description: Vulnerability IDs. Search for all assets that have vulnerabilities with these IDs.
+          default: []
+          items:
+            type: integer
+            format: int32
+    asset_group_post_response_schema:
+      type: object
+      properties:
+        parent_id:
+          type:
+          - integer
+          - 'null'
+          example: 81
+        parent:
+          type:
+          - object
+          - 'null'
+          properties:
+            id:
+              type: integer
+              example: 1
+            querystring:
+              type: string
+              example: status%5B%5D=active
+            created_at:
+              type: string
+              example: '2015-02-04T21:25:49Z'
+            updated_at:
+              type: string
+              example: '2015-02-04T21:25:49Z'
+            name:
+              type: string
+              example: parent
+            parent_id:
+              type:
+              - integer
+              - 'null'
+              example: 1
+            resource:
+              type: string
+              example: asset
+        child_ids:
+          type: array
+          items:
+            type: integer
+        client_id:
+          type: integer
+          example: 66261
+        id:
+          type: integer
+          example: 2
+        resource:
+          type: string
+          example: asset
+        name:
+          type: string
+          example: name
+        querystring:
+          type: string
+          example: status%5B%5D=active&tags%5B%5D=foo&tags%5B%5D=bar
+        created_at:
+          type: string
+          example: '2015-02-04T21:25:49Z'
+        updated_at:
+          type: string
+          example: '2015-02-04T21:25:49Z'
+        risk_meter_score:
+          type: integer
+          example: 0
+          default: 0
+        asset_count:
+          type: integer
+          example: 0
+          default: 0
+        full_query:
+          type: array
+          items:
+            type: object
+            properties:
+              status:
+                type: array
+                items:
+                  type: string
+                  example: active
+              tags:
+                type: array
+                items:
+                  type: string
+                  example: foo
+    fix_info_schema:
+      type: object
+      properties:
+        alternative_visible:
+          type: boolean
+          example: false
+        assets:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+                example: 27183
+              locator:
+                type: string
+                example: 127.0.0.1
+              primary_locator:
+                type: string
+                example: ip_address
+              display_locator:
+                type: string
+                example: localhost
+        category:
+          type: string
+          example: Ubuntu
+        consequence:
+          type: string
+          example: If these vulnerabilities are successfully exploited, an attacker can bypass certain security ...
+        cves:
+          type: array
+          items:
+            type: string
+            example: CVE-2006-4924
+        diagnosis:
+          type: string
+          example: OpenSSH is OpenBSD's SSH (Secure SHell) protocol implementation. This package includes the core files ...
+        exact_match:
+          type: boolean
+          example: true
+        id:
+          type: integer
+          example: '48910'
+          format: int32
+        max_vuln_score:
+          type: integer
+          format: int32
+          example: 49
+        patch_publication_date:
+          type: string
+          example: 4/21/2009
+        reference_links:
+          type: array
+          items:
+            type: string
+            example: https://nvd.nist.gov/vuln/detail/CVE-2006-4924#:~:text=CVE-2006-4924%20Detail
+        scanner_ids:
+          type: array
+          items:
+            type: integer
+            format: int32
+            example: 1
+        solution:
+          type: string
+          example: Download the patch for ELSA-2006:0697 from Oracle metalink account ...
+        title:
+          type: string
+          example: Oracle Enterprise Linux Openssh security update (ELSA-2006:0697)
+        updated_at:
+          type: string
+          example: 5/19/2015
+        url:
+          type: string
+          example: http://oss.oracle.com/pipermail/el-errata/2006-November/000010.html
+          description: Deprecated. The first url in the urls array.
+          deprecated: true
+        urls:
+          type: array
+          items:
+            type: string
+            example:
+            - http://oss.oracle.com/pipermail/el-errata/2006-November/000010.html
+            - http://oss.oracle.com/pipermail/el-errata/2006-November/123456.html
+        vendor:
+          type: string
+          example: oracle
+        vuln_count:
+          type: integer
+          format: int32
+          example: 1
+    show_top_fix_groups_schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 2
+        name:
+          type: string
+          example: routers
+        risk_meter_score:
+          type: integer
+          format: int32
+          example: 580
+        top_fixes:
+          type: array
+          items:
+            type: object
+            properties:
+              fix_group_number:
+                type: integer
+                format: int32
+                example: 5
+              risk_score_reduction:
+                type: integer
+                format: int32
+                example: 23
+              fixes:
+                $ref: '#/components/schemas/top_fixes_info_schema'
+  securitySchemes:
+    X-Risk-Token:
+      type: apiKey
+      name: X-Risk-Token
+      in: header
+x-provenance:
+  method: searched
+  source: https://apidocs.kennasecurity.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://apidocs.kennasecurity.com/reference/add-applications-to-role.md
+  - https://apidocs.kennasecurity.com/reference/add-asset-groups-to-role.md
+  - https://apidocs.kennasecurity.com/reference/application-findings-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/application-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/application-historical-vulnerability-count-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/asset-groups-findings-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/audit-log-search.md
+  - https://apidocs.kennasecurity.com/reference/average-days-open-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/bulk-delete-findings.md
+  - https://apidocs.kennasecurity.com/reference/bulk-delete-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/bulk-update-assets.md
+  - https://apidocs.kennasecurity.com/reference/bulk-update-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/calculate-asset-group-metric.md
+  - https://apidocs.kennasecurity.com/reference/check-data-export-status.md
+  - https://apidocs.kennasecurity.com/reference/check-remediation-score.md
+  - https://apidocs.kennasecurity.com/reference/check-sla-adherence-metrics.md
+  - https://apidocs.kennasecurity.com/reference/check-vulnerability-densities-metrics.md
+  - https://apidocs.kennasecurity.com/reference/create-application.md
+  - https://apidocs.kennasecurity.com/reference/create-asset-group-and-risk-meter.md
+  - https://apidocs.kennasecurity.com/reference/create-asset.md
+  - https://apidocs.kennasecurity.com/reference/create-child-asset-group-and-risk-meter.md
+  - https://apidocs.kennasecurity.com/reference/create-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/create-finding.md
+  - https://apidocs.kennasecurity.com/reference/create-role.md
+  - https://apidocs.kennasecurity.com/reference/create-stack.md
+  - https://apidocs.kennasecurity.com/reference/create-user.md
+  - https://apidocs.kennasecurity.com/reference/create-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/delete-application.md
+  - https://apidocs.kennasecurity.com/reference/delete-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/delete-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/delete-role.md
+  - https://apidocs.kennasecurity.com/reference/delete-stack.md
+  - https://apidocs.kennasecurity.com/reference/delete-user.md
+  - https://apidocs.kennasecurity.com/reference/delete-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/download-zipped-asset-data.md
+  - https://apidocs.kennasecurity.com/reference/download-zipped-vuln-data.md
+  - https://apidocs.kennasecurity.com/reference/entitlements-overage.md
+  - https://apidocs.kennasecurity.com/reference/false-positive-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/get-refresh-reporting-status.md
+  - https://apidocs.kennasecurity.com/reference/historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/historical-risk-meter-scores.md
+  - https://apidocs.kennasecurity.com/reference/historical-vulnerability-risk-category-counts.md
+  - https://apidocs.kennasecurity.com/reference/kill-running-data-export.md
+  - https://apidocs.kennasecurity.com/reference/list-applications.md
+  - https://apidocs.kennasecurity.com/reference/list-asset-groups.md
+  - https://apidocs.kennasecurity.com/reference/list-assets.md
+  - https://apidocs.kennasecurity.com/reference/list-connector-runs.md
+  - https://apidocs.kennasecurity.com/reference/list-connectors.md
+  - https://apidocs.kennasecurity.com/reference/list-cve-identifiers.md
+  - https://apidocs.kennasecurity.com/reference/list-dashboard-groups.md
+  - https://apidocs.kennasecurity.com/reference/list-fix-alternatives.md
+  - https://apidocs.kennasecurity.com/reference/list-fixes.md
+  - https://apidocs.kennasecurity.com/reference/list-roles.md
+  - https://apidocs.kennasecurity.com/reference/list-stacks.md
+  - https://apidocs.kennasecurity.com/reference/list-tags.md
+  - https://apidocs.kennasecurity.com/reference/list-users.md
+  - https://apidocs.kennasecurity.com/reference/list-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/list-vulnerability-definitions.md
+  - https://apidocs.kennasecurity.com/reference/past-due-vulnerabilities-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/refresh-reporting-data.md
+  - https://apidocs.kennasecurity.com/reference/request-data-export.md
+  - https://apidocs.kennasecurity.com/reference/retrieve-data-export.md
+  - https://apidocs.kennasecurity.com/reference/risk-accepted-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/run-connector.md
+  - https://apidocs.kennasecurity.com/reference/search-assets.md
+  - https://apidocs.kennasecurity.com/reference/search-findings.md
+  - https://apidocs.kennasecurity.com/reference/search-fixes.md
+  - https://apidocs.kennasecurity.com/reference/search-for-vulnerability-definitions.md
+  - https://apidocs.kennasecurity.com/reference/search-users.md
+  - https://apidocs.kennasecurity.com/reference/search-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/service-now-list-fixes.md
+  - https://apidocs.kennasecurity.com/reference/service-now-search-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/show-all-fixes.md
+  - https://apidocs.kennasecurity.com/reference/show-application.md
+  - https://apidocs.kennasecurity.com/reference/show-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/show-asset-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/show-asset.md
+  - https://apidocs.kennasecurity.com/reference/show-chatter.md
+  - https://apidocs.kennasecurity.com/reference/show-connector-run.md
+  - https://apidocs.kennasecurity.com/reference/show-cve-history.md
+  - https://apidocs.kennasecurity.com/reference/show-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/show-finding.md
+  - https://apidocs.kennasecurity.com/reference/show-fix.md
+  - https://apidocs.kennasecurity.com/reference/show-malware-hashes.md
+  - https://apidocs.kennasecurity.com/reference/show-role.md
+  - https://apidocs.kennasecurity.com/reference/show-scanner-vulnerability-details.md
+  - https://apidocs.kennasecurity.com/reference/show-stack.md
+  - https://apidocs.kennasecurity.com/reference/show-top-fix-groups.md
+  - https://apidocs.kennasecurity.com/reference/show-user.md
+  - https://apidocs.kennasecurity.com/reference/show-vulnerability-definition.md
+  - https://apidocs.kennasecurity.com/reference/show-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/stack-applications-statistics.md
+  - https://apidocs.kennasecurity.com/reference/stack-asset-groups-statistics.md
+  - https://apidocs.kennasecurity.com/reference/tag-an-asset.md
+  - https://apidocs.kennasecurity.com/reference/total-past-due-vulnerabilities-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/trends.md
+  - https://apidocs.kennasecurity.com/reference/untag-an-asset.md
+  - https://apidocs.kennasecurity.com/reference/update-application.md
+  - https://apidocs.kennasecurity.com/reference/update-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/update-asset.md
+  - https://apidocs.kennasecurity.com/reference/update-connector.md
+  - https://apidocs.kennasecurity.com/reference/update-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/update-findings.md
+  - https://apidocs.kennasecurity.com/reference/update-permissions-in-bulk.md
+  - https://apidocs.kennasecurity.com/reference/update-role-custom-permissions.md
+  - https://apidocs.kennasecurity.com/reference/update-role.md
+  - https://apidocs.kennasecurity.com/reference/update-stack.md
+  - https://apidocs.kennasecurity.com/reference/update-user.md
+  - https://apidocs.kennasecurity.com/reference/update-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/upload-data-file.md
+  - https://apidocs.kennasecurity.com/reference/validate-asset-search-query.md
+  - https://apidocs.kennasecurity.com/reference/validate-vulnerability-search-query.md
+  - https://apidocs.kennasecurity.com/reference/vi-data-snapshot.md
+  - https://apidocs.kennasecurity.com/reference/vulnerabilities-by-due-date.md
+  - https://apidocs.kennasecurity.com/reference/vulnerability-definitions-with-significant-score-change.md
+  merge:
+    pages: 115
+    deduped: 272
+    conflicts_kept_first: 0

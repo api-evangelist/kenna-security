@@ -1,0 +1,844 @@
+openapi: 3.2.0
+info:
+  title: Kenna Platform STACKS API
+  description: OpenAPI specification for Kenna Security
+  version: '1.0'
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: api.kennasecurity.com
+tags:
+- name: STACKS
+paths:
+  /stacks:
+    get:
+      summary: List Stacks
+      description: 'Returns a list of all of your stacks.
+
+
+        Attribute Value
+
+
+        Maximum Pages Allowed ∞
+
+
+        Maximum Page Size 100
+
+
+        Default Page Size 100
+
+
+        Total Count Present in meta object Yes
+
+
+        See the Pagination Section for more details.'
+      operationId: list-stacks
+      security:
+      - X-Risk-Token: []
+      tags:
+      - STACKS
+      parameters:
+      - name: page
+        in: query
+        description: The specific page being requested from 1 to the total number of pages returned in the `meta` object.
+        required: false
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        description: The page size from 1 to 5,000. Default page size is 100
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    stacks:
+                    - name: Test stack
+                      id: 1
+                      application_count_in_stack: 2
+                      risk_group_count_in_stack: 1
+                      application_score: 350
+                      risk_group_score: 640
+                    - name: Other test stack
+                      id: 2
+                      application_count_in_stack: 2
+                      risk_group_count_in_stack: 1
+                      application_score: 0
+                      risk_group_score: 930
+                    meta:
+                      page: 1
+                      total_count: 3
+                      pages: 1
+              schema:
+                type: object
+                properties:
+                  stacks:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/stacks_get_response_schema'
+                  meta:
+                    $ref: '#/components/schemas/page_metadata'
+    post:
+      summary: Create Stack
+      description: Creates a Stack and returns the created stack details.
+      operationId: create-stack
+      security:
+      - X-Risk-Token: []
+      tags:
+      - STACKS
+      parameters: []
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    stack:
+                      name: Test stack
+                      id: 2
+                      application_ids:
+                      - 284
+                      asset_search_ids:
+                      - 233
+              schema:
+                $ref: '#/components/schemas/stacks_post_response_schema'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/stacks_request_body_schema'
+  /stacks/{id}:
+    get:
+      summary: Show Stack
+      description: Return information about a stack by ID.
+      operationId: show-stack
+      security:
+      - X-Risk-Token: []
+      tags:
+      - STACKS
+      parameters:
+      - name: id
+        in: path
+        description: Stack ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    stack_name: Test stack
+                    stack_id: 1
+                    applications:
+                    - id: 284
+                      name: New Application
+                      edit_path: /applications/284229/edit
+                      overview_path: /applications/284229
+                      risk_meter_score: 0
+                      explore_link: /applications/explore?application=284229
+                      can_edit: true
+                      highest_scored_finding:
+                        name: CWE 89
+                        description: The software constructs all or part of an SQL
+                        score: 50
+                        explore_link: /applications/findings/293
+                      vuln_breakdown:
+                        high: 0
+                        medium: 0
+                        low: 0
+                        total: 0
+                      vuln_count: 0
+                      asset_count: 0
+                      repo_url: ''
+                      owner: Github
+                      high_risk_vuln_link: /explore?application%5B%5D=worldpressindex
+                    persistent_searches:
+                    - asset_count: 359
+                      child_ids:
+                      - 281
+                      client_id: 166
+                      created_at: '2021-06-14T15:39:48Z'
+                      full_query:
+                      - status:
+                        - active
+                        vulnerability:
+                          port:
+                          - '443'
+                          status:
+                          - open
+                      id: 280
+                      name: parent port 443
+                      parent_id: 1
+                      parent: {}
+                      querystring: status%5B%5D=active&vulnerability%5Bport%5D%5B%5D=443&vulnerability%5Bstatus%5D%5B%5D=open
+                      resource: asset
+                      risk_meter_score: 640
+                      true_risk_meter_score: 640
+                      updated_at: '2021-06-14T15:39:48Z'
+                      direct_descendants:
+                      - id: 281
+                        name: child score 66
+                        node_id: cb7f8aa6-6207-4e84-bc32-7bb009f44eeb
+                        querystring: status%5B%5D=active&vulnerability%5Bq%5D=vulnerability_score%3A%26gt%3B66&vulnerability%5Bstatus%5D%5B%5D=open
+                        risk_meter_score: 930
+                        asset_count: 36
+                        vulnerability_count: 63
+                        has_children: false
+                        parent:
+                          id: 280
+                          name: parent port 443
+                          risk_meter_score: 640
+              schema:
+                $ref: '#/components/schemas/stack_get_response_schema'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+    delete:
+      summary: Delete Stack
+      description: Delete an Stack using its ID.
+      operationId: delete-stack
+      security:
+      - X-Risk-Token: []
+      tags:
+      - STACKS
+      parameters:
+      - name: id
+        in: path
+        description: Stack ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: '204'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+    put:
+      summary: Update Stack
+      description: Update a stack by its ID.
+      operationId: update-stack
+      security:
+      - X-Risk-Token: []
+      tags:
+      - STACKS
+      parameters:
+      - name: id
+        in: path
+        description: Stack ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    stack:
+                      id: 77
+                      name: Smoke stack
+                      application_ids:
+                      - 3108
+                      - 6636
+                      asset_search_ids:
+                      - 2718
+                      - 31459
+              schema:
+                $ref: '#/components/schemas/stack_put_response_schema'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/stack_request_body_schema'
+  /stacks/{id}/stats/applications:
+    get:
+      summary: Stack's Application statistics
+      description: Return the application statistics about a stack by ID.
+      operationId: stack-applications-statistics
+      security:
+      - X-Risk-Token: []
+      tags:
+      - STACKS
+      parameters:
+      - name: id
+        in: path
+        description: Stack ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    id: '1'
+                    application_score:
+                      value: 350
+                      difference: 350
+                    findings_count:
+                      value: 2
+                      difference: 2
+              schema:
+                $ref: '#/components/schemas/stack_stats_applications_response_schema'
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /stacks/{id}/stats/asset_groups:
+    get:
+      summary: Stack's Asset Groups statistics
+      description: Return the asset groups statistics about a stack by ID.
+      operationId: stack-asset-groups-statistics
+      security:
+      - X-Risk-Token: []
+      tags:
+      - STACKS
+      parameters:
+      - name: id
+        in: path
+        description: Stack ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    id: '4'
+                    asset_groups_score:
+                      value: 530
+                      difference: 530
+                    assets_count:
+                      value: 45
+                      difference: 45
+                    vulnerabilities_count:
+                      value: 1997
+                      difference: 1997
+              schema:
+                $ref: '#/components/schemas/stack_stats_asset_groups_response_schema'
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+components:
+  schemas:
+    stack_stats_asset_groups_response_schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+          default: 0
+        asset_group_score:
+          type: object
+          properties:
+            value:
+              type: integer
+              example: 350
+              default: 0
+            difference:
+              type: integer
+              example: 100
+              default: 0
+        assets_count:
+          type: object
+          properties:
+            value:
+              type: integer
+              example: 50
+              default: 0
+            difference:
+              type: integer
+              example: 2
+              default: 0
+        vulnerabilities_count:
+          type: object
+          properties:
+            value:
+              type: integer
+              example: 50
+              default: 0
+            difference:
+              type: integer
+              example: 2
+              default: 0
+    page_metadata:
+      type: object
+      properties:
+        meta:
+          type: object
+          required:
+          - page
+          - pages
+          properties:
+            page:
+              type: integer
+              description: The response current page number.
+              default: 1
+            pages:
+              type: integer
+              description: The total number of pages.
+              default: 1
+            total_count:
+              type: integer
+              description: The total number of items across all pages.
+              default: 1
+    error_response:
+      type: object
+      properties:
+        error:
+          type: string
+          description: The HTTP error message.
+        message:
+          type: string
+          description: The specific error message.
+        success:
+          type: string
+          description: Indicates success, usually 'false'.
+    stack_stats_applications_response_schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+          default: 0
+        application_score:
+          type: object
+          properties:
+            value:
+              type: integer
+              example: 350
+              default: 0
+            difference:
+              type: integer
+              example: 100
+              default: 0
+        findings_count:
+          type: object
+          properties:
+            value:
+              type: integer
+              example: 50
+              default: 0
+            difference:
+              type: integer
+              example: 2
+              default: 0
+    stacks_get_response_schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+          default: 0
+        name:
+          type: string
+          example: Test Stack
+        application_count_in_stack:
+          type: integer
+          example: 20
+          default: 0
+        risk_group_count_in_stack:
+          type: integer
+          example: 20
+          default: 0
+        application_score:
+          type: integer
+          example: 350
+          default: 0
+        risk_group_score:
+          type: integer
+          example: 350
+          default: 0
+    stack_put_response_schema:
+      type: object
+      properties:
+        stack:
+          properties:
+            id:
+              type: integer
+              description: The stack ID.
+              example: 77
+            name:
+              type: string
+              description: The stack name.
+              example: Smoke Stack
+            application_ids:
+              type: array
+              description: The application IDs in the stack.
+              items:
+                type: integer
+                example: 3108
+            asset_search_ids:
+              type: array
+              description: The asset IDs in the stack.
+              items:
+                type: integer
+                example: 6626
+    stack_request_body_schema:
+      type: object
+      properties:
+        stack:
+          type: object
+          properties:
+            name:
+              type: string
+              description: The new name of the stack.
+              example: Automation Stack
+            application_ids:
+              type: array
+              description: An array containing application IDs that will replace the current IDs in the stack.
+              items:
+                type: integer
+                example: 314159
+            asset_search_ids:
+              type: array
+              description: An array containing asset IDs that will replace the current IDs the stack.
+              items:
+                type: integer
+                example: 16180
+    stacks_request_body_schema:
+      type: object
+      required:
+      - stack
+      properties:
+        stack:
+          type: object
+          description: The stack create object
+          required:
+          - name
+          - application_ids
+          - asset_search_ids
+          properties:
+            name:
+              type: string
+              example: Test Stack
+              description: The name of the stack.
+            application_ids:
+              type: array
+              items:
+                type: integer
+                example: 234
+                description: An array containing ID of the applications to add to the stack.
+            asset_search_ids:
+              type: array
+              items:
+                type: integer
+                example: 234
+                description: An array containing ID of the asset searches to add to the stack.
+    stack_get_response_schema:
+      type: object
+      properties:
+        stack_name:
+          type: string
+          example: Test Stack
+        stack_id:
+          type: integer
+          example: 1
+        applications:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              name:
+                type: string
+                example: Great App
+              repo_url:
+                type: string
+                example: https://my-great-app.com
+              owner:
+                type: string
+                example: Jane Doe
+              edit_path:
+                type: string
+                format: uri
+                example: /applications/1/edit
+              overview_path:
+                type: string
+                format: uri
+                example: /applications/1
+              can_edit:
+                type: boolean
+              risk_meter_score:
+                type: integer
+                example: 850
+                default: 0
+              vuln_count:
+                type: integer
+                example: 916
+                default: 0
+              asset_count:
+                type: integer
+                example: 3
+                default: 0
+              total_vulnerability_count:
+                type: integer
+                example: 1033
+                default: 0
+              high_risk_vuln_link:
+                type: string
+                format: uri
+              vuln_breakdown:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 3
+                    default: 0
+                  high:
+                    type: integer
+                    example: 1
+                    default: 0
+                  medium:
+                    type: integer
+                    example: 1
+                    default: 0
+                  low:
+                    type: integer
+                    example: 1
+                    default: 0
+              highest_scored_finding:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: CWE 89
+                  description:
+                    type: string
+                    example: SQL Injection
+                  score:
+                    type: integer
+                    example: 40
+                  explore_link:
+                    type: string
+                    example: /applications/1/findings/1
+                    format: uri
+        persistent_searches:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              name:
+                type: string
+                example: My Search
+              querystring:
+                type: string
+                example: status%5B%5D=active&vulnerability%5Bport%5D%5B%5D=443
+              parent_id:
+                type: integer
+                example: 2
+              parent: {}
+              risk_meter_score:
+                type: integer
+                example: 850
+                default: 0
+              true_risk_meter_score:
+                type: integer
+                example: 850
+                default: 0
+    stacks_post_response_schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+          default: 0
+        name:
+          type: string
+          example: Test Stack
+        application_ids:
+          type: array
+          items:
+            type: integer
+            example: 234
+        asset_search_ids:
+          type: array
+          items:
+            type: integer
+            example: 234
+  securitySchemes:
+    X-Risk-Token:
+      type: apiKey
+      name: X-Risk-Token
+      in: header
+x-provenance:
+  method: searched
+  source: https://apidocs.kennasecurity.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://apidocs.kennasecurity.com/reference/add-applications-to-role.md
+  - https://apidocs.kennasecurity.com/reference/add-asset-groups-to-role.md
+  - https://apidocs.kennasecurity.com/reference/application-findings-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/application-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/application-historical-vulnerability-count-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/asset-groups-findings-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/audit-log-search.md
+  - https://apidocs.kennasecurity.com/reference/average-days-open-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/bulk-delete-findings.md
+  - https://apidocs.kennasecurity.com/reference/bulk-delete-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/bulk-update-assets.md
+  - https://apidocs.kennasecurity.com/reference/bulk-update-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/calculate-asset-group-metric.md
+  - https://apidocs.kennasecurity.com/reference/check-data-export-status.md
+  - https://apidocs.kennasecurity.com/reference/check-remediation-score.md
+  - https://apidocs.kennasecurity.com/reference/check-sla-adherence-metrics.md
+  - https://apidocs.kennasecurity.com/reference/check-vulnerability-densities-metrics.md
+  - https://apidocs.kennasecurity.com/reference/create-application.md
+  - https://apidocs.kennasecurity.com/reference/create-asset-group-and-risk-meter.md
+  - https://apidocs.kennasecurity.com/reference/create-asset.md
+  - https://apidocs.kennasecurity.com/reference/create-child-asset-group-and-risk-meter.md
+  - https://apidocs.kennasecurity.com/reference/create-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/create-finding.md
+  - https://apidocs.kennasecurity.com/reference/create-role.md
+  - https://apidocs.kennasecurity.com/reference/create-stack.md
+  - https://apidocs.kennasecurity.com/reference/create-user.md
+  - https://apidocs.kennasecurity.com/reference/create-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/delete-application.md
+  - https://apidocs.kennasecurity.com/reference/delete-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/delete-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/delete-role.md
+  - https://apidocs.kennasecurity.com/reference/delete-stack.md
+  - https://apidocs.kennasecurity.com/reference/delete-user.md
+  - https://apidocs.kennasecurity.com/reference/delete-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/download-zipped-asset-data.md
+  - https://apidocs.kennasecurity.com/reference/download-zipped-vuln-data.md
+  - https://apidocs.kennasecurity.com/reference/entitlements-overage.md
+  - https://apidocs.kennasecurity.com/reference/false-positive-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/get-refresh-reporting-status.md
+  - https://apidocs.kennasecurity.com/reference/historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/historical-risk-meter-scores.md
+  - https://apidocs.kennasecurity.com/reference/historical-vulnerability-risk-category-counts.md
+  - https://apidocs.kennasecurity.com/reference/kill-running-data-export.md
+  - https://apidocs.kennasecurity.com/reference/list-applications.md
+  - https://apidocs.kennasecurity.com/reference/list-asset-groups.md
+  - https://apidocs.kennasecurity.com/reference/list-assets.md
+  - https://apidocs.kennasecurity.com/reference/list-connector-runs.md
+  - https://apidocs.kennasecurity.com/reference/list-connectors.md
+  - https://apidocs.kennasecurity.com/reference/list-cve-identifiers.md
+  - https://apidocs.kennasecurity.com/reference/list-dashboard-groups.md
+  - https://apidocs.kennasecurity.com/reference/list-fix-alternatives.md
+  - https://apidocs.kennasecurity.com/reference/list-fixes.md
+  - https://apidocs.kennasecurity.com/reference/list-roles.md
+  - https://apidocs.kennasecurity.com/reference/list-stacks.md
+  - https://apidocs.kennasecurity.com/reference/list-tags.md
+  - https://apidocs.kennasecurity.com/reference/list-users.md
+  - https://apidocs.kennasecurity.com/reference/list-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/list-vulnerability-definitions.md
+  - https://apidocs.kennasecurity.com/reference/past-due-vulnerabilities-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/refresh-reporting-data.md
+  - https://apidocs.kennasecurity.com/reference/request-data-export.md
+  - https://apidocs.kennasecurity.com/reference/retrieve-data-export.md
+  - https://apidocs.kennasecurity.com/reference/risk-accepted-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/run-connector.md
+  - https://apidocs.kennasecurity.com/reference/search-assets.md
+  - https://apidocs.kennasecurity.com/reference/search-findings.md
+  - https://apidocs.kennasecurity.com/reference/search-fixes.md
+  - https://apidocs.kennasecurity.com/reference/search-for-vulnerability-definitions.md
+  - https://apidocs.kennasecurity.com/reference/search-users.md
+  - https://apidocs.kennasecurity.com/reference/search-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/service-now-list-fixes.md
+  - https://apidocs.kennasecurity.com/reference/service-now-search-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/show-all-fixes.md
+  - https://apidocs.kennasecurity.com/reference/show-application.md
+  - https://apidocs.kennasecurity.com/reference/show-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/show-asset-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/show-asset.md
+  - https://apidocs.kennasecurity.com/reference/show-chatter.md
+  - https://apidocs.kennasecurity.com/reference/show-connector-run.md
+  - https://apidocs.kennasecurity.com/reference/show-cve-history.md
+  - https://apidocs.kennasecurity.com/reference/show-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/show-finding.md
+  - https://apidocs.kennasecurity.com/reference/show-fix.md
+  - https://apidocs.kennasecurity.com/reference/show-malware-hashes.md
+  - https://apidocs.kennasecurity.com/reference/show-role.md
+  - https://apidocs.kennasecurity.com/reference/show-scanner-vulnerability-details.md
+  - https://apidocs.kennasecurity.com/reference/show-stack.md
+  - https://apidocs.kennasecurity.com/reference/show-top-fix-groups.md
+  - https://apidocs.kennasecurity.com/reference/show-user.md
+  - https://apidocs.kennasecurity.com/reference/show-vulnerability-definition.md
+  - https://apidocs.kennasecurity.com/reference/show-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/stack-applications-statistics.md
+  - https://apidocs.kennasecurity.com/reference/stack-asset-groups-statistics.md
+  - https://apidocs.kennasecurity.com/reference/tag-an-asset.md
+  - https://apidocs.kennasecurity.com/reference/total-past-due-vulnerabilities-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/trends.md
+  - https://apidocs.kennasecurity.com/reference/untag-an-asset.md
+  - https://apidocs.kennasecurity.com/reference/update-application.md
+  - https://apidocs.kennasecurity.com/reference/update-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/update-asset.md
+  - https://apidocs.kennasecurity.com/reference/update-connector.md
+  - https://apidocs.kennasecurity.com/reference/update-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/update-findings.md
+  - https://apidocs.kennasecurity.com/reference/update-permissions-in-bulk.md
+  - https://apidocs.kennasecurity.com/reference/update-role-custom-permissions.md
+  - https://apidocs.kennasecurity.com/reference/update-role.md
+  - https://apidocs.kennasecurity.com/reference/update-stack.md
+  - https://apidocs.kennasecurity.com/reference/update-user.md
+  - https://apidocs.kennasecurity.com/reference/update-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/upload-data-file.md
+  - https://apidocs.kennasecurity.com/reference/validate-asset-search-query.md
+  - https://apidocs.kennasecurity.com/reference/validate-vulnerability-search-query.md
+  - https://apidocs.kennasecurity.com/reference/vi-data-snapshot.md
+  - https://apidocs.kennasecurity.com/reference/vulnerabilities-by-due-date.md
+  - https://apidocs.kennasecurity.com/reference/vulnerability-definitions-with-significant-score-change.md
+  merge:
+    pages: 115
+    deduped: 272
+    conflicts_kept_first: 0

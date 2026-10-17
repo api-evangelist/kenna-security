@@ -1,0 +1,275 @@
+openapi: 3.2.0
+info:
+  title: Kenna Inference INFERENCE V3 - Cves API
+  description: Swagger POC
+  version: '2.0'
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: api.inference.us.kennasecurity.com
+tags:
+- name: INFERENCE V3 - Cves
+paths:
+  /v3/odata/cves:
+    get:
+      summary: Cve entities details
+      description: 'Returns a entity or collection of entities of type CVEs.
+
+
+        🚧
+
+        Restricted Access
+
+
+        This API endpoint is a premium feature for selected partners.'
+      operationId: get-odata-cves
+      security:
+      - X-Risk-Token: []
+      tags:
+      - INFERENCE V3 - Cves
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    '@context': '#Cves/$entity'
+                    '@count': 1
+                    value:
+                    - __metadata:
+                        uri: https://api.inference.us.kennasecurity.com/v3/odata/cves(identifier='CVE-2022-46480')
+                      cve_id: CVE-2022-46480
+                      remote_code_execution: false
+                      cvss_access_complexity: Low
+                      cvss_access_vector: Adjacent network
+                      cvss_authentication: None required
+                      cvss_availability_impact: None
+                      cvss_confidentiality_impact: Complete
+                      cvss_integrity_impact: Complete
+                      cvss_score: 7.8
+                      cvss_exploit_subscore: 6.5
+                      cvss_impact_subscore: 9.2
+                      cvss_vector: AV:A/AC:L/Au:N/C:C/I:C/A:N/E:U/RL:U/RC:UR
+                      cvss_temporal_score: 6.3
+                      cvss_v3_score: 8.1
+                      cvss_v3_exploit_subscore: 2.8
+                      cvss_v3_impact_subscore: 5.2
+                      cvss_v3_vector: CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N/E:U/RL:U/RC:R
+                      cvss_v3_temporal_score: 3.5
+                      description: Incorrect Session Management and Credential Re-use in the Bluetooth LE stack of the Ultraloq UL3 2nd Gen Smart Lock Firmware 02.27.0012 allows an attacker to sniff the unlock code and unlock the device whilst within Bluetooth range.
+                      last_modified: '2024-01-16T02:15:28Z'
+                      published: '2023-12-05T00:15:07Z'
+                      vulnerable_products:
+                      - cpe:2.3:o:u-tec:ultraloq_ul3_bt_firmware:02.27.0012:*:*:*:*:*:*:*
+                      checksum: 3672788e85502bfd197a83855cd3c10917b6717b
+                      checksum_updated_at: '2024-02-15T04:54:33Z'
+                      vulnerability_score: 27.8649
+                      easily_exploitable: false
+                      malware_exploitable: false
+                      active_internet_breach: false
+                      malware_count: 0
+                      internal_updated_at: '2024-02-15T04:49:16Z'
+                      last_seen_breach_at: '2024-01-15T04:49:16Z'
+              schema:
+                type: object
+                properties:
+                  '@context':
+                    type: string
+                    example: '#Cves/$entity'
+                  '@count':
+                    type: integer
+                    example: 10
+                    description: Amount of CVEs returned by the endpoint in the value property
+                  value:
+                    type: array
+                    description: CVEs list
+                    items:
+                      $ref: '#/components/schemas/odata_cve_response_schema'
+                  '@nextLink':
+                    type: string
+                    example: https://api.inference.us.kennasecurity.com/v3/odata/cves?%24filter=since_time_ago+lt+30d&page=3
+                  '@prevLink':
+                    type: string
+                    example: https://api.inference.us.kennasecurity.com/v3/odata/cves?%24filter=since_time_ago+lt+30d&page=1
+        '400':
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/odata_error_response_schema'
+        '500':
+          description: '500'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/odata_error_response_schema'
+components:
+  schemas:
+    odata_cve_response_schema:
+      type: object
+      properties:
+        __metadata:
+          type: object
+          properties:
+            uri:
+              type: string
+              example: https://api.inference.us.kennasecurity.com/v3/odata/cves(identifier='CVE-2022-46480')
+              description: URI to retrieve the entity individually
+        cve_id:
+          type: string
+          example: CVE-2022-46480
+          description: CVE identifier
+        remote_code_execution:
+          type: boolean
+          example: false
+        cvss_access_complexity:
+          type: string
+          example: low
+        cvss_access_vector:
+          type: string
+          example: Adjacent network
+        cvss_authentication:
+          type: string
+          example: None required
+        cvss_availability_impact:
+          type: string
+          example: None
+        cvss_confidentiality_impact:
+          type: string
+          example: Complete
+        cvss_integrity_impact:
+          type: string
+          example: Complete
+        cvss_score:
+          type: number
+          example: 7.8
+        cvss_exploit_subscore:
+          type: number
+          example: 6.5
+        cvss_impact_subscore:
+          type: number
+          example: 9.2
+        cvss_vector:
+          type: string
+          example: AV:A/AC:L/Au:N/C:C/I:C/A:N/E:U/RL:U/RC:UR
+        cvss_temporal_score:
+          type: number
+          example: 6.3
+        cvss_v3_score:
+          type: number
+          example: 8.1
+        cvss_v3_exploit_subscore:
+          type: number
+          example: 2.8
+        cvss_v3_impact_subscore:
+          type: number
+          example: 5.2
+        cvss_v3_vector:
+          type: string
+          example: CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N/E:U/RL:U/RC:R
+        cvss_v3_temporal_score:
+          type: number
+          example: 3.5
+        description:
+          type: string
+          example: Incorrect Session Management and Credential Re-use in the Bluetooth LE stack of the Ultraloq UL3 2nd Gen Smart Lock Firmware 02.27.0012 allows an attacker to sniff the unlock code and unlock the device whilst within Bluetooth range.
+        last_modified:
+          type: string
+          format: date-time
+          example: '2024-01-16T02:15:28Z'
+        published:
+          type: string
+          format: date-time
+          example: '2023-12-05T00:15:07Z'
+        vulnerable_products:
+          type: array
+          items:
+            type: string
+            example: cpe:2.3:o:u-tec:ultraloq_ul3_bt_firmware:02.27.0012:*:*:*:*:*:*:*
+        checksum:
+          type: string
+          example: 3672788e85502bfd197a83855cd3c10917b6717b
+        checksum_updated_at:
+          type: string
+          format: date-time
+          example: '2024-02-15T04:54:33Z'
+        vulnerability_score:
+          type: number
+          example: 27.8649
+        easily_exploitable:
+          type: boolean
+          example: false
+        malware_exploitable:
+          type: boolean
+          example: false
+        active_internet_breach:
+          type: boolean
+          example: false
+        malware_count:
+          type: integer
+          example: 0
+        internal_updated_at:
+          type: string
+          format: date-time
+          example: '2024-02-15T04:49:16Z'
+        last_seen_breach_at:
+          type: string
+          format: date-time
+          example: '2024-01-15T04:49:16Z'
+    odata_error_response_schema:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: The HTTP error code
+        message:
+          type: string
+          description: The global error message
+        target:
+          type: string
+          enum:
+          - entity
+          - query
+          description: Resource to which applies the error
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: integer
+                description: The detail error code
+              message:
+                type: string
+                description: The specific error message
+              target:
+                type: string
+                enum:
+                - entity
+                - query
+                - filter
+                description: specifict target that throws the error
+  securitySchemes:
+    X-Risk-Token:
+      type: apiKey
+      name: X-Risk-Token
+      in: header
+x-provenance:
+  method: searched
+  source: https://apidocs.kennasecurity.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://apidocs.kennasecurity.com/reference/application-inference.md
+  - https://apidocs.kennasecurity.com/reference/get-odata-cves.md
+  - https://apidocs.kennasecurity.com/reference/v2-os-inference.md
+  - https://apidocs.kennasecurity.com/reference/v3-os-inference.md
+  - https://apidocs.kennasecurity.com/reference/windows-os-inference.md
+  merge:
+    pages: 5
+    deduped: 7
+    conflicts_kept_first: 0

@@ -1,0 +1,1034 @@
+openapi: 3.2.0
+info:
+  title: Kenna Platform FINDINGS API
+  description: OpenAPI specification for Kenna Security
+  version: '1.0'
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: api.kennasecurity.com
+tags:
+- name: FINDINGS
+paths:
+  /findings:
+    get:
+      summary: Search Findings
+      description: 'Filters findings by a given set of parameters and returns those filtered findings as well as the total number of findings in the filtered set.
+
+
+        If no filters are specified, then "Search Findings" is "List Findings".
+
+
+        Each unique parameter is combined using AND while each of values passed in a single array will be combined using OR. For example, if you search for all findings with status=["new", "resolved"] and sort_by="score", you will receive all findings with either status "new" or "resolved," sorted by score in the response.
+
+
+        Attribute Value
+
+
+        Maximum Pages Allowed 2,000
+
+
+        Maximum Page Size 100
+
+
+        Default Page Size 100
+
+
+        Total Count Present in meta object Yes
+
+
+        See the Pagination Section for more details.
+
+
+        To avoid ambiguity with regards to dates, this endpoint accepts strings formatted according to a stricter version of ISO 8601: "YYYY-MM-DDThh:mm:ss.sssTZD". All fields besides nanoseconds and timezone are required. If time is omitted, UTC is used. See ISO 8601 formats for more details.'
+      operationId: search-findings
+      security:
+      - X-Risk-Token: []
+      tags:
+      - FINDINGS
+      parameters:
+      - name: status[]
+        in: query
+        required: false
+        description: 'An array of statuses.  Default: ["open", "in_progress", "new", "triaged"].'
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - closed
+            - duplicate
+            - false_positive
+            - in_progress
+            - new
+            - not_a_security_issue
+            - open
+            - resolved
+            - risk_accepted
+            - triaged
+      - name: identifier[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: 'An array of CVE, CWE, or WASCs.  Example: ["CWE-242", "CVE=2020-9524"].'
+      - name: id[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: integer
+        description: Array of finding IDs.
+      - name: page
+        in: query
+        required: false
+        description: The specific page being requested from 1 to the total number of pages returned in the `meta` object.
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        description: The number of findings being requested for the current page. The default page size is 100.  Any other page size will return an error.
+        required: false
+        schema:
+          type: integer
+      - name: sort_by
+        in: query
+        required: false
+        description: 'The results will be sorted by this field.  Default: "score".'
+        schema:
+          type: string
+          enum:
+          - closed_at
+          - created_at
+          - due_date
+          - found_on
+          - last_found_on
+          - score
+          - updated_at
+      - name: sort_direction
+        in: query
+        required: false
+        description: 'The sort direction of the field specified in "sort_by". Default: "desc".'
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+      - name: earliest_closed_at
+        in: query
+        schema:
+          type: string
+          format: datetime
+        description: Searches for findings with a 'closed at' on or after a date in ISO 8601 format.
+      - name: latest_closed_at
+        in: query
+        schema:
+          type: string
+          format: datetime
+        description: Searches for findings with a 'closed_at' on or before a date in ISO 8601 format.
+      - name: earliest_due_date
+        in: query
+        schema:
+          type: string
+          format: datetime
+        description: Searches for findings with a 'due_date' on or after a date in ISO 8601 format.
+      - name: latest_due_date
+        in: query
+        schema:
+          type: string
+          format: datetime
+        description: Searches for findings with a 'due_date' on or before a date in ISO 8601 format.
+      - name: earliest_last_found_on
+        in: query
+        schema:
+          type: string
+          format: datetime
+        description: Searches for findings with a 'last_found_on' on or after a date in ISO 8601 format.
+      - name: latest_last_found_on
+        in: query
+        schema:
+          type: string
+          format: datetime
+        description: Searches for findings with a 'last_found_on' on or before a date in ISO 8601 format.
+      - name: earliest_created_at
+        in: query
+        schema:
+          type: string
+          format: datetime
+        description: Searches for findings with a 'created_at' on or after a date in ISO 8601 format.
+      - name: latest_created_at
+        in: query
+        schema:
+          type: string
+          format: datetime
+        description: Searches for findings with a 'created_at' on or before a date in ISO 8601 format.
+      - name: earliest_updated_at
+        in: query
+        schema:
+          type: string
+          format: datetime
+        description: Searches for findings with a 'updated_at' on or after a date in ISO 8601 format.
+      - name: latest_updated_at
+        in: query
+        schema:
+          type: string
+          format: datetime
+        description: Searches for findings with a 'updated_at' on or before a date in ISO 8601 format.
+      - name: min_score
+        in: query
+        description: Searches for findings with a 'score' greater than or equal to this value.
+        schema:
+          type: integer
+      - name: max_score
+        in: query
+        description: Searches for findings with a 'score' less than or equal to this value.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    findings:
+                    - application_locator: application_locator_2
+                      asset_id: 123
+                      closed_at: null
+                      connector:
+                        id: 789
+                        name: API
+                      created_at: '2020-06-16T19:45:29.000Z'
+                      due_date: '2020-06-17T00:00:00.000Z'
+                      external_unique_id: '3287238723'
+                      file_locator: file.js
+                      id: 1
+                      identifiers:
+                      - CWE-242
+                      last_found_on: '2020-06-15T12:28:10.000Z'
+                      additional_fields:
+                        fields:
+                        - field_name: some_field
+                          value: some value
+                      score: 80
+                      status: in_progress
+                      updated_at: '2020-06-16T19:45:29.000Z'
+                      url_locator: null
+                      vulnerability_definition:
+                        description: The program calls a function that can never be guaranteed to work safely.
+                        id: 12345
+                        name: CWE 242 - Use of Inherently Dangerous Function
+                    meta:
+                      page: 1
+                      pages: 5
+                      total_count: 421
+              schema:
+                $ref: '#/components/schemas/finding_post_response_schema'
+    post:
+      summary: Create Finding
+      description: 'Creates a single finding and returns the record.
+
+
+        To associate this Finding with a vulnerability definition, either identifier or definition is required. The identifier should be used when the Finding is associated with a known vulnerability: CVE, CWE, or WASC ID (e.g. "CWE-242"). However, certain scanners will not report a known vulnerability, in which case the definition can be used. The keys of definition are documented below, with scanner_identifier being minimally required.
+
+
+        To avoid ambiguity with regards to dates, this endpoint accepts strings formatted according to a stricter version of ISO 8601: "YYYY-MM-DDThh:mm:ss.sssTZD". All fields besides nanoseconds and timezone are required. If timezone is omitted, UTC is used.'
+      operationId: create-finding
+      security:
+      - X-Risk-Token: []
+      tags:
+      - FINDINGS
+      parameters: []
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    finding:
+                      application_locator: application_locator_2
+                      asset_id: 123
+                      closed_at: null
+                      connector:
+                        id: 789
+                        name: API
+                      created_at: '2020-06-16T19:45:29.000Z'
+                      due_date: '2020-06-17T00:00:00.000Z'
+                      external_unique_id: '3287238723'
+                      file_locator: file.js
+                      id: 1
+                      identifiers:
+                      - CWE-242
+                      last_found_on: '2020-06-15T12:28:10.000Z'
+                      additional_fields:
+                        fields:
+                        - field_name: some_field
+                          value: some value
+                      score: 80
+                      status: in_progress
+                      updated_at: '2020-06-16T19:45:29.000Z'
+                      url_locator: null
+                      vulnerability_definition:
+                        description: The program calls a function that can never be guaranteed to work safely.
+                        id: 12345
+                        name: CWE 242 - Use of Inherently Dangerous Function
+              schema:
+                $ref: '#/components/schemas/finding_post_response_schema'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    error: bad_request
+                    message: identifier is invalid
+                    success: 'false'
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    success: 'false'
+                    error: forbbiden
+                    message: Client does not have access to endpoint
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    error: unprocessable_entity
+                    message: 'found unpermitted parameter: :severity'
+                    success: 'false'
+              schema:
+                $ref: '#/components/schemas/error_response'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/finding_request_body_schema'
+  /findings/bulk_delete:
+    delete:
+      summary: Bulk Delete Findings
+      description: Delete multiple findings at a time using the bulk delete endpoint. Delete limit is 2,000 findings at a time.
+      operationId: bulk-delete-findings
+      security:
+      - X-Risk-Token: []
+      tags:
+      - FINDINGS
+      parameters:
+      - name: finding_ids[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: integer
+            format: int32
+        description: An array of finding IDs to be deleted.
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    findings_deleted: 3
+              schema:
+                $ref: '#/components/schemas/findings_deleted_delete_response_schema'
+  /findings/{id}:
+    get:
+      summary: Show Finding
+      description: Returns a single finding by ID.
+      operationId: show-finding
+      security:
+      - X-Risk-Token: []
+      tags:
+      - FINDINGS
+      parameters:
+      - name: id
+        in: path
+        description: The finding ID to show.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    finding:
+                      application_locator: application_locator_2
+                      asset_id: 123
+                      closed_at: null
+                      connector:
+                        id: 789
+                        name: API
+                      created_at: '2020-06-16T19:45:29.000Z'
+                      due_date: '2020-06-17T00:00:00.000Z'
+                      external_unique_id: '3287238723'
+                      file_locator: file.js
+                      id: 1
+                      identifiers:
+                      - CWE-242
+                      last_found_on: '2020-06-15T12:28:10.000Z'
+                      additional_fields:
+                        fields:
+                        - field_name: some_field
+                          value: some value
+                      score: 80
+                      status: in_progress
+                      updated_at: '2020-06-16T19:45:29.000Z'
+                      url_locator: null
+                      vulnerability_definition:
+                        description: The program calls a function that can never be guaranteed to work safely.
+                        id: 12345
+                        name: CWE 242 - Use of Inherently Dangerous Function
+              schema:
+                $ref: '#/components/schemas/finding_get_response_schema'
+    put:
+      summary: Update Finding
+      description: 'Update a single finding''s attributes by ID.
+
+
+        To avoid ambiguity with regards to dates, this endpoint accepts strings formatted according to a stricter version of ISO 8601: "YYYY-MM-DDThh:mm:ss.sssZ". All fields besides nanoseconds and timezone are required. If timezone is omitted, UTC is used.'
+      operationId: update-findings
+      security:
+      - X-Risk-Token: []
+      tags:
+      - FINDINGS
+      parameters:
+      - name: id
+        in: path
+        description: The finding ID to show.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    finding:
+                      application_locator: application_locator_2
+                      asset_id: 123
+                      closed_at: '2020-07-21T00:00:00.000Z'
+                      connector:
+                        id: 789
+                        name: API
+                      created_at: '2020-06-16T19:45:29.000Z'
+                      due_date: '2020-06-17T00:00:00.000Z'
+                      external_unique_id: '3287238723'
+                      file_locator: file.js
+                      id: 1
+                      identifiers:
+                      - CWE-242
+                      last_found_on: '2020-06-15T12:28:10.000Z'
+                      additional_fields:
+                        fields:
+                        - field_name: some_field
+                          value: some value
+                      score: 80
+                      status: resolved
+                      updated_at: '2020-06-16T19:45:29.000Z'
+                      url_locator: null
+                      vulnerability_definition:
+                        description: The program calls a function that can never be guaranteed to work safely.
+                        id: 12345
+                        name: CWE 242 - Use of Inherently Dangerous Function
+              schema:
+                $ref: '#/components/schemas/finding_put_response_schema'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    error: bad_request
+                    message: identifier is invalid
+                    success: 'false'
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    success: 'false'
+                    error: forbbiden
+                    message: Client does not have access to endpoint
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    error: not_found
+                    message: No Finding found matching the requested ID
+                    success: 'false'
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    error: unprocessable_entity
+                    message: 'found unpermitted parameter: :severity'
+                    success: 'false'
+              schema:
+                $ref: '#/components/schemas/error_response'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/finding_put_request_body_schema'
+components:
+  schemas:
+    finding_request_body_schema:
+      type: object
+      required:
+      - asset_id
+      - external_unique_id
+      properties:
+        asset_id:
+          type: integer
+          description: The ID of the Asset associated with the Finding.
+          format: int32
+        external_unique_id:
+          type: string
+          description: A unique ID, created by a Scanner or client.
+        identifier:
+          type: string
+          description: 'A CVE, CWE, or WASC. Example: "CWE-242".  *Required* if `definition` is not specified.'
+        definition:
+          type: object
+          description: '*Required* if `identifier` is not specified.'
+          required:
+          - scanner_identifier
+          properties:
+            scanner_identifier:
+              type: string
+              description: A value, most likely specific to the Scanner, identifying the Finding.
+            scanner_name:
+              type: string
+              description: The name of the Scanner reporting the Finding.
+            name:
+              type: string
+              description: A name for the Finding.
+            description:
+              type: string
+              description: A description of the Finding.
+            solution:
+              type: string
+              description: A solution to the Finding.
+            pci_related:
+              type: boolean
+              description: Whether or not this Finding is related to the Payment Card Industry.
+        closed_at:
+          type: string
+          description: 'When the Finding was closed. The status body parameter is required to have the status body parameter set to one of the valid closed status values: "closed", "duplicate", "false_positive", "resolved", and "not_a_security_issue". This implies that both closed_at and status will be updated.'
+          format: date-time
+        due_date:
+          type: string
+          description: When the Finding should be fixed.
+          format: date-time
+        found_on:
+          type: string
+          description: When the Finding was initially found.
+          format: date-time
+        last_found_on:
+          type: string
+          description: When the Finding was last seen.
+          format: date-time
+        additional_fields:
+          $ref: '#/components/schemas/additional_fields'
+          example:
+            fields:
+            - field_name: some_field
+              value: some value
+        remediation:
+          type: string
+          description: Instructions for remediating the Finding.
+        scanner_score:
+          type: number
+          description: The score provided by the Scanner.
+          format: float
+        status:
+          $ref: '#/components/schemas/finding_status'
+          description: The current status of the Finding.
+    finding_put_response_schema:
+      type: object
+      properties:
+        application_locator:
+          type: string
+          example: application_locator_2
+        asset_id:
+          type: integer
+          example: 123
+          default: 0
+        closed_at:
+          type: string
+          example: '2020-07-21T00:00:00.000Z'
+        connector:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 789
+              default: 0
+            name:
+              type: string
+              example: API
+        created_at:
+          type: string
+          example: '2020-06-16T19:45:29.000Z'
+        due_date:
+          type: string
+          example: '2020-06-17T00:00:00.000Z'
+        external_unique_id:
+          type: string
+          example: '3287238723'
+        file_locator:
+          type: string
+          example: file.js
+        id:
+          type: integer
+          example: 1
+          default: 0
+        identifiers:
+          type: array
+          items:
+            type: string
+            example: CWE-242
+        last_found_on:
+          type: string
+          example: '2020-06-15T12:28:10.000Z'
+        additional_fields:
+          $ref: '#/components/schemas/additional_fields'
+          example:
+            fields:
+            - field_name: some_field
+              value: some value
+        score:
+          type: integer
+          example: 80
+          default: 0
+        status:
+          type: string
+          example: resolved
+        updated_at:
+          type: string
+          example: '2020-06-16T19:45:29.000Z'
+        url_locator: {}
+        vulnerability_definition:
+          type: object
+          properties:
+            description:
+              type: string
+              example: The program calls a function that can never be guaranteed to work safely.
+            id:
+              type: integer
+              example: 12345
+              default: 0
+            name:
+              type: string
+              example: CWE 242 - Use of Inherently Dangerous Function
+    error_response:
+      type: object
+      properties:
+        error:
+          type: string
+          description: The HTTP error message.
+        message:
+          type: string
+          description: The specific error message.
+        success:
+          type: string
+          description: Indicates success, usually 'false'.
+    additional_fields:
+      description: Any additional information you want associated with the Finding.
+      type: object
+      properties:
+        fields:
+          type: array
+          items:
+            type: object
+            properties:
+              field_name:
+                type: string
+              value:
+                type: string
+    finding_post_response_schema:
+      type: object
+      properties:
+        application_locator:
+          type: string
+          example: application_locator_2
+        asset_id:
+          type: integer
+          description: The asset ID associated with this finding.
+          example: 123
+        closed_at: {}
+        connector:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: The connector ID.
+              example: 789
+            name:
+              type: string
+              example: API
+        created_at:
+          type: string
+          format: date-time
+          example: '2020-06-16T19:45:29.000Z'
+        due_date:
+          type: string
+          format: date-time
+          example: '2020-06-17T00:00:00.000Z'
+        external_unique_id:
+          type: string
+          example: '3287238723'
+        file_locator:
+          type: string
+          example: file.js
+        id:
+          type: integer
+          description: The finding ID.
+          example: 1
+        identifiers:
+          type: array
+          items:
+            type: string
+            example: CWE-242
+        last_found_on:
+          type: string
+          format: date-time
+          example: '2020-06-15T12:28:10.000Z'
+        additional_fields:
+          $ref: '#/components/schemas/additional_fields'
+          example:
+            fields:
+            - field_name: some_field
+              value: some value
+        score:
+          type: integer
+          example: 80
+        status:
+          $ref: '#/components/schemas/finding_status'
+          example: in_progress
+        updated_at:
+          type: string
+          format: date-time
+          example: '2020-06-16T19:45:29.000Z'
+        url_locator: {}
+        vulnerability_definition:
+          type: object
+          properties:
+            description:
+              type: string
+              description: The description of the vulnerability definition.
+              example: The program calls a function that can never be guaranteed to work safely.
+            id:
+              type: integer
+              description: The vulnerability definition ID.  Can be used in "Search Vulnerabilities".
+              example: 314159
+            name:
+              type: string
+              description: The name of the vulnerability definition.
+              example: CWE 242 - Use of Inherently Dangerous Function
+    findings_deleted_delete_response_schema:
+      type: integer
+      example: 3
+      default: 0
+    finding_status:
+      type: string
+      enum:
+      - duplicate
+      - false_positive
+      - in_progress
+      - new
+      - not_a_security_issue
+      - resolved
+      - risk_accepted
+      - triaged
+    finding_put_request_body_schema:
+      type: object
+      properties:
+        asset_id:
+          type: integer
+          description: The ID of the Asset associated with the Finding.
+          format: int32
+        external_unique_id:
+          type: string
+          description: A unique ID, created by a Scanner or client.
+        identifier:
+          type: string
+          description: 'A CVE, CWE, or WASC. Example: "CWE-242".'
+        closed_at:
+          type: string
+          description: 'When the Finding was closed. The status body parameter is required to have the status body parameter set to one of the valid closed status values: "closed", "duplicate", "false_positive", "resolved", and "not_a_security_issue". This implies that both closed_at and status will be updated.'
+          format: date-time
+        due_date:
+          type: string
+          description: When the Finding should be fixed.
+          format: date-time
+        found_on:
+          type: string
+          description: When the Finding was initially found.
+          format: date-time
+        last_found_on:
+          type: string
+          description: When the Finding was last seen.
+          format: date-time
+        additional_fields:
+          $ref: '#/components/schemas/additional_fields'
+          example:
+            fields:
+            - field_name: some_field
+              value: some value
+        remediation:
+          type: string
+          description: Instructions for remediating the Finding.
+        scanner_score:
+          type: number
+          description: The score provided by the Scanner.
+          format: float
+        status:
+          $ref: '#/components/schemas/finding_status'
+          description: The new status of the Finding
+    finding_get_response_schema:
+      type: object
+      properties:
+        application_locator:
+          type: string
+          example: application_locator_2
+        asset_id:
+          type: integer
+          example: 123
+          default: 0
+        closed_at: {}
+        connector:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 789
+              default: 0
+            name:
+              type: string
+              example: API
+        created_at:
+          type: string
+          example: '2020-06-16T19:45:29.000Z'
+        due_date:
+          type: string
+          example: '2020-06-17T00:00:00.000Z'
+        external_unique_id:
+          type: string
+          example: '3287238723'
+        file_locator:
+          type: string
+          example: file.js
+        id:
+          type: integer
+          example: 1
+          default: 0
+        identifiers:
+          type: array
+          items:
+            type: string
+            example: CWE-242
+        last_found_on:
+          type: string
+          example: '2020-06-15T12:28:10.000Z'
+        additional_fields:
+          $ref: '#/components/schemas/additional_fields'
+          example:
+            fields:
+            - field_name: some_field
+              value: some value
+        score:
+          type: integer
+          example: 80
+          default: 0
+        status:
+          type: string
+          example: in_progress
+        updated_at:
+          type: string
+          example: '2020-06-16T19:45:29.000Z'
+        url_locator: {}
+        vulnerability_definition:
+          type: object
+          properties:
+            description:
+              type: string
+              example: The program calls a function that can never be guaranteed to work safely.
+            id:
+              type: integer
+              example: 12345
+              default: 0
+            name:
+              type: string
+              example: CWE 242 - Use of Inherently Dangerous Function
+  securitySchemes:
+    X-Risk-Token:
+      type: apiKey
+      name: X-Risk-Token
+      in: header
+x-provenance:
+  method: searched
+  source: https://apidocs.kennasecurity.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://apidocs.kennasecurity.com/reference/add-applications-to-role.md
+  - https://apidocs.kennasecurity.com/reference/add-asset-groups-to-role.md
+  - https://apidocs.kennasecurity.com/reference/application-findings-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/application-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/application-historical-vulnerability-count-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/asset-groups-findings-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/audit-log-search.md
+  - https://apidocs.kennasecurity.com/reference/average-days-open-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/bulk-delete-findings.md
+  - https://apidocs.kennasecurity.com/reference/bulk-delete-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/bulk-update-assets.md
+  - https://apidocs.kennasecurity.com/reference/bulk-update-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/calculate-asset-group-metric.md
+  - https://apidocs.kennasecurity.com/reference/check-data-export-status.md
+  - https://apidocs.kennasecurity.com/reference/check-remediation-score.md
+  - https://apidocs.kennasecurity.com/reference/check-sla-adherence-metrics.md
+  - https://apidocs.kennasecurity.com/reference/check-vulnerability-densities-metrics.md
+  - https://apidocs.kennasecurity.com/reference/create-application.md
+  - https://apidocs.kennasecurity.com/reference/create-asset-group-and-risk-meter.md
+  - https://apidocs.kennasecurity.com/reference/create-asset.md
+  - https://apidocs.kennasecurity.com/reference/create-child-asset-group-and-risk-meter.md
+  - https://apidocs.kennasecurity.com/reference/create-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/create-finding.md
+  - https://apidocs.kennasecurity.com/reference/create-role.md
+  - https://apidocs.kennasecurity.com/reference/create-stack.md
+  - https://apidocs.kennasecurity.com/reference/create-user.md
+  - https://apidocs.kennasecurity.com/reference/create-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/delete-application.md
+  - https://apidocs.kennasecurity.com/reference/delete-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/delete-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/delete-role.md
+  - https://apidocs.kennasecurity.com/reference/delete-stack.md
+  - https://apidocs.kennasecurity.com/reference/delete-user.md
+  - https://apidocs.kennasecurity.com/reference/delete-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/download-zipped-asset-data.md
+  - https://apidocs.kennasecurity.com/reference/download-zipped-vuln-data.md
+  - https://apidocs.kennasecurity.com/reference/entitlements-overage.md
+  - https://apidocs.kennasecurity.com/reference/false-positive-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/get-refresh-reporting-status.md
+  - https://apidocs.kennasecurity.com/reference/historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/historical-risk-meter-scores.md
+  - https://apidocs.kennasecurity.com/reference/historical-vulnerability-risk-category-counts.md
+  - https://apidocs.kennasecurity.com/reference/kill-running-data-export.md
+  - https://apidocs.kennasecurity.com/reference/list-applications.md
+  - https://apidocs.kennasecurity.com/reference/list-asset-groups.md
+  - https://apidocs.kennasecurity.com/reference/list-assets.md
+  - https://apidocs.kennasecurity.com/reference/list-connector-runs.md
+  - https://apidocs.kennasecurity.com/reference/list-connectors.md
+  - https://apidocs.kennasecurity.com/reference/list-cve-identifiers.md
+  - https://apidocs.kennasecurity.com/reference/list-dashboard-groups.md
+  - https://apidocs.kennasecurity.com/reference/list-fix-alternatives.md
+  - https://apidocs.kennasecurity.com/reference/list-fixes.md
+  - https://apidocs.kennasecurity.com/reference/list-roles.md
+  - https://apidocs.kennasecurity.com/reference/list-stacks.md
+  - https://apidocs.kennasecurity.com/reference/list-tags.md
+  - https://apidocs.kennasecurity.com/reference/list-users.md
+  - https://apidocs.kennasecurity.com/reference/list-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/list-vulnerability-definitions.md
+  - https://apidocs.kennasecurity.com/reference/past-due-vulnerabilities-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/refresh-reporting-data.md
+  - https://apidocs.kennasecurity.com/reference/request-data-export.md
+  - https://apidocs.kennasecurity.com/reference/retrieve-data-export.md
+  - https://apidocs.kennasecurity.com/reference/risk-accepted-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/run-connector.md
+  - https://apidocs.kennasecurity.com/reference/search-assets.md
+  - https://apidocs.kennasecurity.com/reference/search-findings.md
+  - https://apidocs.kennasecurity.com/reference/search-fixes.md
+  - https://apidocs.kennasecurity.com/reference/search-for-vulnerability-definitions.md
+  - https://apidocs.kennasecurity.com/reference/search-users.md
+  - https://apidocs.kennasecurity.com/reference/search-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/service-now-list-fixes.md
+  - https://apidocs.kennasecurity.com/reference/service-now-search-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/show-all-fixes.md
+  - https://apidocs.kennasecurity.com/reference/show-application.md
+  - https://apidocs.kennasecurity.com/reference/show-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/show-asset-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/show-asset.md
+  - https://apidocs.kennasecurity.com/reference/show-chatter.md
+  - https://apidocs.kennasecurity.com/reference/show-connector-run.md
+  - https://apidocs.kennasecurity.com/reference/show-cve-history.md
+  - https://apidocs.kennasecurity.com/reference/show-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/show-finding.md
+  - https://apidocs.kennasecurity.com/reference/show-fix.md
+  - https://apidocs.kennasecurity.com/reference/show-malware-hashes.md
+  - https://apidocs.kennasecurity.com/reference/show-role.md
+  - https://apidocs.kennasecurity.com/reference/show-scanner-vulnerability-details.md
+  - https://apidocs.kennasecurity.com/reference/show-stack.md
+  - https://apidocs.kennasecurity.com/reference/show-top-fix-groups.md
+  - https://apidocs.kennasecurity.com/reference/show-user.md
+  - https://apidocs.kennasecurity.com/reference/show-vulnerability-definition.md
+  - https://apidocs.kennasecurity.com/reference/show-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/stack-applications-statistics.md
+  - https://apidocs.kennasecurity.com/reference/stack-asset-groups-statistics.md
+  - https://apidocs.kennasecurity.com/reference/tag-an-asset.md
+  - https://apidocs.kennasecurity.com/reference/total-past-due-vulnerabilities-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/trends.md
+  - https://apidocs.kennasecurity.com/reference/untag-an-asset.md
+  - https://apidocs.kennasecurity.com/reference/update-application.md
+  - https://apidocs.kennasecurity.com/reference/update-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/update-asset.md
+  - https://apidocs.kennasecurity.com/reference/update-connector.md
+  - https://apidocs.kennasecurity.com/reference/update-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/update-findings.md
+  - https://apidocs.kennasecurity.com/reference/update-permissions-in-bulk.md
+  - https://apidocs.kennasecurity.com/reference/update-role-custom-permissions.md
+  - https://apidocs.kennasecurity.com/reference/update-role.md
+  - https://apidocs.kennasecurity.com/reference/update-stack.md
+  - https://apidocs.kennasecurity.com/reference/update-user.md
+  - https://apidocs.kennasecurity.com/reference/update-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/upload-data-file.md
+  - https://apidocs.kennasecurity.com/reference/validate-asset-search-query.md
+  - https://apidocs.kennasecurity.com/reference/validate-vulnerability-search-query.md
+  - https://apidocs.kennasecurity.com/reference/vi-data-snapshot.md
+  - https://apidocs.kennasecurity.com/reference/vulnerabilities-by-due-date.md
+  - https://apidocs.kennasecurity.com/reference/vulnerability-definitions-with-significant-score-change.md
+  merge:
+    pages: 115
+    deduped: 272
+    conflicts_kept_first: 0

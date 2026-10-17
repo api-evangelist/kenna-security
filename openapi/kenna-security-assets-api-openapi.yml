@@ -1,0 +1,1731 @@
+openapi: 3.2.0
+info:
+  title: Kenna Platform ASSETS API
+  description: OpenAPI specification for Kenna Security
+  version: '1.0'
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: api.kennasecurity.com
+tags:
+- name: ASSETS
+paths:
+  /assets:
+    get:
+      summary: List Assets
+      description: 'Returns a list of all active assets with open vulnerabilities.
+
+
+        To retrieve inactive assets, use the `filter` query parameter with the value "inactive".
+
+
+        Attribute Value
+
+
+        Maximum Pages Allowed 20
+
+
+        Maximum Page Size 500
+
+
+        Default Page Size 500
+
+
+        Total Count Present in meta object No
+
+
+        Page size cannot be set for this API, and is currently fixed at 500 entries. See the Pagination Section for more details.
+
+
+        This endpoint does not return tag source information. Tag source information is available in the List Tags endpoint.'
+      operationId: list-assets
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSETS
+      parameters:
+      - name: filter
+        in: query
+        required: false
+        description: Filter the results based on the filter string
+        schema:
+          type: string
+          enum:
+          - inactive
+          - active
+      - name: page
+        in: query
+        description: The page number from 1 to 20.
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    assets:
+                    - id: 183
+                      created_at: '2015-08-06T12:37:54Z'
+                      last_seen_time: '2015-08-12T15:00:54Z'
+                      operating_system: null
+                      last_booted_at: null
+                      ipv6: null
+                      locator: http://www.example.com
+                      primary_locator: url
+                      network_ports:
+                      - id: 600002
+                        protocol: TCP
+                        port_number: 8080
+                        name: http
+                        product: tomcat
+                        version: 7.0.61
+                        state: running
+                        ostype: windows
+                      tags:
+                      - nihil
+                      - facilis
+                      - quo
+                      vulnerabilities_count: 1
+                      inactive_at: '2020-10-31'
+                      status_set_manually: false
+                      overage: false
+                      urls:
+                        vulnerabilities: https://api.kennasecurity.com/assets/183/vulnerabilities
+                      notes: null
+                      priority: 1
+                      hostname: null
+                      mac_address: null
+                      ec2: null
+                      external_id: null
+                      netbios: null
+                      fqdn: null
+                      ip_address: 127.0.0.1
+                      url: null
+                      file: null
+                      database: null
+                      application: null
+                      risk_meter_score: 0
+                      asset_groups:
+                      - id: 1
+                        name: name
+                      status: active
+                      owner: Freddy
+                    meta:
+                      page: 1
+                      pages: 30
+              schema:
+                type: object
+                properties:
+                  assets:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/assets_get_response_schema'
+                  meta:
+                    $ref: '#/components/schemas/page_metadata'
+    post:
+      summary: Create Asset
+      description: Creates a single asset and returns the record.
+      operationId: create-asset
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSETS
+      parameters: []
+      responses:
+        '201':
+          description: '201'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    asset:
+                      id: 183
+                      created_at: '2017-05-30T15:50:21Z'
+                      operating_system: null
+                      last_booted_at: null
+                      ipv6: null
+                      locator: 54.38.148.231
+                      primary_locator: ip_address
+                      vulnerabilities_count: 0
+                      inactive_at: '2020-10-31'
+                      status_set_manually: false
+                      overage: false
+                      urls:
+                        vulnerabilities: https://api.kennasecurity.com/assets/183/vulnerabilities
+                      priority: null
+                      notes: null
+                      hostname: null
+                      mac_address: null
+                      external_id: null
+                      netbios: null
+                      fqdn: null
+                      ip_address: 54.38.148.231
+                      url: null
+                      database: null
+                      file: null
+                      application: null
+                      risk_meter_score: 0
+                      asset_groups:
+                      - id: 1
+                        name: name
+                      ec2: null
+                      last_seen_time: null
+              schema:
+                type: object
+                properties:
+                  asset:
+                    $ref: '#/components/schemas/assets_get_response_schema'
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    success: 'false'
+                    error: unproccessable_entity
+                    message: 'param is missing or the value is empty: asset'
+              schema:
+                $ref: '#/components/schemas/error_response'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/asset_request_body_schema'
+  /assets/bulk:
+    put:
+      summary: Bulk Update Assets
+      tags:
+      - ASSETS
+      description: 'Update multiple assets at one time using the bulk update endpoint. Update limit is 30,000 assets at a time.
+
+
+        By default, we will index the assets in the background. To index your assets synchronously, pass in the realtime parameter and set it to true.
+
+
+        In addition to the standard attributes on the "asset" parameter, you can also provide a "remove_tags" param: an array of strings that represent tags you would like removed, and a "reset_tags" param: a boolean value set to true if you would like to completely clear tags for each asset. If "reset_tags" is true, all tags will be removed from the assets regardless of source.'
+      operationId: bulk-update-assets
+      security:
+      - X-Risk-Token: []
+      parameters: []
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    assets_updated: 100
+              schema:
+                $ref: '#/components/schemas/assets_updated_put_response_schema'
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/assets_bulk_request_body_schema'
+  /assets/download_data_zip:
+    get:
+      summary: Download Zipped Asset Data
+      description: 'Returns a gzipped file with the most recent data export of all of your assets. To arrange for a daily full data export, contact support. The format of the uncompressed data, is JSONL, JSON, or XML. This is determined when when you contact support.
+
+
+        For more details, refer to Downloading Export Files.'
+      operationId: download-zipped-asset-data
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSETS
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/gzip:
+              schema:
+                $ref: '#/components/schemas/assets_zip_get_response_schema'
+  /assets/search:
+    get:
+      summary: Search Assets
+      description: 'Filters assets by a given set of input parameters and returns the filtered assets and the total number of assets in the filtered set. By default, only active assets with open vulnerabilities are returned.
+
+
+        Each unique parameter is combined using AND while each value passed in a single array will be combined using OR. For example, if you search for all assets with status[]=["active"] and tags[]=["foo", "bar"] you will receive all active assets that have either a "foo" tag or a "bar" tag.
+
+
+        Attribute Value
+
+
+        Maximum Pages Allowed 20
+
+
+        Maximum Page Size 50,000
+
+
+        Default Page Size 500
+
+
+        Total Count Present in meta object Yes
+
+
+        Large page size can cause performance issues. See the Pagination Section for more details.
+
+
+        This endpoint does not return tag source information. Tag source information is available in the List Tags endpoint.'
+      operationId: search-assets
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSETS
+      parameters:
+      - name: application_id
+        in: query
+        description: The ID of an application to retrieve assets for. All other search parameters are ignored if application_id is provided.
+        schema:
+          type: integer
+      - name: exclude_child_filter[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - Include all assets
+            - Assets without Vulnerabilities
+        description: '"Include all assets" includes all assets regardless of the vulnerability filters. "Assets without Vulnerabilities" will return only the assets without vulnerabilities. If this parameter is omitted, then the vulnerability filters are used.'
+      - name: id[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: integer
+        description: Array of asset IDs
+      - name: max_priority
+        in: query
+        description: Search for all assets that have a priority that is less than or equal to this value.
+        schema:
+          type: integer
+      - name: min_priority
+        in: query
+        description: Search for all assets that have a priority that is greater than or equal to this value.
+        schema:
+          type: integer
+      - name: max_risk_meter_score
+        in: query
+        description: Search for all assets that have a risk meter score that is less than or equal to this value.
+        schema:
+          type: integer
+      - name: min_risk_meter_score
+        in: query
+        description: Search for all assets that have a risk meter score that is greater than or equal to this value.
+        schema:
+          type: integer
+      - name: page
+        in: query
+        description: The page number from 1 to 20.
+        required: false
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        description: The page size from 1 to 50,000.  Default page size is 500. A page size of 5,000 is recommended.  Larger page sizes can cause performance issues.
+        required: false
+        schema:
+          type: integer
+      - name: operating_system[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: An array of the names of the operating systems associated with a set of assets.
+      - name: primary_locator[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: 'The primary locator used for an asset. This should be one of the following values: ip_address, hostname, database, url, mac_address, netbios, fqdn, file, or application'
+      - name: q
+        in: query
+        description: 'Additional text search parameters, as documented at: [Cisco Vulnerability Management Search Terms](https://help.kennasecurity.com/hc/en-us/articles/206280593-Kenna-Search-Terms), section "Asset Terms".  Example q=tag:(mytag+AND+thetag).'
+        schema:
+          type: string
+      - name: service_names[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: An array of service names related to your assets. Make sure all letters are lowercase.
+      - name: service_ports[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: integer
+        description: An array of ports related to your assets.
+      - name: service_products[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: An array of service products related to your assets. Make sure all letters are lowercase.
+      - name: service_protocols[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: An array of service protocols related to your assets. Make sure all letters are lowercase.
+      - name: status[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - active
+            - inactive
+        description: 'An array of statuses for your assets which can include active and/or inactive. Note: By default, only active assets are returned when searching. You must specify the asset status you want in order to override that default.'
+      - name: status_set_manually[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: A boolean to indicate whether an asset's active/inactive status was set automatically by Cisco Vulnerability Management or manually by a human.
+      - name: search_id
+        in: query
+        description: Search values specified in the risk meter group definition will override their respective values provided in this request when search_id is provided.
+        schema:
+          type: integer
+      - name: tag_boolean_mode
+        in: query
+        description: Set this to 'all' if you would like to return assets that contain all of the tags in your query rather than assets that contain any of the tags.
+        schema:
+          type: string
+      - name: tags[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: An array of tag names associated with your assets.
+      - name: vulnerability[classification][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: Classification of the vulnerability.
+      - name: vulnerability[connector_names][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: Connector names of the vulnerabilities.
+      - name: vulnerability[connector_types][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: Connector types of the vulnerabilities.
+      - name: vulnerability[has_known_exploits][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: Vulnerabilities that have known exploits.
+      - name: vulnerability[has_known_malware][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: Vulnerabilities that have known malware.
+      - name: vulnerability[id][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: integer
+        description: Vulnerability IDs.
+      - name: vulnerability[max_risk_meter_score]
+        in: query
+        description: Vulnerability risk scores that are less than or equal to this value.
+        schema:
+          type: integer
+      - name: vulnerability[max_rounded_risk_meter_score]
+        in: query
+        description: Vulnerability risk scores rounded to the integer that is less than or equal to this value.
+        schema:
+          type: integer
+      - name: vulnerability[max_severity]
+        in: query
+        description: Vulnerabilities with severity levels that are less than or equal to this value.
+        schema:
+          type: integer
+      - name: vulnerability[max_threat]
+        in: query
+        description: Vulnerabilities with threat levels that are less than or equal to this value.
+        schema:
+          type: integer
+      - name: vulnerability[min_risk_meter_score]
+        in: query
+        description: Vulnerability risk scores that are greater than or equal to this value.
+        schema:
+          type: integer
+      - name: vulnerability[min_rounded_risk_meter_score]
+        in: query
+        description: Vulnerability risk scores rounded to the integer that is greater than or equal to this value.
+        schema:
+          type: integer
+      - name: vulnerability[min_severity]
+        in: query
+        description: Vulnerabilities with severity levels that are greater than or equal to this value.
+        schema:
+          type: integer
+      - name: vulnerability[min_threat]
+        in: query
+        description: Vulnerabilities with threat levels that are greater than or equal to this value.
+        schema:
+          type: integer
+      - name: vulnerability[no_vulnerability_definition_id][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: integer
+        description: Exclude Vulnerability IDs.
+      - name: vulnerability[pci_related][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: Vulnerabilities that are Payment Card Industry related.
+      - name: vulnerability[port][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: integer
+        description: Ports associated with vulnerabilies.
+      - name: vulnerability[predicted_exploitable][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: Vulnerabilities that are predicted to be exploitable.
+      - name: vulnerability[prioritized][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: Vulnerabilities that are prioritized.
+      - name: vulnerability[q]
+        in: query
+        description: Vulnerability query string.
+        schema:
+          type: string
+      - name: vulnerability[remote_code_execution][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: Vulnerabilities that can be executed remotely.
+      - name: vulnerability[service_ticket_status][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: Vulnerability ticket status.
+      - name: vulnerability[status][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: Vulnerability status.
+      - name: vulnerability[top_exploit][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: Vulnerabilities that are actively being used for internet breaches.
+      - name: vulnerability[top_priority][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: An array of booleans for filtering your vulnerabilities that Cisco recommends should be a top priority to fix.
+      - name: vulnerability[trending][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: Vulnerabilities that are trending.
+      - name: vulnerability[vulnerability_class][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: Vulnerability classification.
+      - name: vulnerability[vulnerability_definition_id][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: integer
+        description: Vulnerability definition IDs.
+      - name: vulnerability[wasc_classification][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: Vulnerability WASC classification.
+      - name: vulnerability[zero_day][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: Vulnerabilities that have zero day exploits.
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    assets:
+                    - id: 183
+                      created_at: '2015-08-06T12:37:54Z'
+                      last_seen_time: '2015-08-12T15:00:54Z'
+                      operating_system: null
+                      last_booted_at: null
+                      ipv6: null
+                      locator: http://www.example.com
+                      primary_locator: url
+                      network_ports:
+                        id: 600002
+                        protocol: TCP
+                        port_number: 8080
+                        name: http
+                        product: tomcat
+                        version: 7.0.61
+                        state: running
+                        ostype: windows
+                      tags:
+                      - nihil
+                      - facilis
+                      - quo
+                      vulnerabilities_count: 1
+                      inactive_at: '2020-10-31'
+                      status_set_manually: false
+                      overage: false
+                      urls:
+                        vulnerabilities: https://api.kennasecurity.com/assets/183/vulnerabilities
+                      notes: null
+                      priority: 1
+                      hostname: null
+                      mac_address: null
+                      ec2: null
+                      external_id: null
+                      netbios: null
+                      fqdn: null
+                      ip_address: 127.0.0.1
+                      url: null
+                      file: null
+                      database: null
+                      application: null
+                      risk_meter_score: 0
+                      asset_groups:
+                      - id: 1
+                        name: name
+                      status: active
+                      owner: Freddy
+                    meta:
+                      total_count: 800
+                      page: 1
+                      pages: 2
+              schema:
+                type: object
+                properties:
+                  assets:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/assets_get_response_schema'
+                  meta:
+                    $ref: '#/components/schemas/page_metadata'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /assets/validate_search:
+    get:
+      summary: Validate Asset Search Query
+      description: Validate the query string portion of an asset search. If the query is invalid and if the system can determine a suggested replacement, that suggestion will be returned in the response.
+      operationId: validate-asset-search-query
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSETS
+      parameters:
+      - name: q
+        in: query
+        description: This is the q string to be validated. For more detailed documenation, visit [Cisco Vulnerability Management Search Terms](https://help.kennasecurity.com/hc/en-us/articles/206280593-Kenna-Search-Terms), section "Asset Terms".
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/valid_asset_search_get_response_schema'
+        '422':
+          description: '422'
+  /assets/{id}:
+    put:
+      summary: Update Asset
+      description: Update a single asset's attributes by ID.
+      operationId: update-asset
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSETS
+      parameters:
+      - name: id
+        in: path
+        description: The asset ID.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: '204'
+        '404':
+          description: '404'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/asset_request_body_schema'
+    get:
+      summary: Show Asset
+      description: Returns information about a single asset by ID. This endpoint does not return tag source information. Tag source information is available in the List Tags endpoint.
+      operationId: show-asset
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSETS
+      parameters:
+      - name: id
+        in: path
+        description: The asset ID.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    asset:
+                      id: 183
+                      created_at: '2013-09-24T15:50:21Z'
+                      last_seen_time: '2013-09-30T20:00:30Z'
+                      operating_system: null
+                      last_booted_at: null
+                      ipv6: null
+                      locator: http://www.example.com
+                      primary_locator: url
+                      network_ports:
+                      - id: 600002
+                        protocol: TCP
+                        port_number: 8080
+                        name: http
+                        product: tomcat
+                        version: 7.0.61
+                        state: running
+                        ostype: windows
+                      tags:
+                      - nihil
+                      - facilis
+                      - quo
+                      vulnerabilities_count: 1
+                      inactive_at: '2020-10-31'
+                      status_set_manually: false
+                      overage: false
+                      urls:
+                        vulnerabilities: https://api.kennasecurity.com/assets/183/vulnerabilities
+                      notes: null
+                      priority: 1
+                      hostname: null
+                      mac_address: null
+                      ec2: null
+                      external_id: null
+                      netbios: null
+                      fqdn: null
+                      ip_address: 127.0.0.1
+                      url: null
+                      file: null
+                      database: null
+                      application: null
+                      risk_meter_score: 0
+                      asset_groups:
+                      - id: 1
+                        name: name
+                      status: active
+                      owner: Freddy
+              schema:
+                type: object
+                properties:
+                  asset:
+                    $ref: '#/components/schemas/assets_get_response_schema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                asset_not_found:
+                  value:
+                    error: Bad Request
+                    message: Cannot find specified asset.
+                    success: 'false'
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /assets/{id}/vulnerabilities:
+    get:
+      summary: Show Asset Vulnerabilities
+      description: Returns all vulnerabilities for a single asset.
+      operationId: show-asset-vulnerabilities
+      security:
+      - X-Risk-Token: []
+      tags:
+      - ASSETS
+      parameters:
+      - name: id
+        in: path
+        description: The asset ID.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    vulnerabilities:
+                    - id: 121201
+                      closed: true
+                      closed_at: '2015-02-10T10:50:17Z'
+                      status: closed
+                      created_at: '2015-02-10T10:50:17Z'
+                      last_seen_time: '2015-02-15T10:25:17Z'
+                      notes: null
+                      priority: 0
+                      score: 15
+                      threat: 10
+                      severity: 5
+                      solution: A type confusion vulnerability can occur when manipulating JavaScript objects due to issues in Array.pop. This can allow for an exploitable crash. We are aware of targeted attacks in the wild abusing this flaw. This vulnerability affects Firefox ESR &lt; 60.7.1, Firefox &lt; 67.0.3, and Thunderbird &lt; 60.7.2.
+                      identifiers:
+                      - '86847'
+                      urls:
+                        asset: https://api.kennasecurity.com/asset/536
+                      patch: false
+                      patch_published_at: null
+                      description: null
+                      cve_id: CVE-2007-6750
+                      wasc_id: null
+                      asset_id: 536
+                      first_found_on: '2009-06-20T18:12:08Z'
+                      easily_exploitable: false
+                      platform_types:
+                      - hardware
+                      malware_exploitable: false
+                      top_priority: false
+                      active_internet_breach: false
+                      popular_target: false
+              schema:
+                type: object
+                properties:
+                  vulnerabilities:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/vulnerability_get_response_schema'
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    success: 'false'
+                    error: not_found
+                    message: Asset not found.
+              schema:
+                $ref: '#/components/schemas/error_response'
+components:
+  schemas:
+    page_metadata:
+      type: object
+      properties:
+        meta:
+          type: object
+          required:
+          - page
+          - pages
+          properties:
+            page:
+              type: integer
+              description: The response current page number.
+              default: 1
+            pages:
+              type: integer
+              description: The total number of pages.
+              default: 1
+            total_count:
+              type: integer
+              description: The total number of items across all pages.
+              default: 1
+    valid_asset_search_get_response_schema:
+      type: object
+      properties:
+        valid:
+          type: boolean
+          example: true
+          default: true
+        query:
+          type: string
+          example: os:solaris AND tag:chicago
+          default: ''
+        suggested_query:
+          type: string
+    error_response:
+      type: object
+      properties:
+        error:
+          type: string
+          description: The HTTP error message.
+        message:
+          type: string
+          description: The specific error message.
+        success:
+          type: string
+          description: Indicates success, usually 'false'.
+    vulnerability_get_response_schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 709836
+        status:
+          type: string
+          enum:
+          - closed
+          - closed_by_human
+          - false_positive_by_human
+          - open
+          - open_by_api
+          - risk_accepted_by_human
+          example: open
+        closed_at:
+          type: string
+          format: date-time
+          example: '2021-08-12T03:14:57Z'
+        created_at:
+          type: string
+          format: date-time
+          example: '2021-02-23T13:38:57Z'
+        due_date:
+          type: string
+          format: date-time
+          example: '2021-08-01T12:00:00Z'
+        notes:
+          type: string
+        port:
+          type: array
+          items:
+            type: string
+        priority:
+          type: integer
+          example: 10
+        identifiers:
+          type: array
+          items:
+            type: string
+            example: '133531'
+        custom_fields:
+          $ref: '#/components/schemas/custom_fields_schema'
+        last_seen_time:
+          type: string
+          format: date-time
+          example: '2021-02-04T21:47:50.000Z'
+        scanner_score:
+          type: integer
+          example: 4
+        fix_id:
+          type: integer
+          example: 1841225
+        scanner_vulnerabilities:
+          type: array
+          items:
+            type: object
+            properties:
+              port: {}
+              external_unique_id:
+                type: string
+                example: '133531'
+              open:
+                type: boolean
+                example: true
+        asset_id:
+          type: integer
+          example: 12312
+        connectors:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 157604
+              name:
+                type: string
+                example: Nessus API Importer
+              connector_definition_name:
+                type: string
+                example: Nessus API Importer
+              vendor:
+                type: string
+                example: Tenable
+        service_ticket:
+          $ref: '#/components/schemas/service_ticket_response_schema'
+        urls:
+          type: object
+          properties:
+            asset:
+              type: string
+              example: api.kennasecurity.com/assets/12312
+        solution:
+          type: string
+          example: Upgrade to macOS 10.13.6, 10.14.6, 10.15.3 or later
+        patch:
+          type: boolean
+          example: true
+        patch_published_at: {}
+        cve_id:
+          type: string
+          example: CVE-2019-11043
+        cve_description:
+          type: string
+          example: In PHP versions 7.1.x below 7.1.33, 7.2.x below 7.2.24 and 7.3.x below 7.3.11 in certain configurations of FPM setup it is possible to cause FPM module to write past allocated buffers into the space reserved for FCGI protocol data, thus opening the possibility of remote code execution.
+        cve_published_at:
+          type: string
+          example: '2019-10-28T15:15:00.000Z'
+        description: {}
+        wasc_id: {}
+        severity:
+          type: integer
+          example: 8
+        threat:
+          type: integer
+          example: 10
+        popular_target:
+          type: boolean
+          example: false
+        active_internet_breach:
+          type: boolean
+          example: true
+        easily_exploitable:
+          type: boolean
+          example: true
+        malware_exploitable:
+          type: boolean
+          example: false
+        remote_code_execution:
+          type: boolean
+          example: true
+        predicted_exploitable:
+          type: boolean
+          example: false
+        platform_types:
+          type: array
+          items:
+            type: string
+            enum:
+            - application
+            - hardware
+            - network
+            - operating system
+          example:
+          - application
+          - operating system
+        first_found_on:
+          type: string
+          format: date-time
+          example: '2021-02-23T13:38:57Z'
+        top_priority:
+          type: boolean
+          example: true
+        risk_meter_score:
+          type: integer
+          example: 100
+        closed:
+          type: boolean
+          example: false
+        cvss_v2:
+          $ref: '#/components/schemas/cvss_v2_schema'
+        cvss_v3:
+          $ref: '#/components/schemas/cvss_v3_schema'
+    assets_get_response_schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 183
+          default: 0
+        created_at:
+          type: string
+          format: date-time
+          example: '2015-08-06T12:37:54Z'
+        last_seen_time:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          example: '2015-08-12T15:00:54Z'
+        operating_system:
+          type:
+          - string
+          - 'null'
+        last_booted_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          example: '2015-08-12T15:00:54Z'
+        ipv6:
+          type:
+          - string
+          - 'null'
+        locator:
+          type: string
+          example: http://www.example.com
+        primary_locator:
+          type: string
+          example: url
+        network_ports:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 600002
+                default: 0
+              protocol:
+                type: string
+                example: TCP
+              port_number:
+                type: integer
+                example: 8080
+                default: 0
+              name:
+                type: string
+                example: http
+              product:
+                type: string
+                example: tomcat
+              version:
+                type: string
+                example: 7.0.61
+              state:
+                type: string
+                example: running
+              ostype:
+                type: string
+                example: windows
+        tags:
+          type: array
+          items:
+            type: string
+            example: engineering
+        vulnerabilities_count:
+          type: integer
+          example: 1
+          default: 0
+        inactive_at:
+          type: string
+          example: '2020-10-31'
+        status_set_manually:
+          type: boolean
+          example: false
+          default: true
+        overage:
+          type: boolean
+          example: false
+          default: false
+          description: Indicates if the asset is in overage. If true, no vulnerabilities will be imported for this asset until client overage is resolved.
+        urls:
+          type: object
+          properties:
+            vulnerabilities:
+              type: string
+              example: https://api.kennasecurity.com/assets/183/vulnerabilities
+        notes: {}
+        priority:
+          type: integer
+          example: 1
+          default: 0
+        hostname: {}
+        mac_address: {}
+        ec2: {}
+        external_id: {}
+        netbios: {}
+        fqdn: {}
+        ip_address:
+          type: string
+          example: 127.0.0.1
+        url: {}
+        file: {}
+        database: {}
+        application: {}
+        risk_meter_score:
+          type: integer
+          example: 0
+          default: 0
+        asset_groups:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+                default: 0
+              name:
+                type: string
+                example: name
+        status:
+          type: string
+          example: active
+        owner:
+          type: string
+          example: Freddy
+    cvss_v3_schema:
+      type: object
+      properties:
+        score:
+          type: number
+          format: float
+          description: Numerical score indicates the severity of a vulnerability relative to other vulnerabilities.
+          example: 7.5
+        exploit_subscore:
+          type: number
+          format: float
+          description: Numerical score reflects the ease and technical means by which the vulnerability can be exploited. The Exploitability sub-score equation is derived from the Base Exploitability metrics.
+          example: 3.9
+        impact_subscore:
+          type: number
+          format: float
+          description: Numerical score reflects the direct consequence of a successful exploit, and represents the consequence to the thing that suffers the impact. The Impact sub-score equation is derived from the Base Impact metrics.
+          example: 3.6
+        temporal_score:
+          type: number
+          format: float
+          description: Numerical score reflects the characteristics of a vulnerability that may change over time but not across user environments.
+          example: 9.4
+    service_ticket_response_schema:
+      type: object
+      required:
+      - external_identifier
+      - ticket_type
+      description: Service ticket object to associate with a vulnerability.
+      properties:
+        external_identifier:
+          type: string
+          description: The service ticket's external ID in its ticketing provider.
+          example: JR-678
+        ticket_type:
+          type: string
+          enum:
+          - api
+          - jira
+          - service_now
+          description: The service ticket type.  `api` type tickets are not integrated with ticketing connectors.
+          example: service_now
+        system_id:
+          type: string
+          description: The service ticket's internal ID in its ticketing provider.  Required for Jira and ServiceNow tickets for clients with the relevant ticketing connectors to allow the service ticket to be automatically updated in Cisco Vulnerability Management. Note that this value is the same as external_identifier for Jira type service tickets.
+          example: 12abcd345e6789101112f1g21h3ijk14
+        status:
+          type: string
+          description: The service ticket status.  Will be honored for `api` type tickets.
+          example: Active
+        due_date:
+          type: string
+          format: date-time
+          description: May contain a default due date for internal use, so please refer to `due_date_override` for the service ticket's actual due date
+          example: '2021-08-12T03:14:57Z'
+          default: null
+        due_date_override:
+          type: string
+          format: date-time
+          description: Actual due date.
+          example: '2021-08-12T03:14:57Z'
+    custom_fields_schema:
+      description: The custom field array.
+      type: array
+      items:
+        type: object
+        properties:
+          custom_field_definition_id:
+            description: Custom field ID.
+            type: integer
+            format: int32
+            example: '123'
+          name:
+            description: Custom field Name.
+            type: string
+            example: my custom field
+          value:
+            description: Custom field Value.
+            type: string
+            example: foo
+    asset_request_body_schema:
+      type: object
+      properties:
+        asset:
+          type: object
+          properties:
+            application:
+              type: string
+              description: The application name.  Either `application` or `application_id` may be specified.
+            application_id:
+              type: string
+              description: The application locator of the asset.  Either `application_id` or `application` may be specified.
+            external_id:
+              type: string
+              description: The external_id of the asset
+            database:
+              type: string
+              description: The database name of the asset
+            ec2:
+              type: string
+              description: The ec2 name of the asset
+            file:
+              type: string
+              description: The Fully Qualified path of the file
+            fqdn:
+              type: string
+              description: The Fully Qualified Domain Name of the asset
+            hostname:
+              type: string
+              description: The hostname of the asset
+            inactive:
+              type: boolean
+              description: A boolean value to set the asset inactive
+            ip_address:
+              type: string
+              description: The IP address of the asset
+            ipv6:
+              type: string
+              description: The asset's ipv6 address
+            last_booted_at:
+              type: string
+              description: A datetime (as an iso8601 timestamp) identifying when the asset was last booted
+              format: date-time
+            last_seen_time:
+              type: string
+              description: A datetime (as an iso8601 timestamp) identifying when the asset was last seen
+              format: date-time
+            mac_address:
+              type: string
+              description: The MAC address of the asset
+            netbios:
+              type: string
+              description: The NetBIOS address of the asset
+            notes:
+              type: string
+              description: Strings may be used to store plain english notes about an asset. Maximum 50,000 characters allowed.
+            operating_system:
+              type: string
+              description: The operating system of the asset
+            owner:
+              type: string
+              description: The name of the owner of an asset.
+            primary_locator:
+              type: string
+              description: The primary_locator field is deprecated. It is accepted for backward compatibility, but it's calculated by our back-end system and it is ignored.
+            priority:
+              type: integer
+              description: The priority of the asset; an integer between 1 (low) to 10 (high)
+              format: int32
+            remove_override:
+              type: boolean
+              description: 'Update only: pass in this param to remove a manual override on an existing asset’s status. Automatic asset inactivity logic will immediately be re-applied to this asset.'
+            url:
+              type: string
+              description: The URL of the asset
+    cvss_v2_schema:
+      type: object
+      properties:
+        score:
+          type: number
+          format: float
+          description: Numerical score indicates the severity of a vulnerability relative to other vulnerabilities.
+          example: 7.5
+        exploit_subscore:
+          type: number
+          format: float
+          description: Numerical score reflects the ease and technical means by which the vulnerability can be exploited. The Exploitability sub-score equation is derived from the Base Exploitability metrics.
+          example: 10
+        impact_subscore:
+          type: number
+          format: float
+          description: Numerical score reflects the direct consequence of a successful exploit, and represents the consequence to the thing that suffers the impact. The Impact sub-score equation is derived from the Base Impact metrics.
+          example: 6.4
+        temporal_score:
+          type: number
+          format: float
+          description: Numerical score reflects the characteristics of a vulnerability that may change over time but not across user environments.
+          example: 7.5
+    assets_updated_put_response_schema:
+      type: object
+      properties:
+        assets_updated:
+          type: integer
+          example: 100
+          default: 0
+    assets_zip_get_response_schema:
+      type: object
+      properties:
+        assets:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 183
+              created_at:
+                type: string
+                example: '2015-08-06T12:37:54Z'
+              last_seen_time:
+                type: string
+                example: '2015-08-12T15:00:54Z'
+              operating_system:
+                type: string
+              last_booted_at:
+                type: string
+              ipv6:
+                type: string
+              locator:
+                type: string
+                example: http://www.example.com
+              primary_locator:
+                type: string
+                example: url
+              network_ports:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 600002
+                  protocol:
+                    type: string
+                    example: TCP
+                  port_number:
+                    type: integer
+                    example: 8080
+                  name:
+                    type: string
+                    example: http
+                  product:
+                    type: string
+                    example: tomcat
+                  version:
+                    type: string
+                    example: 7.0.61
+                  state:
+                    type: string
+                    example: running
+                  ostype:
+                    type: string
+                    example: windows
+              tags:
+                type: array
+                items:
+                  type: string
+                  example: nihil
+              vulnerabilities_count:
+                type: integer
+              urls:
+                type: object
+                properties:
+                  vulnerabilities:
+                    type: string
+                    example: https://api.kennasecurity.com/assets/183/vulnerabilities
+              notes:
+                type: string
+              priority:
+                type: integer
+              hostname:
+                type: string
+              mac_address:
+                type: string
+              ec2:
+                type: string
+              external_id:
+                type: integer
+              netbios:
+                type: string
+              fqdn:
+                type: string
+              ip_address:
+                type: string
+                example: 127.0.0.1
+              url:
+                type: string
+              file:
+                type: string
+              database:
+                type: string
+              application:
+                type: string
+              risk_meter_score:
+                type: integer
+                example: 0
+              status:
+                type: string
+                example: active
+              owner:
+                type: string
+                example: Freddy
+        meta:
+          type: object
+          properties:
+            total_count:
+              type: integer
+              example: 100
+    assets_bulk_request_body_schema:
+      type: object
+      properties:
+        asset_ids:
+          type: array
+          description: IDs of all assets to be updated.
+          items:
+            type: integer
+        asset:
+          type: object
+          properties:
+            priority:
+              type: integer
+              format: int32
+            notes:
+              type: string
+            operating_system:
+              type: string
+            last_booted_at:
+              type: string
+              format: date-time
+            ipv6:
+              type: string
+            inactive:
+              type: boolean
+            owner:
+              type: string
+            reset_tags:
+              type: boolean
+            remove_tags:
+              type: array
+              default: []
+              items:
+                type: string
+            tags:
+              type: array
+              default: []
+              items:
+                type: string
+            last_seen_time:
+              type: string
+              format: date-time
+            remove_override:
+              type: boolean
+              description: Pass in this param to remove a manual override on the asset’s status. Automatic asset inactivity logic will be re-applied to assets in the background.
+        realtime:
+          type: boolean
+          description: Assets will be updated synchronously if "realtime" is true. Please note that there is a limit of no more than 100 assets per realtime bulk update request.
+          default: true
+  securitySchemes:
+    X-Risk-Token:
+      type: apiKey
+      name: X-Risk-Token
+      in: header
+x-provenance:
+  method: searched
+  source: https://apidocs.kennasecurity.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://apidocs.kennasecurity.com/reference/add-applications-to-role.md
+  - https://apidocs.kennasecurity.com/reference/add-asset-groups-to-role.md
+  - https://apidocs.kennasecurity.com/reference/application-findings-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/application-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/application-historical-vulnerability-count-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/asset-groups-findings-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/audit-log-search.md
+  - https://apidocs.kennasecurity.com/reference/average-days-open-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/bulk-delete-findings.md
+  - https://apidocs.kennasecurity.com/reference/bulk-delete-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/bulk-update-assets.md
+  - https://apidocs.kennasecurity.com/reference/bulk-update-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/calculate-asset-group-metric.md
+  - https://apidocs.kennasecurity.com/reference/check-data-export-status.md
+  - https://apidocs.kennasecurity.com/reference/check-remediation-score.md
+  - https://apidocs.kennasecurity.com/reference/check-sla-adherence-metrics.md
+  - https://apidocs.kennasecurity.com/reference/check-vulnerability-densities-metrics.md
+  - https://apidocs.kennasecurity.com/reference/create-application.md
+  - https://apidocs.kennasecurity.com/reference/create-asset-group-and-risk-meter.md
+  - https://apidocs.kennasecurity.com/reference/create-asset.md
+  - https://apidocs.kennasecurity.com/reference/create-child-asset-group-and-risk-meter.md
+  - https://apidocs.kennasecurity.com/reference/create-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/create-finding.md
+  - https://apidocs.kennasecurity.com/reference/create-role.md
+  - https://apidocs.kennasecurity.com/reference/create-stack.md
+  - https://apidocs.kennasecurity.com/reference/create-user.md
+  - https://apidocs.kennasecurity.com/reference/create-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/delete-application.md
+  - https://apidocs.kennasecurity.com/reference/delete-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/delete-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/delete-role.md
+  - https://apidocs.kennasecurity.com/reference/delete-stack.md
+  - https://apidocs.kennasecurity.com/reference/delete-user.md
+  - https://apidocs.kennasecurity.com/reference/delete-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/download-zipped-asset-data.md
+  - https://apidocs.kennasecurity.com/reference/download-zipped-vuln-data.md
+  - https://apidocs.kennasecurity.com/reference/entitlements-overage.md
+  - https://apidocs.kennasecurity.com/reference/false-positive-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/get-refresh-reporting-status.md
+  - https://apidocs.kennasecurity.com/reference/historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/historical-risk-meter-scores.md
+  - https://apidocs.kennasecurity.com/reference/historical-vulnerability-risk-category-counts.md
+  - https://apidocs.kennasecurity.com/reference/kill-running-data-export.md
+  - https://apidocs.kennasecurity.com/reference/list-applications.md
+  - https://apidocs.kennasecurity.com/reference/list-asset-groups.md
+  - https://apidocs.kennasecurity.com/reference/list-assets.md
+  - https://apidocs.kennasecurity.com/reference/list-connector-runs.md
+  - https://apidocs.kennasecurity.com/reference/list-connectors.md
+  - https://apidocs.kennasecurity.com/reference/list-cve-identifiers.md
+  - https://apidocs.kennasecurity.com/reference/list-dashboard-groups.md
+  - https://apidocs.kennasecurity.com/reference/list-fix-alternatives.md
+  - https://apidocs.kennasecurity.com/reference/list-fixes.md
+  - https://apidocs.kennasecurity.com/reference/list-roles.md
+  - https://apidocs.kennasecurity.com/reference/list-stacks.md
+  - https://apidocs.kennasecurity.com/reference/list-tags.md
+  - https://apidocs.kennasecurity.com/reference/list-users.md
+  - https://apidocs.kennasecurity.com/reference/list-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/list-vulnerability-definitions.md
+  - https://apidocs.kennasecurity.com/reference/past-due-vulnerabilities-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/refresh-reporting-data.md
+  - https://apidocs.kennasecurity.com/reference/request-data-export.md
+  - https://apidocs.kennasecurity.com/reference/retrieve-data-export.md
+  - https://apidocs.kennasecurity.com/reference/risk-accepted-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/run-connector.md
+  - https://apidocs.kennasecurity.com/reference/search-assets.md
+  - https://apidocs.kennasecurity.com/reference/search-findings.md
+  - https://apidocs.kennasecurity.com/reference/search-fixes.md
+  - https://apidocs.kennasecurity.com/reference/search-for-vulnerability-definitions.md
+  - https://apidocs.kennasecurity.com/reference/search-users.md
+  - https://apidocs.kennasecurity.com/reference/search-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/service-now-list-fixes.md
+  - https://apidocs.kennasecurity.com/reference/service-now-search-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/show-all-fixes.md
+  - https://apidocs.kennasecurity.com/reference/show-application.md
+  - https://apidocs.kennasecurity.com/reference/show-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/show-asset-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/show-asset.md
+  - https://apidocs.kennasecurity.com/reference/show-chatter.md
+  - https://apidocs.kennasecurity.com/reference/show-connector-run.md
+  - https://apidocs.kennasecurity.com/reference/show-cve-history.md
+  - https://apidocs.kennasecurity.com/reference/show-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/show-finding.md
+  - https://apidocs.kennasecurity.com/reference/show-fix.md
+  - https://apidocs.kennasecurity.com/reference/show-malware-hashes.md
+  - https://apidocs.kennasecurity.com/reference/show-role.md
+  - https://apidocs.kennasecurity.com/reference/show-scanner-vulnerability-details.md
+  - https://apidocs.kennasecurity.com/reference/show-stack.md
+  - https://apidocs.kennasecurity.com/reference/show-top-fix-groups.md
+  - https://apidocs.kennasecurity.com/reference/show-user.md
+  - https://apidocs.kennasecurity.com/reference/show-vulnerability-definition.md
+  - https://apidocs.kennasecurity.com/reference/show-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/stack-applications-statistics.md
+  - https://apidocs.kennasecurity.com/reference/stack-asset-groups-statistics.md
+  - https://apidocs.kennasecurity.com/reference/tag-an-asset.md
+  - https://apidocs.kennasecurity.com/reference/total-past-due-vulnerabilities-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/trends.md
+  - https://apidocs.kennasecurity.com/reference/untag-an-asset.md
+  - https://apidocs.kennasecurity.com/reference/update-application.md
+  - https://apidocs.kennasecurity.com/reference/update-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/update-asset.md
+  - https://apidocs.kennasecurity.com/reference/update-connector.md
+  - https://apidocs.kennasecurity.com/reference/update-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/update-findings.md
+  - https://apidocs.kennasecurity.com/reference/update-permissions-in-bulk.md
+  - https://apidocs.kennasecurity.com/reference/update-role-custom-permissions.md
+  - https://apidocs.kennasecurity.com/reference/update-role.md
+  - https://apidocs.kennasecurity.com/reference/update-stack.md
+  - https://apidocs.kennasecurity.com/reference/update-user.md
+  - https://apidocs.kennasecurity.com/reference/update-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/upload-data-file.md
+  - https://apidocs.kennasecurity.com/reference/validate-asset-search-query.md
+  - https://apidocs.kennasecurity.com/reference/validate-vulnerability-search-query.md
+  - https://apidocs.kennasecurity.com/reference/vi-data-snapshot.md
+  - https://apidocs.kennasecurity.com/reference/vulnerabilities-by-due-date.md
+  - https://apidocs.kennasecurity.com/reference/vulnerability-definitions-with-significant-score-change.md
+  merge:
+    pages: 115
+    deduped: 272
+    conflicts_kept_first: 0

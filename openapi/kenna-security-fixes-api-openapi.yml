@@ -1,0 +1,737 @@
+openapi: 3.2.0
+info:
+  title: Kenna Platform FIXES API
+  description: OpenAPI specification for Kenna Security
+  version: '1.0'
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: api.kennasecurity.com
+tags:
+- name: FIXES
+paths:
+  /fixes:
+    get:
+      summary: List Fixes
+      description: 'Returns a paginated list of fixes that are related to all of your open vulnerabilities that have active assets.
+
+
+        Attribute Value
+
+
+        Maximum Pages Allowed ∞
+
+
+        Maximum Page Size 100
+
+
+        Default Page Size 25
+
+
+        Total Count Present in meta object Yes
+
+
+        See the Pagination Section for more details.
+
+
+        Note: this request may take longer to complete depending on the number of assets and vulnerabilities associated with your fixes.'
+      operationId: list-fixes
+      security:
+      - X-Risk-Token: []
+      tags:
+      - FIXES
+      parameters:
+      - name: page
+        in: query
+        required: false
+        description: The specific page being requested from 1 to the total number of pages returned in the `meta` object.
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        required: false
+        description: Number of Fixes per page. The default is 25 and the maximum page size is 100.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    fixes:
+                    - id: '48910'
+                      diagnosis: OpenSSH is OpenBSD's SSH (Secure SHell) protocol implementation. This package includes the core files ...
+                      consequence: If these vulnerabilities are successfully exploited, an attacker can bypass certain security ...
+                      solution: Download the patch for ELSA-2006:0697 from Oracle metalink account ...
+                      url: http://oss.oracle.com/pipermail/el-errata/2006-November/000010.html
+                      urls:
+                      - http://oss.oracle.com/pipermail/el-errata/2006-November/000010.html
+                      - http://oss.oracle.com/pipermail/el-errata/2006-November/123456.html
+                      title: Oracle Enterprise Linux Openssh security update (ELSA-2006:0697)
+                      vendor: oracle
+                      assets:
+                      - id: 555
+                        locator: 127.0.0.1
+                        primary_locator: ip_address
+                        display_locator: localhost
+                      scanner_ids:
+                      - 1
+                      cves:
+                      - CVE-2006-4924
+                      - CVE-2006-5051
+                      updated_at: 5/19/2015
+                      patch_publication_date: 4/21/2009
+                      category: Ubuntu
+                      vuln_count: 1
+                      max_vuln_score: 49
+                    meta:
+                      total_count: 34
+                      page: 1
+                      pages: 4
+              schema:
+                type: object
+                properties:
+                  fixes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/fix_get_response_schema'
+                  meta:
+                    $ref: '#/components/schemas/page_metadata'
+  /fixes/search:
+    get:
+      summary: Search Fixes
+      description: 'Filters fixes by a given set of vulnerability and asset parameters and returns the filtered fixes as well as the total number of fixes. By default, only fixes for open vulnerabilities with active assets are returned. Requests with search parameters relevant to over 30,000,000 vulnerabilities will be rejected.
+
+
+        Each unique parameter is combined using AND while each of values passed in a single array will be combined using OR. For example, if you search for all fixes belonging to vulnerabilities with status=["open"] and port=["443", "80"] you will receive all fixes for open vulnerabilities that have either port 443 or port 80.
+
+
+        Attribute Value
+
+
+        Maximum Pages Allowed ∞
+
+
+        Maximum Page Size 5,000
+
+
+        Default Page Size 25
+
+
+        Total Count Present in meta object Yes
+
+
+        Large page sizes can cause performance issues. See the Pagination Section for more details.'
+      operationId: search-fixes
+      security:
+      - X-Risk-Token: []
+      tags:
+      - FIXES
+      parameters:
+      - name: active_internet_breach
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: An array of booleans for filtering your vulnerabilities by those that have seen trending breach activity.
+      - name: asset
+        in: query
+        schema:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Search for all fixes related to vulnerabilities that are connected to a set of assets.
+            status:
+              type: string
+              description: By default, only fixes for vulnerabilities with active assets are returned. To override this default specify the status param for an asset as shown. Status choices are active and inactive.
+      - name: connector_names
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: An array of connector names related to your vulnerabilities.
+      - name: connector_types
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: An array of connector types related to your vulnerabilities.
+      - name: custom_field
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: Search for all fixes for vulnerabilities that have a specific custom field value. The proper format for a custom field query is 'custom_fields:' then the name of the custom_field you are searching on, then the value you are searching for.
+      - name: easily_exploitable
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: An array of booleans for filtering your vulnerabilities by those that have seen high levels of exploitation recently.
+      - name: id
+        in: query
+        schema:
+          type: array
+          items:
+            type: integer
+        description: Array of vulnerability ids
+      - name: malware_exploitable
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: An array of booleans for filtering your vulnerabilities by those that have had pieces of malware identified.
+      - name: max_risk_meter_score
+        in: query
+        description: Find all fixes for vulnerabilities with risk scores that are less than or equal to this value.
+        schema:
+          type: integer
+      - name: min_risk_meter_score
+        in: query
+        description: Find all fixes for vulnerabilities with risk scores that are greater than or equal to this value.
+        schema:
+          type: integer
+      - name: page
+        in: query
+        description: The specific page being requested from 1 to the total number of pages returned in the `meta` object.
+        required: false
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        description: The page size from 1 to 5,000.  Default page size is 25.  Large page sizes can cause performance issues.
+        required: false
+        schema:
+          type: integer
+      - name: pci_related
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: An array of booleans to filter for Payment Card Industry related vulnerabilities.
+      - name: popular_target
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: An array of booleans for filtering your vulnerabilities by those that are popular targets.
+      - name: port
+        in: query
+        schema:
+          type: array
+          items:
+            type: integer
+        description: An array of ports associated with your vulnerabilities.
+      - name: service_ticket_status
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: An array of strings that represent the statuses of all service tickets connected to your vulnerabilities.
+      - name: status
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: An array of statuses for vulnerabilities.
+      - name: top_priority
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: An array of booleans for filtering your vulnerabilities by those that Cisco Vulnerability Management recommends should be a top priority to fix.
+      - name: vulnerability_class
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: An array of strings describing the class of your vulnerabilities.
+      - name: wasc_classification
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: An array of WASC classifications related to your vulnerabilities.
+      - name: zero_day
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: An array of booleans for filtering your vulnerabilities by those that are classified as zero days.
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    fixes:
+                    - id: '48910'
+                      diagnosis: OpenSSH is OpenBSD's SSH (Secure SHell) protocol implementation. This package includes the core files ...
+                      consequence: If these vulnerabilities are successfully exploited, an attacker can bypass certain security ...
+                      solution: Download the patch for ELSA-2006:0697 from Oracle metalink account ...
+                      url: http://oss.oracle.com/pipermail/el-errata/2006-November/000010.html
+                      urls:
+                      - http://oss.oracle.com/pipermail/el-errata/2006-November/000010.html
+                      - http://oss.oracle.com/pipermail/el-errata/2006-November/123456.html
+                      title: Oracle Enterprise Linux Openssh security update (ELSA-2006:0697)
+                      vendor: oracle
+                      assets:
+                      - id: 555
+                        locator: 127.0.0.1
+                        primary_locator: ip_address
+                        display_locator: localhost
+                      scanner_ids:
+                      - 1
+                      cves:
+                      - CVE-2006-4924
+                      - CVE-2006-5051
+                      updated_at: 5/19/2015
+                      patch_publication_date: 4/21/2009
+                      category: Ubuntu
+                      vuln_count: 1
+                      max_vuln_score: 49
+                    meta:
+                      total_count: 31
+                      page: 1
+                      pages: 4
+              schema:
+                type: object
+                properties:
+                  fixes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/fix_get_response_schema'
+                  meta:
+                    $ref: '#/components/schemas/page_metadata'
+  /fixes/{id}:
+    get:
+      summary: Show Fix
+      description: Returns information about a single fix by ID.
+      operationId: show-fix
+      security:
+      - X-Risk-Token: []
+      tags:
+      - FIXES
+      parameters:
+      - name: id
+        in: path
+        description: The fix ID.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    fix:
+                      id: '48910'
+                      diagnosis: OpenSSH is OpenBSD's SSH (Secure SHell) protocol implementation. This package includes the core files ...
+                      consequence: If these vulnerabilities are successfully exploited, an attacker can bypass certain security ...
+                      solution: Download the patch for ELSA-2006:0697 from Oracle metalink account ...
+                      url: http://oss.oracle.com/pipermail/el-errata/2006-November/000010.html
+                      urls:
+                      - http://oss.oracle.com/pipermail/el-errata/2006-November/000010.html
+                      - http://oss.oracle.com/pipermail/el-errata/2006-November/123456.html
+                      title: Oracle Enterprise Linux Openssh security update (ELSA-2006:0697)
+                      vendor: oracle
+                      assets:
+                      - id: 555
+                        locator: 127.0.0.1
+                        primary_locator: ip_address
+                        display_locator: localhost
+                      scanner_ids:
+                      - 1
+                      cves:
+                      - CVE-2006-4924
+                      - CVE-2006-5051
+                      updated_at: 5/19/2015
+                      patch_publication_date: 4/21/2009
+                      category: Ubuntu
+                      vuln_count: 1
+                      max_vuln_score: 49
+              schema:
+                type: object
+                properties:
+                  fix:
+                    $ref: '#/components/schemas/fix_get_response_schema'
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /fixes/{id}/alternatives:
+    get:
+      summary: List Fix Alternatives
+      description: 'Returns a paginated list of a single fix''s alternative fixes by a fix''s ID.
+
+
+        Attribute Value
+
+
+        Maximum Pages Allowed ∞
+
+
+        Maximum Page Size 100
+
+
+        Default Page Size 25
+
+
+        Total Count Present in meta object Yes
+
+
+        See the Pagination Section for more details.
+
+
+        Note: this request may take longer to complete depending on the number of assets and vulnerabilities associated with your fixes.'
+      operationId: list-fix-alternatives
+      security:
+      - X-Risk-Token: []
+      tags:
+      - FIXES
+      parameters:
+      - name: id
+        in: path
+        description: The fix ID.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    fixes:
+                    - id: '48910'
+                      diagnosis: OpenSSH is OpenBSD's SSH (Secure SHell) protocol implementation. This package includes the core files ...
+                      consequence: If these vulnerabilities are successfully exploited, an attacker can bypass certain security ...
+                      solution: Download the patch for ELSA-2006:0697 from Oracle metalink account ...
+                      url: http://oss.oracle.com/pipermail/el-errata/2006-November/000010.html
+                      urls:
+                      - http://oss.oracle.com/pipermail/el-errata/2006-November/000010.html
+                      - http://oss.oracle.com/pipermail/el-errata/2006-November/123456.html
+                      title: Oracle Enterprise Linux Openssh security update (ELSA-2006:0697)
+                      vendor: oracle
+                      assets:
+                      - id: 555
+                        locator: 127.0.0.1
+                        primary_locator: ip_address
+                        display_locator: localhost
+                      scanner_ids:
+                      - 1
+                      cves:
+                      - CVE-2006-4924
+                      - CVE-2006-5051
+                      updated_at: 5/19/2015
+                      patch_publication_date: 4/21/2009
+                      category: Ubuntu
+                      vuln_count: 1
+                      max_vuln_score: 49
+                    meta:
+                      total_count: 32
+                      page: 1
+                      pages: 4
+              schema:
+                type: object
+                properties:
+                  fixes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/fix_get_response_schema'
+                  meta:
+                    $ref: '#/components/schemas/page_metadata'
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+components:
+  schemas:
+    page_metadata:
+      type: object
+      properties:
+        meta:
+          type: object
+          required:
+          - page
+          - pages
+          properties:
+            page:
+              type: integer
+              description: The response current page number.
+              default: 1
+            pages:
+              type: integer
+              description: The total number of pages.
+              default: 1
+            total_count:
+              type: integer
+              description: The total number of items across all pages.
+              default: 1
+    error_response:
+      type: object
+      properties:
+        error:
+          type: string
+          description: The HTTP error message.
+        message:
+          type: string
+          description: The specific error message.
+        success:
+          type: string
+          description: Indicates success, usually 'false'.
+    fix_get_response_schema:
+      type: object
+      properties:
+        asset_count:
+          type: integer
+          example: '5'
+        asset_count_display_string:
+          type: string
+          example: 5 Assets Affected
+        assets:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+                example: 27183
+              locator:
+                type: string
+                example: 127.0.0.1
+              primary_locator:
+                type: string
+                example: ip_address
+              display_locator:
+                type: string
+                example: localhost
+        category:
+          type: string
+          example: Ubuntu
+        consequence:
+          type: string
+          example: If these vulnerabilities are successfully exploited, an attacker can bypass certain security ...
+        cves:
+          type: array
+          items:
+            type: string
+            example: CVE-2006-4924
+        diagnosis:
+          type: string
+          example: OpenSSH is OpenBSD's SSH (Secure SHell) protocol implementation. This package includes the core files ...
+        id:
+          type: integer
+          example: '48910'
+          format: int32
+        max_vuln_score:
+          type: integer
+          format: int32
+          example: 49
+        patch_publication_date:
+          type: string
+          example: 4/21/2009
+        reference_links:
+          type: array
+          items:
+            type: string
+            example: https://nvd.nist.gov/vuln/detail/CVE-2006-4924#:~:text=CVE-2006-4924%20Detail
+        scanner_ids:
+          type: array
+          items:
+            type: string
+            example: '118667'
+        solution:
+          type: string
+          example: Download the patch for ELSA-2006:0697 from Oracle metalink account ...
+        title:
+          type: string
+          example: Oracle Enterprise Linux Openssh security update (ELSA-2006:0697)
+        updated_at:
+          type: string
+          example: 5/19/2015
+        url:
+          type: string
+          example: http://oss.oracle.com/pipermail/el-errata/2006-November/000010.html
+          description: Deprecated. The first url in the urls array.
+          deprecated: true
+        urls:
+          type: array
+          items:
+            type: string
+            example:
+            - http://oss.oracle.com/pipermail/el-errata/2006-November/000010.html
+            - http://oss.oracle.com/pipermail/el-errata/2006-November/123456.html
+        vendor:
+          type: string
+          example: oracle
+        vuln_count:
+          type: integer
+          format: int32
+          example: 1
+  securitySchemes:
+    X-Risk-Token:
+      type: apiKey
+      name: X-Risk-Token
+      in: header
+x-provenance:
+  method: searched
+  source: https://apidocs.kennasecurity.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://apidocs.kennasecurity.com/reference/add-applications-to-role.md
+  - https://apidocs.kennasecurity.com/reference/add-asset-groups-to-role.md
+  - https://apidocs.kennasecurity.com/reference/application-findings-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/application-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/application-historical-vulnerability-count-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/asset-groups-findings-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/audit-log-search.md
+  - https://apidocs.kennasecurity.com/reference/average-days-open-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/bulk-delete-findings.md
+  - https://apidocs.kennasecurity.com/reference/bulk-delete-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/bulk-update-assets.md
+  - https://apidocs.kennasecurity.com/reference/bulk-update-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/calculate-asset-group-metric.md
+  - https://apidocs.kennasecurity.com/reference/check-data-export-status.md
+  - https://apidocs.kennasecurity.com/reference/check-remediation-score.md
+  - https://apidocs.kennasecurity.com/reference/check-sla-adherence-metrics.md
+  - https://apidocs.kennasecurity.com/reference/check-vulnerability-densities-metrics.md
+  - https://apidocs.kennasecurity.com/reference/create-application.md
+  - https://apidocs.kennasecurity.com/reference/create-asset-group-and-risk-meter.md
+  - https://apidocs.kennasecurity.com/reference/create-asset.md
+  - https://apidocs.kennasecurity.com/reference/create-child-asset-group-and-risk-meter.md
+  - https://apidocs.kennasecurity.com/reference/create-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/create-finding.md
+  - https://apidocs.kennasecurity.com/reference/create-role.md
+  - https://apidocs.kennasecurity.com/reference/create-stack.md
+  - https://apidocs.kennasecurity.com/reference/create-user.md
+  - https://apidocs.kennasecurity.com/reference/create-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/delete-application.md
+  - https://apidocs.kennasecurity.com/reference/delete-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/delete-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/delete-role.md
+  - https://apidocs.kennasecurity.com/reference/delete-stack.md
+  - https://apidocs.kennasecurity.com/reference/delete-user.md
+  - https://apidocs.kennasecurity.com/reference/delete-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/download-zipped-asset-data.md
+  - https://apidocs.kennasecurity.com/reference/download-zipped-vuln-data.md
+  - https://apidocs.kennasecurity.com/reference/entitlements-overage.md
+  - https://apidocs.kennasecurity.com/reference/false-positive-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/get-refresh-reporting-status.md
+  - https://apidocs.kennasecurity.com/reference/historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/historical-risk-meter-scores.md
+  - https://apidocs.kennasecurity.com/reference/historical-vulnerability-risk-category-counts.md
+  - https://apidocs.kennasecurity.com/reference/kill-running-data-export.md
+  - https://apidocs.kennasecurity.com/reference/list-applications.md
+  - https://apidocs.kennasecurity.com/reference/list-asset-groups.md
+  - https://apidocs.kennasecurity.com/reference/list-assets.md
+  - https://apidocs.kennasecurity.com/reference/list-connector-runs.md
+  - https://apidocs.kennasecurity.com/reference/list-connectors.md
+  - https://apidocs.kennasecurity.com/reference/list-cve-identifiers.md
+  - https://apidocs.kennasecurity.com/reference/list-dashboard-groups.md
+  - https://apidocs.kennasecurity.com/reference/list-fix-alternatives.md
+  - https://apidocs.kennasecurity.com/reference/list-fixes.md
+  - https://apidocs.kennasecurity.com/reference/list-roles.md
+  - https://apidocs.kennasecurity.com/reference/list-stacks.md
+  - https://apidocs.kennasecurity.com/reference/list-tags.md
+  - https://apidocs.kennasecurity.com/reference/list-users.md
+  - https://apidocs.kennasecurity.com/reference/list-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/list-vulnerability-definitions.md
+  - https://apidocs.kennasecurity.com/reference/past-due-vulnerabilities-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/refresh-reporting-data.md
+  - https://apidocs.kennasecurity.com/reference/request-data-export.md
+  - https://apidocs.kennasecurity.com/reference/retrieve-data-export.md
+  - https://apidocs.kennasecurity.com/reference/risk-accepted-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/run-connector.md
+  - https://apidocs.kennasecurity.com/reference/search-assets.md
+  - https://apidocs.kennasecurity.com/reference/search-findings.md
+  - https://apidocs.kennasecurity.com/reference/search-fixes.md
+  - https://apidocs.kennasecurity.com/reference/search-for-vulnerability-definitions.md
+  - https://apidocs.kennasecurity.com/reference/search-users.md
+  - https://apidocs.kennasecurity.com/reference/search-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/service-now-list-fixes.md
+  - https://apidocs.kennasecurity.com/reference/service-now-search-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/show-all-fixes.md
+  - https://apidocs.kennasecurity.com/reference/show-application.md
+  - https://apidocs.kennasecurity.com/reference/show-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/show-asset-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/show-asset.md
+  - https://apidocs.kennasecurity.com/reference/show-chatter.md
+  - https://apidocs.kennasecurity.com/reference/show-connector-run.md
+  - https://apidocs.kennasecurity.com/reference/show-cve-history.md
+  - https://apidocs.kennasecurity.com/reference/show-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/show-finding.md
+  - https://apidocs.kennasecurity.com/reference/show-fix.md
+  - https://apidocs.kennasecurity.com/reference/show-malware-hashes.md
+  - https://apidocs.kennasecurity.com/reference/show-role.md
+  - https://apidocs.kennasecurity.com/reference/show-scanner-vulnerability-details.md
+  - https://apidocs.kennasecurity.com/reference/show-stack.md
+  - https://apidocs.kennasecurity.com/reference/show-top-fix-groups.md
+  - https://apidocs.kennasecurity.com/reference/show-user.md
+  - https://apidocs.kennasecurity.com/reference/show-vulnerability-definition.md
+  - https://apidocs.kennasecurity.com/reference/show-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/stack-applications-statistics.md
+  - https://apidocs.kennasecurity.com/reference/stack-asset-groups-statistics.md
+  - https://apidocs.kennasecurity.com/reference/tag-an-asset.md
+  - https://apidocs.kennasecurity.com/reference/total-past-due-vulnerabilities-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/trends.md
+  - https://apidocs.kennasecurity.com/reference/untag-an-asset.md
+  - https://apidocs.kennasecurity.com/reference/update-application.md
+  - https://apidocs.kennasecurity.com/reference/update-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/update-asset.md
+  - https://apidocs.kennasecurity.com/reference/update-connector.md
+  - https://apidocs.kennasecurity.com/reference/update-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/update-findings.md
+  - https://apidocs.kennasecurity.com/reference/update-permissions-in-bulk.md
+  - https://apidocs.kennasecurity.com/reference/update-role-custom-permissions.md
+  - https://apidocs.kennasecurity.com/reference/update-role.md
+  - https://apidocs.kennasecurity.com/reference/update-stack.md
+  - https://apidocs.kennasecurity.com/reference/update-user.md
+  - https://apidocs.kennasecurity.com/reference/update-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/upload-data-file.md
+  - https://apidocs.kennasecurity.com/reference/validate-asset-search-query.md
+  - https://apidocs.kennasecurity.com/reference/validate-vulnerability-search-query.md
+  - https://apidocs.kennasecurity.com/reference/vi-data-snapshot.md
+  - https://apidocs.kennasecurity.com/reference/vulnerabilities-by-due-date.md
+  - https://apidocs.kennasecurity.com/reference/vulnerability-definitions-with-significant-score-change.md
+  merge:
+    pages: 115
+    deduped: 272
+    conflicts_kept_first: 0

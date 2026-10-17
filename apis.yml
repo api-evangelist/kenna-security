@@ -152,9 +152,11 @@ common:
 
 apis:
 - name: Cisco Vulnerability Management API (Kenna)
-  description: 'REST API for the Kenna / Cisco Vulnerability Management platform: manage assets, asset groups, applications, findings, fixes,
-    vulnerabilities, vulnerability intelligence, connectors, data exports, dashboards, metrics, roles, and users. Authenticated with an X-Risk-Token
-    API-key header over HTTPS; JSON request/response with page-number pagination.'
+  description: >-
+    REST API for the Kenna / Cisco Vulnerability Management platform: manage assets, asset groups, applications,
+    findings, fixes, vulnerabilities, vulnerability intelligence, connectors, data exports, dashboards,
+    metrics, roles, and users. Authenticated with an X-Risk-Token API-key header over HTTPS; JSON request/response
+    with page-number pagination.
   humanURL: https://apidocs.kennasecurity.com/reference
   baseURL: https://api.kennasecurity.com
   properties:
@@ -165,16 +167,17 @@ apis:
   - type: Authentication
     url: https://apidocs.kennasecurity.com/reference/api-authentication
   aid: kenna-security:cisco-vulnerability-management-api-kenna
-- aid: kenna-security:kenna-security-inference-api
-  name: Kenna Security Security Inference API
-  description: The Security Inference API from Kenna Security — 5 operation(s) for security inference.
+- aid: kenna-security:kenna-security-application-reporting-api
+  name: Kenna Security APPLICATION REPORTING API
+  description: >-
+    The APPLICATION REPORTING API from Kenna Security — 3 operation(s) for application reporting.
   humanURL: https://apidocs.kennasecurity.com/reference
   baseURL: https://api.kennasecurity.com
   tags:
-  - Security Inference
+  - APPLICATION REPORTING
   properties:
   - type: OpenAPI
-    url: openapi/kenna-security-inference-api-openapi.yml
+    url: openapi/kenna-security-application-reporting-api-openapi.yml
   - type: JSONSchema
     url: json-schema/kenna-security-os-inference-response-schema-schema.json
   - type: JSONSchema
@@ -184,19 +187,10 @@ apis:
   - type: JSONSchema
     url: json-schema/kenna-security-odata-cve-response-schema-schema.json
   - type: JSONSchema
-    url: json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
   - type: JSONSchema
     url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
-- aid: kenna-security:kenna-security-platform-api
-  name: Kenna Security Security Platform API
-  description: The Security Platform API from Kenna Security — 88 operation(s) for security platform.
-  humanURL: https://apidocs.kennasecurity.com/reference
-  baseURL: https://api.kennasecurity.com
-  tags:
-  - Security Platform
-  properties:
-  - type: OpenAPI
-    url: openapi/kenna-security-platform-api-openapi.yml
   - type: JSONSchema
     url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
   - type: JSONSchema
@@ -209,7 +203,959 @@ apis:
     url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
   - type: JSONSchema
     url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
-
+- aid: kenna-security:kenna-security-applications-api
+  name: Kenna Security APPLICATIONS API
+  description: The APPLICATIONS API from Kenna Security — 2 operation(s) for applications.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - APPLICATIONS
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-applications-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+- aid: kenna-security:kenna-security-asset-group-reporting-api
+  name: Kenna Security ASSET GROUP REPORTING API
+  description: >-
+    The ASSET GROUP REPORTING API from Kenna Security — 12 operation(s) for asset group reporting.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - ASSET GROUP REPORTING
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-asset-group-reporting-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+- aid: kenna-security:kenna-security-asset-groups-api
+  name: Kenna Security ASSET GROUPS API
+  description: The ASSET GROUPS API from Kenna Security — 6 operation(s) for asset groups.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - ASSET GROUPS
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-asset-groups-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+- aid: kenna-security:kenna-security-asset-tagging-api
+  name: Kenna Security ASSET TAGGING API
+  description: The ASSET TAGGING API from Kenna Security — 1 operation(s) for asset tagging.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - ASSET TAGGING
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-asset-tagging-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+- aid: kenna-security:kenna-security-assets-api
+  name: Kenna Security ASSETS API
+  description: The ASSETS API from Kenna Security — 7 operation(s) for assets.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - ASSETS
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-assets-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+- aid: kenna-security:kenna-security-audit-logs-api
+  name: Kenna Security AUDIT LOGS API
+  description: The AUDIT LOGS API from Kenna Security — 1 operation(s) for audit logs.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - AUDIT LOGS
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-audit-logs-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+- aid: kenna-security:kenna-security-connector-runs-api
+  name: Kenna Security CONNECTOR RUNS API
+  description: The CONNECTOR RUNS API from Kenna Security — 4 operation(s) for connector runs.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - CONNECTOR RUNS
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-connector-runs-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+- aid: kenna-security:kenna-security-connectors-api
+  name: Kenna Security CONNECTORS API
+  description: The CONNECTORS API from Kenna Security — 2 operation(s) for connectors.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - CONNECTORS
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-connectors-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+- aid: kenna-security:kenna-security-cves-api
+  name: Kenna Security CVES API
+  description: The CVES API from Kenna Security — 1 operation(s) for cves.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - CVES
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-cves-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+- aid: kenna-security:kenna-security-dashboard-groups-api
+  name: Kenna Security DASHBOARD GROUPS API
+  description: The DASHBOARD GROUPS API from Kenna Security — 2 operation(s) for dashboard groups.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - DASHBOARD GROUPS
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-dashboard-groups-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+- aid: kenna-security:kenna-security-data-export-api
+  name: Kenna Security DATA EXPORT API
+  description: The DATA EXPORT API from Kenna Security — 3 operation(s) for data export.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - DATA EXPORT
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-data-export-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+- aid: kenna-security:kenna-security-entitlements-api
+  name: Kenna Security ENTITLEMENTS API
+  description: The ENTITLEMENTS API from Kenna Security — 1 operation(s) for entitlements.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - ENTITLEMENTS
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-entitlements-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+- aid: kenna-security:kenna-security-findings-api
+  name: Kenna Security FINDINGS API
+  description: The FINDINGS API from Kenna Security — 3 operation(s) for findings.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - FINDINGS
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-findings-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+- aid: kenna-security:kenna-security-fixes-api
+  name: Kenna Security FIXES API
+  description: The FIXES API from Kenna Security — 4 operation(s) for fixes.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - FIXES
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-fixes-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+- aid: kenna-security:kenna-security-high-risk-vulnerability-densities-api
+  name: Kenna Security HIGH RISK VULNERABILITY DENSITIES API
+  description: >-
+    The HIGH RISK VULNERABILITY DENSITIES API from Kenna Security — 1 operation(s) for high risk vulnerability
+    densities.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - HIGH RISK VULNERABILITY DENSITIES
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-high-risk-vulnerability-densities-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+- aid: kenna-security:kenna-security-inference-v1-legacy-api
+  name: Kenna Security INFERENCE V1 (Legacy) API
+  description: >-
+    The INFERENCE V1 (Legacy) API from Kenna Security — 2 operation(s) for inference v1 (legacy).
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - INFERENCE V1 (Legacy)
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-inference-v1-legacy-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+- aid: kenna-security:kenna-security-inference-v2-legacy-api
+  name: Kenna Security INFERENCE V2 (Legacy) API
+  description: >-
+    The INFERENCE V2 (Legacy) API from Kenna Security — 1 operation(s) for inference v2 (legacy).
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - INFERENCE V2 (Legacy)
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-inference-v2-legacy-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+- aid: kenna-security:kenna-security-inference-v3-cves-api
+  name: Kenna Security INFERENCE V3 - Cves API
+  description: >-
+    The INFERENCE V3 - Cves API from Kenna Security — 1 operation(s) for inference v3 - cves.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - INFERENCE V3 - Cves
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-inference-v3-cves-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+- aid: kenna-security:kenna-security-inference-v3-osquery-api
+  name: Kenna Security INFERENCE V3 - Osquery API
+  description: >-
+    The INFERENCE V3 - Osquery API from Kenna Security — 1 operation(s) for inference v3 - osquery.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - INFERENCE V3 - Osquery
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-inference-v3-osquery-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+- aid: kenna-security:kenna-security-integrations-api
+  name: Kenna Security INTEGRATIONS API
+  description: The INTEGRATIONS API from Kenna Security — 2 operation(s) for integrations.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - INTEGRATIONS
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-integrations-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+- aid: kenna-security:kenna-security-remediation-score-api
+  name: Kenna Security REMEDIATION SCORE API
+  description: The REMEDIATION SCORE API from Kenna Security — 1 operation(s) for remediation score.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - REMEDIATION SCORE
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-remediation-score-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+- aid: kenna-security:kenna-security-roles-api
+  name: Kenna Security ROLES API
+  description: The ROLES API from Kenna Security — 7 operation(s) for roles.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - ROLES
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-roles-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+- aid: kenna-security:kenna-security-sla-adherence-api
+  name: Kenna Security SLA ADHERENCE API
+  description: The SLA ADHERENCE API from Kenna Security — 1 operation(s) for sla adherence.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - SLA ADHERENCE
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-sla-adherence-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+- aid: kenna-security:kenna-security-stacks-api
+  name: Kenna Security STACKS API
+  description: The STACKS API from Kenna Security — 4 operation(s) for stacks.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - STACKS
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-stacks-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+- aid: kenna-security:kenna-security-users-api
+  name: Kenna Security USERS API
+  description: The USERS API from Kenna Security — 3 operation(s) for users.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - USERS
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-users-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+- aid: kenna-security:kenna-security-vulnerabilities-api
+  name: Kenna Security VULNERABILITIES API
+  description: The VULNERABILITIES API from Kenna Security — 8 operation(s) for vulnerabilities.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - VULNERABILITIES
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-vulnerabilities-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
+- aid: kenna-security:kenna-security-vulnerability-intelligence-api
+  name: Kenna Security VULNERABILITY INTELLIGENCE+ API
+  description: >-
+    The VULNERABILITY INTELLIGENCE+ API from Kenna Security — 9 operation(s) for vulnerability intelligence+.
+  humanURL: https://apidocs.kennasecurity.com/reference
+  baseURL: https://api.kennasecurity.com
+  tags:
+  - VULNERABILITY INTELLIGENCE+
+  properties:
+  - type: OpenAPI
+    url: openapi/kenna-security-vulnerability-intelligence-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/kenna-security-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-v3-os-inference-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-microsoft-vuln-inferenece-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-odata-cve-response-schema-schema.json
+  - type: JSONSchema
+    url: >-
+      json-schema/kenna-security-51612701083eea34cbeb0be66175b235566839e2376216d7ff4bab8b393d98fd-post-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-windows-os-inference-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-settings-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-with-mitre-attack-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-vulnerability-response-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-vulnerability-definition-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-create-vulnerability-request-body-schema-schema.json
+  - type: JSONSchema
+    url: json-schema/kenna-security-export-get-finding-response-schema-schema.json
 x-enrichment:
   date: '2026-07-19'
   status: backfilled

@@ -1,0 +1,1089 @@
+openapi: 3.2.0
+info:
+  title: Kenna Inference INFERENCE V3 - Osquery API
+  description: Swagger POC
+  version: '2.0'
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: api.inference.us.kennasecurity.com
+tags:
+- name: INFERENCE V3 - Osquery
+paths:
+  /inference/v3/os_query:
+    post:
+      summary: Vulnerability Inference for Windows, Darwin (macOS) and Linux Systems
+      description: 'Returns a list of known vulnerabilities for a given operating system such as Windows, Mac OS and Linux Systems.
+
+
+        🚧
+
+        Restricted Access
+
+
+        This API endpoint is a premium feature for select partners.
+
+
+        To generate a payload on the client machine, please review the Getting Started with Vulnerability Inference V3 guides, and select your client operating system. For example, for Darwin Systems (macOS), run this osquery command from your command line shell:
+
+        osqueryi --json "SELECT * FROM os_version;"
+
+
+        The command should produce JSON output that looks like this:
+
+        [
+
+        {
+
+        "major": "10",
+
+        "name": "Mac OS X",
+
+        "platform_like": "darwin",
+
+        "patch": "3",
+
+        "platform": "darwin",
+
+        "version": "10.15.1",
+
+        "build": "19D76",
+
+        "codename": "",
+
+        "arch": "x86_64",
+
+        "minor": "15"
+
+        }
+
+        ]
+
+
+        The above output can be used in the POST request.'
+      operationId: v3-os-inference
+      security:
+      - X-Risk-Token: []
+      tags:
+      - INFERENCE V3 - Osquery
+      parameters: []
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              examples:
+                windows_without_applications:
+                  value:
+                    meta:
+                      request_uuid: 5d646171-0fd9-4f89-ba6a-35bb940dd007
+                      request_agent: 'User-Agent: curl/7.79.1'
+                      request_params:
+                        minimum_vulnerability_score: 33
+                      request_notes: For most accurate vulnerability reporting, please send installed_kbs with request
+                    os:
+                      os_information:
+                        os_name: Microsoft Windows 10 Pro
+                        version: 10.0.22000
+                        platform: WINDOWS
+                        arch: x86_64
+                        os_name_normalized: Windows 11 Version 21H2 Build 22000
+                        vendor_status: End Of Life
+                        end_of_support_date: '2024-10-08'
+                        end_of_life_date: '2024-10-08'
+                      vulnerabilities:
+                      - cve_id: CVE-2021-43217
+                        checksum: b679ca070d8117199dc976de95c29ece3bc1d9f2
+                        checksum_updated_at: '2024-11-23T14:38:26.731Z'
+                        vulnerability_score: 37.0923
+                        first_matched_product:
+                          cpe_uri: cpe:2.3:o:microsoft:windows_11:-:*:*:*:*:*:*:*
+                          affected_versions: []
+                          cpe_schema_version: '2.3'
+                        fixes:
+                        - type: kb
+                          vendor_fix_id: KB5044280
+                          vendor_link: https://catalog.update.microsoft.com/v7/site/Search.aspx?q=KB5044280
+                          internal_created_at: '2024-10-08T18:00:01.921Z'
+                          internal_updated_at: '2025-03-12T00:57:01.657Z'
+                          vendor_published_at: '2024-10-08'
+                        - type: kb
+                          vendor_fix_id: KB5043067
+                          vendor_link: https://catalog.update.microsoft.com/v7/site/Search.aspx?q=KB5043067
+                          internal_created_at: '2024-09-10T18:00:01.727Z'
+                          internal_updated_at: '2025-03-12T00:57:00.750Z'
+                          vendor_published_at: '2024-09-10'
+                        - type: kb
+                          vendor_fix_id: KB5041592
+                          vendor_link: https://catalog.update.microsoft.com/v7/site/Search.aspx?q=KB5041592
+                          internal_created_at: '2024-08-13T18:00:01.614Z'
+                          internal_updated_at: '2024-08-13T18:03:28.781Z'
+                          vendor_published_at: '2024-08-13'
+                    applications: []
+                    success: true
+                    errors: []
+                    warnings: []
+                    has_application_errors: false
+                    inferred_kbs:
+                    - KB5006674
+                    - KB4541738
+                    - KB4545706
+                  summary: Windows OS Only
+                  description: Response for Microsoft Windows 10 Pro OS only
+                windows_with_applications:
+                  value:
+                    meta:
+                      request_uuid: 8284700d-5fd7-4429-b7a7-dfb49112fd8e
+                      request_agent: 'User-Agent: curl/7.79.1'
+                      request_params:
+                        minimum_vulnerability_score: 33
+                      request_notes: For most accurate vulnerability reporting, please send installed_kbs with request
+                    os:
+                      os_information:
+                        os_name: Microsoft Windows Server 2019 Datacenter
+                        version: 10.0.17763
+                        platform: WINDOWS
+                        arch: x86_64
+                        os_name_normalized: Windows Server 2019
+                        vendor_status: Maintenance Support
+                        end_of_support_date: '2024-01-09'
+                        end_of_life_date: '2029-01-09'
+                      vulnerabilities: []
+                    applications:
+                    - application_information:
+                        application_name: Microsoft Silverlight
+                        vendor: Microsoft Corporation
+                        version: 5.1.20918.0
+                      vulnerabilities:
+                      - cve_id: CVE-2016-0034
+                        checksum: 3992779760476dc7a252c7a0dfeaf61a53d7a3c1
+                        checksum_updated_at: '2025-02-10T20:13:03.751Z'
+                        vulnerability_score: 84.3006
+                        first_matched_product:
+                          cpe_uri: cpe:2.3:a:microsoft:silverlight:*:*:*:*:*:*:*:*
+                          affected_versions:
+                          - lower_bound_type: including
+                            lower_bound: '5.0'
+                            upper_bound_type: excluding
+                            upper_bound: 5.1.41212.0
+                          cpe_version: '2.3'
+                        fixes: []
+                      success: true
+                      errors: []
+                      warnings: []
+                    success: true
+                    errors: []
+                    warnings: []
+                    has_application_errors: false
+                    inferred_kbs:
+                    - KB4464330
+                    - KB3074661
+                    - KB3074663
+                  summary: Windows OS with Applications
+                  description: Microsoft Windows Server 2019 Datacenter with applications
+                darwin:
+                  value:
+                    meta:
+                      request_uuid: 08270b19-4452-4279-acdf-a8bd8d98df7a
+                      request_agent: 'User-Agent: curl/7.79.1'
+                      request_params:
+                        minimum_vulnerability_score: 33
+                    os:
+                      os_information:
+                        os_name: Mac OS X
+                        version: 10.15.1
+                        platform: DARWIN
+                        arch: x86_64
+                        os_name_normalized: macOS Catalina 10.15.1
+                        vendor_status: End Of Life
+                        end_of_support_date: '2022-07-20'
+                        end_of_life_date: '2022-07-20'
+                      vulnerabilities:
+                      - cve_id: CVE-2013-4449
+                        checksum: 086746b0dd2e88e1581a46ac0a8e9ba220600cf0
+                        checksum_updated_at: '2024-11-23T12:10:51.202Z'
+                        vulnerability_score: 46.2717
+                        first_matched_product: null
+                        fixes:
+                        - type: security_update
+                          vendor_fix_id: HT210788
+                          vendor_link: https://support.apple.com/en-us/HT210788
+                          internal_created_at: '2021-04-16T18:00:44Z'
+                          internal_updated_at: '2021-04-16T18:00:44Z'
+                          vendor_published_at: '2019-12-10'
+                    applications: []
+                    success: true
+                    errors: []
+                    warnings: []
+                    has_application_errors: false
+                  summary: Darwin (macOS)
+                  description: Response for macOS 10.15.1
+                alma_linux:
+                  value:
+                    meta:
+                      request_uuid: e698c553-8701-4930-82f1-469fe84f1a6b
+                      request_agent: 'User-Agent: PostmanRuntime/7.43.2'
+                      request_params:
+                        minimum_vulnerability_score: 33
+                    os:
+                      os_information:
+                        os_name: AlmaLinux 8.3
+                        version: 8.3.
+                        platform: RHEL
+                        arch: x86_64
+                        os_name_normalized: AlmaLinux 8.3 8.3.
+                        vendor_status: Maintenance Support
+                        end_of_support_date: '2024-05-31'
+                        end_of_life_date: '2031-05-31'
+                      vulnerabilities: []
+                    applications:
+                    - application_information:
+                        application_name: kernel
+                        vendor: AlmaLinux
+                        version: 4.18.0
+                      vulnerabilities:
+                      - cve_id: CVE-2023-6356
+                        checksum: c4fedbe37833e296cb80fbbd22fb67d1af0af46b
+                        checksum_updated_at: '2024-11-23T17:06:19.497Z'
+                        vulnerability_score: 42.2748
+                        first_matched_product: null
+                        fixes:
+                        - arch: x86_64
+                          type: package
+                          fix_name: kernel-4.18.0-513.18.1.el8_9.x86_64.rpm
+                          fix_version: 0:4.18.0-513.18.1.el8_9
+                          internal_created_at: '2024-02-23T01:36:37Z'
+                          internal_updated_at: '2024-02-23T01:36:37Z'
+                          vendor_published_at: '2024-02-07T21:15:08Z'
+                          vendor_advisory_id: ALSA-2024:0897
+                          vendor_advisory_uri: https://errata.almalinux.org/8/ALSA-2024-0897.html
+                      success: true
+                      errors: []
+                    success: true
+                    errors: []
+                    warnings: []
+                    has_application_errors: false
+                  summary: Alma Linux
+                  description: Response for Alma Linux 8.3
+                amazon_linux:
+                  value:
+                    meta:
+                      request_uuid: ddf487be-12d4-4252-8956-9379d4041a7e
+                      request_agent: 'User-Agent: PostmanRuntime/7.43.2'
+                      request_params:
+                        minimum_vulnerability_score: 33
+                    os:
+                      os_information:
+                        os_name: Amazon Linux
+                        version: 2.0.0
+                        platform: AMZN
+                        arch: x86_64
+                        os_name_normalized: Amazon Linux 2.0.0
+                        vendor_status: End Of Life
+                        end_of_support_date: '2024-06-30'
+                        end_of_life_date: '2024-06-30'
+                      vulnerabilities: []
+                    applications:
+                    - application_information:
+                        application_name: kernel
+                        vendor: Amazon Linux
+                        version: 4.14.262
+                      vulnerabilities:
+                      - cve_id: CVE-2023-52340
+                        checksum: 52119837dfdfe4693b3dec165a65127ec112c7d4
+                        checksum_updated_at: '2025-03-20T15:13:05.550Z'
+                        vulnerability_score: 50.7256
+                        first_matched_product:
+                          cpe_uri: cpe:2.3:o:linux:linux_kernel:*:*:*:*:*:*:*:*
+                          affected_versions:
+                          - lower_bound_type: null
+                            lower_bound: null
+                            upper_bound_type: excluding
+                            upper_bound: '6.3'
+                          cpe_version: '2.3'
+                        fixes:
+                        - arch: x86_64
+                          type: package
+                          fix_name: kernel-5.15.145-95.156.amzn2.x86_64
+                          fix_version: 5.15.145-95.156
+                          internal_created_at: '2024-01-23T03:13:27Z'
+                          internal_updated_at: '2024-01-23T03:13:27Z'
+                          vendor_published_at: '2024-07-05T02:15:09Z'
+                          vendor_advisory_id: ALASKERNEL-5.15-2024-033
+                          vendor_advisory_uri: https://alas.aws.amazon.com/AL2/ALASKERNEL-5.15-2024-033.html
+                        - arch: x86_64
+                          type: package
+                          fix_name: kernel-5.10.205-195.804.amzn2.x86_64
+                          fix_version: 5.10.205-195.804
+                          internal_created_at: '2024-01-23T03:13:27Z'
+                          internal_updated_at: '2024-01-23T03:13:27Z'
+                          vendor_published_at: '2024-07-05T02:15:09Z'
+                          vendor_advisory_id: ALASKERNEL-5.10-2024-045
+                          vendor_advisory_uri: https://alas.aws.amazon.com/AL2/ALASKERNEL-5.10-2024-045.html
+                      success: true
+                      errors: []
+                    success: true
+                    errors: []
+                    warnings: []
+                    has_application_errors: false
+                  summary: Amazon Linux
+                  description: Response for Amazon Linux 2
+                debian_linux:
+                  value:
+                    meta:
+                      request_uuid: cadaacb1-f9e2-4238-aec5-61fae1c192c5
+                      request_agent: 'User-Agent: PostmanRuntime/7.43.2'
+                      request_params:
+                        minimum_vulnerability_score: 33
+                    os:
+                      os_information:
+                        os_name: Debian GNU/Linux
+                        version: 11.6.0
+                        platform: DEBIAN
+                        arch: x86_64
+                        os_name_normalized: Debian GNU/Linux 11.6.0
+                        vendor_status: Active Support
+                        end_of_support_date: '2026-06-30'
+                        end_of_life_date: '2031-06-30'
+                      vulnerabilities: []
+                    applications:
+                    - application_information:
+                        application_name: openssl
+                        vendor: ''
+                        version: 1.1.1n
+                      vulnerabilities:
+                      - cve_id: CVE-2023-0464
+                        checksum: f60c6cfa9efb4c306fc876169c6c15b756613b43
+                        checksum_updated_at: '2024-11-23T16:26:10.812Z'
+                        vulnerability_score: 53.6089
+                        first_matched_product: null
+                        fixes:
+                        - arch: all
+                          type: package
+                          fix_name: openssl
+                          fix_version: 1.1.1-0+deb11u5
+                          internal_created_at: '2024-07-24T19:39:30Z'
+                          internal_updated_at: '2024-07-24T19:39:30Z'
+                          vendor_published_at: '2023-03-22T17:15:13Z'
+                          vendor_advisory_id: DSA-5417-1
+                          vendor_advisory_uri: https://security-tracker.debian.org/tracker/DSA-5417-1
+                      success: true
+                      errors: []
+                    success: true
+                    errors: []
+                    warnings: []
+                    has_application_errors: false
+                  summary: Debian Linux
+                  description: Response for Debian Linux 11.6
+                opensuse_leap_linux:
+                  value:
+                    meta:
+                      request_uuid: 70decee7-73fe-4b77-a771-a95781b578e5
+                      request_agent: 'User-Agent: curl/7.79.1'
+                      request_params:
+                        minimum_vulnerability_score: 33
+                    os:
+                      os_information:
+                        os_name: openSUSE Leap
+                        version: '15.4'
+                        platform: OPENSUSE-LEAP
+                        arch: x86_64
+                        os_name_normalized: openSUSE Leap 15.4
+                        vendor_status: Active Support
+                        end_of_support_date: '2023-12-01'
+                        end_of_life_date: '2023-12-01'
+                      vulnerabilities: []
+                    applications:
+                    - application_information:
+                        application_name: kernel-default
+                        vendor: SUSE LLC <https://www.suse.com/>
+                        version: 5.2.21
+                      vulnerabilities:
+                      - cve_id: CVE-2022-1016
+                        checksum: f3415409a453cba2e2176d9555fe46f7d5b27c76
+                        checksum_updated_at: '2022-04-27T04:35:00.000Z'
+                        vulnerability_score: 25.5432
+                        first_matched_product: null
+                        fixes:
+                        - arch: all
+                          type: package
+                          fix_name: SUSE Linux Enterprise Server 15 SP2-LTSS:kernel-default-5.3.18-150200.24.112.1
+                          fix_version: 5.3.18-150200.24.112.1
+                          internal_created_at: '2022-04-16T08:24:48Z'
+                          internal_updated_at: '2022-08-18T06:31:16Z'
+                          vendor_published_at: null
+                          vendor_advisory_id: SUSE-SU-2022:1197-1
+                          vendor_advisory_uri: null
+                      success: true
+                      errors: []
+                    success: true
+                    errors: []
+                    warnings: []
+                    has_application_errors: false
+                  summary: OpenSUSE Leap Linux
+                  description: Response for OpenSUSE Leap Linux 15.4
+                oracle_linux:
+                  value:
+                    meta:
+                      request_uuid: cadaacb1-f9e2-4238-aec5-61fae1c192c5
+                      request_agent: 'User-Agent: curl/7.79.1'
+                      request_params:
+                        minimum_vulnerability_score: 33
+                    os:
+                      os_information:
+                        os_name: Red Hat Enterprise Linux
+                        version: 8.6.0
+                        platform: ORACLE
+                        arch: x86_64
+                        os_name_normalized: Oracle Linux 8.6.0
+                        vendor_status: Active Support
+                        end_of_support_date: '2029-06-30'
+                        end_of_life_date: '2031-06-30'
+                      vulnerabilities: []
+                    applications:
+                    - application_information:
+                        application_name: kernel
+                        vendor: Oracle America
+                        version: 4.18.0
+                      vulnerabilities:
+                      - cve_id: CVE-2023-0464
+                        checksum: af544c227be8f59b3fb78d7b16b515519584f536
+                        checksum_updated_at: '2022-08-10T22:45:10.268Z'
+                        vulnerability_score: 45.3469
+                        first_matched_product: null
+                        fixes:
+                        - arch: x86_64
+                          type: package
+                          fix_name: kernel-4.18.0-305.10.2.el8_4.x86_64.rpm
+                          fix_version: 4.18.0-305.10.2.el8_4
+                          internal_created_at: '2022-08-01T02:02:05Z'
+                          internal_updated_at: '2022-08-01T02:02:05Z'
+                          vendor_published_at: '2021-07-20T19:15:00Z'
+                          vendor_advisory_id: ELSA-2021-2714
+                          vendor_advisory_uri: https://linux.oracle.com/errata/ELSA-2021-2714.html
+                      success: true
+                      errors: []
+                    success: true
+                    errors: []
+                    warnings: []
+                    has_application_errors: false
+                  summary: Oracle Linux
+                  description: Response for Oracle Linux 8.6.0
+                rhel_centos_linux:
+                  value:
+                    meta:
+                      request_uuid: cadaacb1-f9e2-4238-aec5-61fae1c192c5
+                      request_agent: 'User-Agent: curl/7.79.1'
+                      request_params:
+                        minimum_vulnerability_score: 33
+                    os:
+                      os_information:
+                        os_name: CentOS Linux
+                        version: 7.0.1406
+                        platform: RHEL
+                        arch: x86_64
+                        os_name_normalized: CentOS Linux 7.0.1406
+                        vendor_status: Maintenance Support
+                        end_of_support_date: '2019-08-06'
+                        end_of_life_date: '2026-06-30'
+                      vulnerabilities: []
+                    applications:
+                    - application_information:
+                        application_name: kernel
+                        vendor: CentOS
+                        version: 3.10.0
+                      vulnerabilities:
+                      - cve_id: CVE-2023-0464
+                        checksum: a2ee45dd653d41b8ae3f0aeba30e2158dce3689e
+                        checksum_updated_at: '2022-05-21T07:47:04.832Z'
+                        vulnerability_score: 34.6089
+                        first_matched_product: null
+                        fixes:
+                        - arch: x86_64
+                          type: package
+                          fix_name: null
+                          fix_version: 0:3.10.0-229.1.2.el7
+                          internal_created_at: '2021-06-10T04:01:39Z'
+                          internal_updated_at: '2021-06-10T04:01:39Z'
+                          vendor_published_at: '2015-03-16T10:59:00Z'
+                          vendor_advisory_id: null
+                          vendor_advisory_uri: null
+                      success: true
+                      errors: []
+                    success: true
+                    errors: []
+                    warnings: []
+                    has_application_errors: false
+                  summary: RHEL/Centos Linux
+                  description: Response for RHEL/CentOS Linux 7.0
+                rocky_linux:
+                  value:
+                    meta:
+                      request_uuid: cadaacb1-f9e2-4238-aec5-61fae1c192c5
+                      request_agent: 'User-Agent: curl/7.79.1'
+                      request_params:
+                        minimum_vulnerability_score: 33
+                    os:
+                      os_information:
+                        os_name: Rocky Linux
+                        version: 8.4.0
+                        platform: RHEL
+                        arch: x86_64
+                        os_name_normalized: Rocky Linux 8.4.0
+                        vendor_status: Active Support
+                        end_of_support_date: '2024-05-31'
+                        end_of_life_date: '2031-05-31'
+                      vulnerabilities: []
+                    applications:
+                    - application_information:
+                        application_name: kernel
+                        vendor: Rocky
+                        version: 4.18.0
+                      vulnerabilities:
+                      - cve_id: CVE-2022-0435
+                        checksum: 5ba7376454d47b56b778ef186f52a5d485e20dbe
+                        checksum_updated_at: '2022-06-02T22:45:33.635Z'
+                        vulnerability_score: 34.9629
+                        first_matched_product: null
+                        fixes:
+                        - arch: all
+                          type: package
+                          fix_name: null
+                          fix_version: 4.18.0-348.20.1.el8_5
+                          internal_created_at: '2022-05-13T13:06:10Z'
+                          internal_updated_at: '2022-05-13T13:06:10Z'
+                          vendor_published_at: '2022-03-25T19:15:00Z'
+                          vendor_advisory_id: null
+                          vendor_advisory_uri: null
+                      success: true
+                      errors: []
+                    success: true
+                    errors: []
+                    warnings: []
+                    has_application_errors: false
+                  summary: Rocky Linux
+                  description: Response for Rocky Linux 8.4
+                ubuntu_linux:
+                  value:
+                    meta:
+                      request_uuid: cadaacb1-f9e2-4238-aec5-61fae1c192c5
+                      request_agent: 'User-Agent: curl/7.79.1'
+                      request_params:
+                        minimum_vulnerability_score: 33
+                    os:
+                      os_information:
+                        os_name: Ubuntu
+                        version: '20.04'
+                        platform: UBUNTU
+                        arch: x86_64
+                        os_name_normalized: Ubuntu 20.04
+                        vendor_status: Active Support
+                        end_of_support_date: '2025-04-02'
+                        end_of_life_date: '2030-04-02'
+                      vulnerabilities: []
+                    applications:
+                    - application_information:
+                        application_name: curl
+                        vendor: null
+                        version: 7.68.0-1ubuntu2
+                      vulnerabilities:
+                      - cve_id: CVE-2022-22576
+                        checksum: 06515c181a0e1d2604b19b37d63513cf94e564cc
+                        checksum_updated_at: '2022-08-02T05:45:05.951Z'
+                        vulnerability_score: 53.6857
+                        first_matched_product:
+                          cpe_uri: cpe:2.3:a:haxx:curl:*:*:*:*:*:*:*:*
+                          affected_versions:
+                          - lower_bound_type: including
+                            lower_bound: 7.33.0
+                            upper_bound_type: excluding
+                            upper_bound: 7.83.0
+                          cpe_schema_version: '2.3'
+                        fixes:
+                        - arch: all
+                          type: package
+                          fix_name: 7.68.0-1ubuntu2.10
+                          fix_version: 7.68.0-1ubuntu2.10
+                          internal_created_at: '2022-07-07T05:07:44Z'
+                          internal_updated_at: '2022-07-07T05:07:44Z'
+                          vendor_published_at: '2022-05-26T17:15:00Z'
+                          vendor_advisory_id: null
+                          vendor_advisory_uri: null
+                      success: true
+                      errors: []
+                    success: true
+                    errors: []
+                    has_application_errors: false
+                  summary: Ubuntu Linux
+                  description: Response for Ubuntu Linux 20.4
+              schema:
+                $ref: '#/components/schemas/v3_os_inference_response_schema'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/darwin_os_inference_request_body_schema'
+              - $ref: '#/components/schemas/linux_os_inference_request_body_schema'
+              - $ref: '#/components/schemas/windows_os_inference_request_body_schema'
+components:
+  schemas:
+    linux_os_inference_request_body_schema:
+      type: array
+      items:
+        type: object
+        properties:
+          arch:
+            type: string
+            example: x86_64
+            description: OS or package architecture
+          build:
+            type: string
+            example: ''
+            description: Optional build-specific or variant string
+          codename:
+            type: string
+            example: ''
+            description: OS version codename
+          major:
+            type: string
+            example: '8'
+            description: Major release version
+          minor:
+            type: string
+            example: '4'
+            description: Minor release version
+          name:
+            type: string
+            example: Rocky Linux
+            description: Distribution, product or package name
+          patch:
+            type: string
+            example: '0'
+            description: Optional patch release
+          platform:
+            type: string
+            enum:
+            - rhel
+            - ubuntu
+            - amzn
+            - sles
+            - opensuse-leap
+            - alma
+            - oracle
+            example: rhel
+            description: OS Platform or ID
+          platform_like:
+            type: string
+            example: rhel
+            description: Closely related platforms
+          version:
+            type: string
+            example: Rocky Linux release 8.4 (Green Obsidian)
+            description: OS version or package version
+          epoch:
+            type: string
+            example: '0'
+            description: Package epoch value
+          install_time:
+            type: string
+            example: '1650475202'
+            description: Unix Timestamp
+          package_group:
+            type: string
+            example: Development/Libraries
+            description: Package group
+          release:
+            type: string
+            example: 2.el8
+            description: Package release
+          sha1:
+            type: string
+            example: d5a4c219aa526c66f57ff8d803c467d4ef0b0f75
+            description: SHA1 hash of the package contents
+          size:
+            type: string
+            example: '1187520'
+            description: Package size in bytes
+          source:
+            type: string
+            example: ModemManager-1.10.8-2.el8.src.rpm
+            description: Source RPM package name (optional)
+          vendor:
+            type: string
+            example: Rocky
+            description: Package vendor
+    windows_os_inference_request_body_schema:
+      type: array
+      items:
+        type: object
+        properties:
+          arch:
+            type: string
+            example: 64-bit
+            description: OS or program architecture
+          build:
+            type: string
+            example: '17763'
+            description: Optional build-specific or variant string
+          codename:
+            type: string
+            example: Microsoft Windows Server 2019 Datacenter
+            description: OS version codename
+          install_date:
+            type: string
+            example: '1612227950'
+            description: Unix Timestamp
+          major:
+            type: string
+            example: '10'
+            description: Major release version
+          minor:
+            type: string
+            example: '0'
+            description: Minor release version
+          name:
+            type: string
+            example: Microsoft Windows Server 2019 Datacenter
+            description: Distribution or product name
+          patch:
+            type: string
+            example: '17763'
+            description: Optional patch release
+          platform:
+            type: string
+            example: windows
+            description: OS Platform
+          platform_like:
+            type: string
+            example: windows
+            description: Closely related platforms
+          version:
+            type: string
+            example: 10.0.17763
+            description: OS or product version
+          identifying_number:
+            type: string
+            example: '{5BA23861-E612-4782-99F3-2044db0b947b592c9c97add8a452342ba179d7756397c1f72761b19436d30f5f}'
+            description: Product identification such as a serial number on software, or a die number on a hardware chip.
+          install_location:
+            type: string
+            example: ''
+            description: The installation location directory of the product.
+          install_source:
+            type: string
+            example: C:\ec2amibuild\
+            description: The installation source of the product.
+          language:
+            type: string
+            example: '1033'
+            description: The language of the product.
+          publisher:
+            type: string
+            example: Microsoft Corporation
+            description: Name of the product supplier.
+          uninstall_string:
+            type: string
+            example: MsiExec.exe /I{5BA23861-E612-4782-99F3-E9485E6CED25}
+            description: Path and filename of the uninstaller.
+    darwin_os_inference_request_body_schema:
+      type: array
+      items:
+        type: object
+        properties:
+          major:
+            type: string
+            example: '10'
+            description: Major release version
+          name:
+            type: string
+            example: Max OS X
+            description: Distribution name
+          platform_like:
+            type: string
+            example: darwin
+            description: Closely related platforms
+          patch:
+            type: string
+            example: '3'
+            description: Optional patch release
+          platform:
+            type: string
+            example: darwin
+            description: OS Platform
+          version:
+            type: string
+            example: 10.15.1
+            description: OS version
+          build:
+            type: string
+            example: 19D76
+            description: Optional build-specific or variant string
+          codename:
+            type: string
+            example: null
+            description: OS version codename
+          arch:
+            type: string
+            example: x86_64
+            description: OS Architecture
+          minor:
+            type: string
+            example: '15'
+            description: Minor release version
+    v3_os_inference_response_schema:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            request_uuid:
+              type: string
+              example: 5d646171-0fd9-4f89-ba6a-35bb940dd007
+            request_agent:
+              type: string
+              example: 'User-Agent: curl/7.79.1'
+            request_params:
+              type: object
+              properties:
+                minimum_vulnerability_score:
+                  type: number
+                  example: 33
+            request_notes:
+              type: string
+              example: For most accurate vulnerability reporting, please send installed_kbs with request
+        os:
+          type: object
+          properties:
+            os_information:
+              type: object
+              properties:
+                os_name:
+                  type: string
+                  example: Red Hat Enterprise Linux
+                version:
+                  type: string
+                  example: 8.6.0
+                platform:
+                  type: string
+                  enum:
+                  - rhel
+                  - ubuntu
+                  - amzn
+                  - sles
+                  - opensuse-leap
+                  - alma
+                  - oracle
+                  - windows
+                  - darwin
+                  example: ORACLE
+                arch:
+                  type: string
+                  example: x86_64
+                os_name_normalized:
+                  type: string
+                  example: Red Hat Enterprise Linux 8.6.0
+                vendor_status:
+                  type: string
+                  enum:
+                  - Active Support
+                  - Maintenance Support
+                  - End Of Life
+                  example: Active Support
+                end_of_support_date:
+                  type: string
+                  format: date
+                  example: '2024-05-31'
+                end_of_life_date:
+                  type: string
+                  format: date
+                  example: '2031-05-31'
+            vulnerabilities:
+              type: array
+              items:
+                type: object
+                properties:
+                  cve_id:
+                    type: string
+                    example: CVE-2021-00001
+                  checksum:
+                    type: string
+                    example: af544c227be8f59b3fb78d7b16b515519584f536
+                  checksum_updated_at:
+                    type: string
+                    format: date-time
+                    example: '2022-08-10T22:45:10.268Z'
+                  vulnerability_score:
+                    type: number
+                    example: 37.0923
+                  first_matched_product:
+                    type: object
+                    properties:
+                      cpe_uri:
+                        type: string
+                        example: cpe:2.3:o:microsoft:windows_10:-:*:*:*:*:*:*:*
+                      affected_versions:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            lower_bound_type:
+                              type: string
+                              example: including
+                            lower_bound:
+                              type: string
+                              example: 3.0.0
+                            upper_bound_type:
+                              type: string
+                              example: excluding
+                            upper_bound:
+                              type: string
+                              example: 3.0.9
+                      cpe_schema_version:
+                        type: string
+                        example: '2.3'
+                  fixes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          example: kb
+                          enum:
+                          - kb
+                          - package
+                          - security_update
+                        vendor_fix_id:
+                          type: string
+                          example: KB5044280
+                        vendor_link:
+                          type: string
+                          example: https://catalog.update.microsoft.com/v7/site/Search.aspx?q=KB5044280
+                        internal_created_at:
+                          type: string
+                          format: date-time
+                          example: '2022-08-01T02:02:05Z'
+                        internal_updated_at:
+                          type: string
+                          format: date-time
+                          example: '2022-08-01T02:02:05Z'
+                        vendor_published_at:
+                          type: string
+                          format: date-time
+                          example: '2021-07-20T19:15:00Z'
+        applications:
+          type: array
+          items:
+            type: object
+            properties:
+              application_information:
+                type: object
+                properties:
+                  application_name:
+                    type: string
+                    example: Microsoft Silverlight
+                  vendor:
+                    type: string
+                    example: Microsoft Corporation
+                  version:
+                    type: string
+                    example: 5.1.20918.0
+              vulnerabilities:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    cve_id:
+                      type: string
+                      example: CVE-2016-0034
+                    checksum:
+                      type: string
+                      example: 3992779760476dc7a252c7a0dfeaf61a53d7a3c1
+                    checksum_updated_at:
+                      type: string
+                      format: date-time
+                      example: '2025-02-10T20:13:03.751Z'
+                    vulnerability_score:
+                      type: number
+                      example: 84.3006
+                    first_matched_product:
+                      type: object
+                      properties:
+                        cpe_uri:
+                          type: string
+                          example: cpe:2.3:a:microsoft:silverlight:*:*:*:*:*:*:*:*
+                        affected_versions:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              lower_bound_type:
+                                type: string
+                                example: including
+                              lower_bound:
+                                type: string
+                                example: '5.0'
+                              upper_bound_type:
+                                type: string
+                                example: excluding
+                              upper_bound:
+                                type: string
+                                example: 5.1.41212.0
+                        cpe_schema_version:
+                          type: string
+                          example: '2.3'
+                    fixes:
+                      type: array
+                      items: {}
+                      example: []
+              success:
+                type: boolean
+                example: true
+              errors:
+                type: array
+                items: {}
+              warnings:
+                type: array
+                items: {}
+        success:
+          type: boolean
+          example: true
+        errors:
+          type: array
+          items: {}
+        warnings:
+          type: array
+          items: {}
+        has_application_errors:
+          type: boolean
+          example: false
+        inferred_kbs:
+          type: array
+          items:
+            type: string
+            example:
+            - KB5006674
+            - KB4541738
+  securitySchemes:
+    X-Risk-Token:
+      type: apiKey
+      name: X-Risk-Token
+      in: header
+x-provenance:
+  method: searched
+  source: https://apidocs.kennasecurity.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://apidocs.kennasecurity.com/reference/application-inference.md
+  - https://apidocs.kennasecurity.com/reference/get-odata-cves.md
+  - https://apidocs.kennasecurity.com/reference/v2-os-inference.md
+  - https://apidocs.kennasecurity.com/reference/v3-os-inference.md
+  - https://apidocs.kennasecurity.com/reference/windows-os-inference.md
+  merge:
+    pages: 5
+    deduped: 7
+    conflicts_kept_first: 0

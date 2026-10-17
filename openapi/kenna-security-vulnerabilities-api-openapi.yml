@@ -1,0 +1,2099 @@
+openapi: 3.2.0
+info:
+  title: Kenna Platform VULNERABILITIES API
+  description: OpenAPI specification for Kenna Security
+  version: '1.0'
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: api.kennasecurity.com
+tags:
+- name: VULNERABILITIES
+paths:
+  /vulnerabilities:
+    post:
+      summary: Create Vulnerability
+      description: Creates a single vulnerability and returns the record.
+      operationId: create-vulnerability
+      security:
+      - X-Risk-Token: []
+      tags:
+      - VULNERABILITIES
+      parameters: []
+      responses:
+        '201':
+          description: '201'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    vulnerability:
+                      id: 100
+                      created_at: '2013-09-24T15:50:21Z'
+                      last_seen_time: '2013-10-20T15:15:21Z'
+                      closed: true
+                      closed_at: '2013-10-24T21:29:05Z'
+                      status: closed
+                      due_date: '2015-10-10T15:30:00Z'
+                      due_date_change_source: api
+                      sla_due_date_updated_at: null
+                      due_date_changed_by: Manually set by API on March 18th, 2024
+                      risk_meter_score: 60
+                      priority: 0
+                      threat: 10
+                      severity: 5
+                      urls:
+                        asset: https://api.kennasecurity.com/asset/98
+                      notes: null
+                      patch: true
+                      patch_published_at: '2013-10-24T15:50:21Z'
+                      port: 443
+                      active_internet_breach: false
+                      top_priority: false
+                      easily_exploitable: false
+                      predicted_exploitable: false
+                      malware_exploitable: false
+                      wasc_id: null
+                      cve_id: CVE-2002-0510
+                      cve_published_at: '2013-10-15T15:50:21Z'
+                      description: null
+                      cve_description: This is a CVE
+                      solution: null
+                      asset_id: 98
+                      identifiers:
+                      - 123
+                      connectors:
+                      - id: 111
+                        name: QualysGuard
+                        connector_definition_name: QualysGuard
+                        vendor: Qualys
+                      - id: 222
+                        name: QualysGuard
+                        connector_definition_name: QualysGuard
+                        vendor: Qualys
+                      service_ticket:
+                        status: Active
+                        ticket_type: jira
+                        external_identifier: JR-468
+                        system_id: 12abcd345e6789101112f1g21h3ijk14
+                        due_date: '2021-08-12T03:14:57Z'
+                        due_date_override: '2022-08-12T03:14:57Z'
+                      cvss_v2:
+                        score: 7.5
+                        exploit_subscore: 10
+                        impact_subscore: 6.4
+                        temporal_score: 7.5
+                      cvss_v3:
+                        score: 7.5
+                        exploit_subscore: 3.9
+                        impact_subscore: 3.6
+                        temporal_score: 9.4
+              schema:
+                type: object
+                properties:
+                  vulnerability:
+                    $ref: '#/components/schemas/vulnerability_get_response_schema'
+        '401':
+          description: '401'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create_vulnerability_request_body_schema'
+    get:
+      summary: List Vulnerabilities
+      description: 'Returns a list of all of the open vulnerabilities that are associated with active assets.
+
+
+        To retrieve closed vulnerabilities, use the `filter` query parameter with the value "closed".
+
+
+        Attribute Value
+
+
+        Maximum Pages Allowed 20
+
+
+        Maximum Page Size 500
+
+
+        Default Page Size 500
+
+
+        Total Count Present in meta object No
+
+
+        Page size cannot be set for this API,and is fixed at 500. See the Pagination Section for more details.'
+      operationId: list-vulnerabilities
+      security:
+      - X-Risk-Token: []
+      tags:
+      - VULNERABILITIES
+      parameters:
+      - name: filter
+        in: query
+        required: false
+        description: Filter the results based on the filter string
+        schema:
+          type: string
+          enum:
+          - closed
+          - open
+      - name: page
+        in: query
+        description: The page number from 1 to 20.
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    vulnerabilities:
+                    - id: 709836
+                      status: open
+                      closed_at: null
+                      created_at: '2021-02-23T13:38:57Z'
+                      due_date: null
+                      notes: null
+                      port: []
+                      priority: 10
+                      identifiers:
+                      - '133531'
+                      last_seen_time: '2021-02-04T21:47:50.000Z'
+                      scanner_score: 4
+                      fix_id: 1841225
+                      scanner_vulnerabilities:
+                      - port: null
+                        external_unique_id: '133531'
+                        open: true
+                      asset_id: 12312
+                      connectors:
+                      - id: 157604
+                        name: Nessus API Importer
+                        connector_definition_name: Nessus API Importer
+                        vendor: Tenable
+                      service_ticket:
+                        status: Active
+                        ticket_type: jira
+                        external_identifier: JR-123
+                        system_id: 12abcd345e6789101112f1g21h3ijk14
+                        due_date: '2021-08-12T03:14:57Z'
+                        due_date_override: '2021-08-12T03:14:57Z'
+                      urls:
+                        asset: api.kennasecurity.com/assets/12312
+                      solution: Upgrade to macOS 10.13.6, 10.14.6, 10.15.3 or later
+                      patch: true
+                      patch_published_at: null
+                      cve_id: CVE-2019-11043
+                      cve_description: In PHP versions 7.1.x below 7.1.33, 7.2.x below 7.2.24 and 7.3.x below 7.3.11 in certain configurations of FPM setup it is possible to cause FPM module to write past allocated buffers into the space reserved for FCGI protocol data, thus opening the possibility of remote code execution.
+                      cve_published_at: '2019-10-28T15:15:00.000Z'
+                      description: null
+                      wasc_id: null
+                      severity: 8
+                      threat: 10
+                      popular_target: false
+                      active_internet_breach: true
+                      easily_exploitable: true
+                      malware_exploitable: false
+                      remote_code_execution: true
+                      predicted_exploitable: false
+                      platform_types:
+                      - operating system
+                      custom_fields: []
+                      first_found_on: '2021-02-23T13:38:57Z'
+                      top_priority: true
+                      risk_meter_score: 100
+                      closed: false
+                      cvss_v2:
+                        score: 7.5
+                        exploit_subscore: 10
+                        impact_subscore: 6.4
+                        temporal_score: 7.5
+                      cvss_v3:
+                        score: 7.5
+                        exploit_subscore: 3.9
+                        impact_subscore: 3.6
+                        temporal_score: 9.4
+                    - id: 708136
+                      status: open
+                      closed_at: null
+                      created_at: '2021-02-23T13:38:49Z'
+                      due_date: null
+                      notes: null
+                      port:
+                      - 445
+                      priority: 10
+                      identifiers:
+                      - '122118'
+                      last_seen_time: '2021-02-18T21:33:12.000Z'
+                      scanner_score: 3
+                      fix_id: 1841079
+                      scanner_vulnerabilities:
+                      - port: 445
+                        external_unique_id: '122118'
+                        open: true
+                      asset_id: 12309
+                      connectors:
+                      - id: 157604
+                        name: Nessus API Importer
+                        connector_definition_name: Nessus API Importer
+                        vendor: Tenable
+                      service_ticket:
+                        status: Active
+                        ticket_type: jira
+                        external_identifier: JR-123
+                        system_id: 12abcd345e6789101112f1g21h3ijk14
+                        due_date: '2021-08-12T03:14:57Z'
+                        due_date_override: '2021-08-12T03:14:57Z'
+                      urls:
+                        asset: api.kennasecurity.com/assets/12309
+                      solution: Apply Security Only update KB4486564 or Cumulative Update KB4486563.
+                      patch: true
+                      patch_published_at: null
+                      cve_id: CVE-2019-0595
+                      cve_description: A remote code execution vulnerability exists when the Windows Jet Database Engine improperly handles objects in memory, aka 'Jet Database Engine Remote Code Execution Vulnerability'. This CVE ID is unique from CVE-2019-0596, CVE-2019-0597, CVE-2019-0598, CVE-2019-0599, CVE-2019-0625.
+                      cve_published_at: '2019-03-05T23:29:00.000Z'
+                      description: null
+                      wasc_id: null
+                      severity: 9
+                      threat: 9
+                      popular_target: true
+                      active_internet_breach: false
+                      easily_exploitable: false
+                      malware_exploitable: false
+                      remote_code_execution: true
+                      predicted_exploitable: true
+                      platform_types: null
+                      custom_fields: []
+                      first_found_on: '2021-02-23T13:38:49Z'
+                      top_priority: true
+                      risk_meter_score: 46
+                      closed: false
+                      cvss_v2:
+                        score: 5.5
+                        exploit_subscore: 10
+                        impact_subscore: 6.5
+                        temporal_score: 7.4
+                      cvss_v3: null
+                    meta:
+                      page: 1
+                      pages: 18
+              schema:
+                type: object
+                properties:
+                  vulnerabilities:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/vulnerability_get_response_schema'
+                  meta:
+                    $ref: '#/components/schemas/page_metadata'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /vulnerabilities/bulk:
+    put:
+      summary: Bulk Update Vulnerabilities
+      description: Update multiple vulnerabilities at a time using the bulk update endpoint. Update limit is 30,000 vulnerabilities at a time. By default we will index the vulnerabilities in the background.
+      operationId: bulk-update-vulnerability
+      security:
+      - X-Risk-Token: []
+      tags:
+      - VULNERABILITIES
+      parameters: []
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    vulnerabilities_updated: 5
+              schema:
+                $ref: '#/components/schemas/vulnerabilities_bulk_updated_put_response_schema'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/bulk_update_request_body_schema'
+  /vulnerabilities/bulk_delete:
+    delete:
+      summary: Bulk Delete Vulnerabilities
+      description: Delete multiple vulnerabilities at a time. Delete limit is 2,000 vulnerabilities at a time.
+      operationId: bulk-delete-vulnerabilities
+      security:
+      - X-Risk-Token: []
+      tags:
+      - VULNERABILITIES
+      parameters: []
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    vulnerabilities_deleted: 3
+              schema:
+                $ref: '#/components/schemas/vulnerabilities_bulk_delete_response_schema'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '403':
+          description: '403'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/vulnerability_ids_request_body_schema'
+  /vulnerabilities/download_data_zip:
+    get:
+      summary: Download Zipped Vulnerability Data
+      description: 'Will return a gzipped file with the most recent data export of all of your vulnerabilities. In order to arrange for a daily full data export please contact our tech support staff. The format of the uncompressed data, is JSONL, JSON, or XML. This is determined when the technical support staff is contacted.
+
+
+        For more details, refer to Downloading Export Files.'
+      operationId: download-zipped-vuln-data
+      security:
+      - X-Risk-Token: []
+      tags:
+      - VULNERABILITIES
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/gzip:
+              schema:
+                type: object
+                properties:
+                  vulnerabilities:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/vulnerability_get_response_schema'
+                  meta:
+                    type: string
+  /vulnerabilities/search:
+    get:
+      summary: Search Vulnerabilities
+      description: 'Filters vulnerabilities by a given set of parameters and returns the filtered vulnerabilities as well as the total number of vulnerabilities in the filtered set.
+
+
+        By default, only open vulnerabilities with active assets are returned. Each unique parameter is combined using AND while each of values passed in a single array will be combined using OR. For example, if you search for all vulnerabilities with status=["open"] and port=["443", "80"] you will receive all open vulnerabilities that have either port 443 or port 80.
+
+
+        Attribute Value
+
+
+        Maximum Pages Allowed 20
+
+
+        Maximum Page Size 5,000
+
+
+        Default Page Size 500
+
+
+        Total Count Present in meta object Yes
+
+
+        See the Pagination Section for more details.'
+      operationId: search-vulnerabilities
+      security:
+      - X-Risk-Token: []
+      tags:
+      - VULNERABILITIES
+      parameters:
+      - name: active_internet_breach[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: An array of booleans for filtering your vulnerabilities by those that have seen trending breach activity.
+      - name: application_id
+        in: query
+        description: The ID of an application to retrieve vulnerabilities for. All other search parameters are ignored if application_id is provided.
+        schema:
+          type: integer
+      - name: asset[id][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: integer
+        description: Search for vulnerabilities related to the specified asset IDs.
+      - name: asset[max_priority]
+        in: query
+        description: Find vulnerabilities related to assets with priority levels that are less than or equal to this value.
+        schema:
+          type: integer
+      - name: asset[min_priority]
+        in: query
+        description: Find vulnerabilities related to assets with priority levels that are greater than or equal to this value.
+        schema:
+          type: integer
+      - name: asset[operating_system][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: An array of the names of the operating systems associated with a set of assets.
+      - name: asset[primary_locator][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: 'The primary locator used for an asset. This should be one of the following values: ip_address, hostname, database, url, mac_address, netbios, fqdn, file, or application'
+      - name: asset[service_names][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: An array of service names relating to your assets. Make sure all letters are lowercase.
+      - name: asset[service_ports][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: integer
+        description: An array of ports relating to your assets.
+      - name: asset[service_products][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: An array of service products relating to your assets. Make sure all letters are lowercase.
+      - name: asset[service_protocols][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: An array of service protocols relating to your assets. Make sure all letters are lowercase.
+      - name: asset[status][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - active
+            - inactive
+        description: Search for vulnerabilities related to assets with the specified statuses.
+      - name: asset[status_set_manually][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: A boolean to indicate whether an asset's active/inactive status was set automatically by Cisco Vulnerability Management or manually by a human.
+      - name: asset[tags][]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: An array of tag names associated with your assets.
+      - name: classification[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - Informational
+            - CVE
+            - CWE
+            - WASC
+        description: Find all vulnerabilities matching the specified classifications.
+      - name: connector_names[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: An array of connector names related to your vulnerabilities.
+      - name: connector_types[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: An array of connector types related to your vulnerabilities.
+      - name: custom_fields
+        in: query
+        schema:
+          type: string
+        description: 'Search for all vulnerabilities that have a specific custom field and its value.  The proper format for a custom field query is `custom_fields:`, the name of the custom field you are searching on, and the value you are searching for.  For example: `custom_fields:Category[]=good`.<br>Note the following: <ol><li>Testing <code>custom_fields</code> in the "Try It!" pane does not work.</li><li>Use the example above as a guide in <code>curl</code> or some other language.</li><li>To search multiple custom fields, add another query parameter.</li><li>Search must have a value and there is no wildcarding.</li></ol>'
+      - name: easily_exploitable[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: An array of booleans for filtering your vulnerabilities by those that have seen high levels of exploitation recently.
+      - name: fields
+        in: query
+        schema:
+          type: string
+        description: A comma separated list of fields to be returned in the response.
+      - name: has_known_exploits[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: '*Deprecated:* Please use the "easily_exploitable" query parameter.'
+      - name: has_known_malware[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: '*Deprecated:* Please use the "malware_exploitable" query parameter.'
+      - name: id[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: integer
+        description: Array of vulnerability IDs.
+      - name: malware_exploitable[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: An array of booleans for filtering your vulnerabilities by those that have had pieces of malware identified.
+      - name: max_risk_meter_score
+        in: query
+        description: Find all vulnerabilities with risk scores that are less than or equal to this value.
+        schema:
+          type: integer
+      - name: min_risk_meter_score
+        in: query
+        description: Find all vulnerabilities with risk scores that are greater than or equal to this value.
+        schema:
+          type: integer
+      - name: max_rounded_risk_meter_score
+        in: query
+        description: Similar to max_risk_meter_score, rounded to the nearest integer.
+        schema:
+          type: integer
+      - name: min_rounded_risk_meter_score
+        in: query
+        description: Similar to min_risk_meter_score, rounded to the nearest integer.
+        schema:
+          type: integer
+      - name: max_severity
+        in: query
+        description: Find all vulnerabilities with severity levels that are less than or equal to this value.
+        schema:
+          type: integer
+      - name: min_severity
+        in: query
+        description: Find all vulnerabilities with severity levels that are greater than or equal to this value.
+        schema:
+          type: integer
+      - name: max_threat
+        in: query
+        description: Find all vulnerabilities with threat levels that are less than or equal to this value.
+        schema:
+          type: integer
+      - name: min_threat
+        in: query
+        description: Find all vulnerabilities with threat levels that are greater than or equal to this value.
+        schema:
+          type: integer
+      - name: no_vulnerability_definition_id[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: integer
+        description: Exclude all vulnerabilities for the identified definition IDs.
+      - name: page
+        in: query
+        description: The page number from 1 to 20.
+        required: false
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        description: The page size from 1 to 5,000.  Default is 500.
+        required: false
+        schema:
+          type: integer
+      - name: pci_related[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: An array of booleans for filtering your vulnerabilities by those that are Payment Card Industry related
+      - name: popular_target[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: An array of booleans for filtering your vulnerabilities by those that are popular targets.
+      - name: port[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: integer
+        description: An array of ports associated with your vulnerabilities.
+      - name: platform_types[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - application
+            - hardware
+            - network
+            - operating system
+        description: An array of strings to filter by platform type.
+      - name: predicted_exploitable[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: An array of booleans for filtering your vulnerabilities by those that have been predicted to be exploited.
+      - name: prioritized[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: '*Deprecated:* Please use the "top_priority" query parameter.'
+      - name: q
+        in: query
+        description: 'Additional text search parameters, as documented at: [Cisco Vulnerability Management Search Terms](https://help.kennasecurity.com/hc/en-us/articles/206280593-Cisco-Vulnerability-Management-Search-Terms), section "Vulnerability Terms".  Example q=tag:(mytag+AND+thetag).'
+        schema:
+          type: string
+      - name: remote_code_execution[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: An array of booleans for filtering your vulnerabilities by those that be executed remotely.
+      - name: search_id
+        in: query
+        description: The ID of a risk meter group to retrieve vulnerabilities for. Other parameters are ignored if search_id is provided.
+        schema:
+          type: integer
+      - name: service_ticket_status[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: An array of strings that represent the statuses of all service tickets connected to your vulnerabilities.
+      - name: status[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - open
+            - closed
+            - risk accepted
+            - false positive
+        description: An array of strings to filter by vulnerability status.
+      - name: top_exploit[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: '*Deprecated:* Please use the "active_internet_breach" query parameter.'
+      - name: top_priority[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: An array of booleans for filtering your vulnerabilities by those that Cisco Vulnerability Management recommends should be a top priority to fix.
+      - name: trending[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: An array of booleans for filtering by vulnerabilities that are trending.
+      - name: vulnerability_class[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - Web app
+            - Host or network
+        description: An array of strings for filtering by vulnerability classification.
+      - name: vulnerability_definition_id[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: integer
+        description: Find all vulnerabilities for the identified definition IDs.
+      - name: wasc_classification[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: An array to filter your vulnerabilities by specified WASC classifications.
+      - name: zero_day[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: boolean
+        description: An array of booleans for filtering by vulnerabilities that have zero days.
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    vulnerabilities:
+                    - connectors:
+                      - name: Nessus XML
+                        id: 1
+                        connector_definition_name: Nessus XML
+                        vendor: Tenable
+                      notes: null
+                      fix_id: 73492
+                      service_ticket: null
+                      created_at: '2020-03-04T01:30:36Z'
+                      asset_id: 21741
+                      id: 9401144
+                      last_seen_time: '2020-02-23T14:46:46.000Z'
+                      closed_at: null
+                      identifiers:
+                      - '58988'
+                      due_date: null
+                      priority: null
+                      port:
+                      - 443
+                      scanner_vulnerabilities:
+                      - port: 443
+                        external_unique_id: '58988'
+                        open: true
+                      scanner_score: 3
+                      status: open
+                      urls:
+                        asset: api.nyc3.us.kennasecurity.com/assets/21741
+                      solution: 'Upgrade to PHP version 5.3.12 / 5.4.2 or later.  A ''mod_rewrite''
+
+                        workaround is available as well.'
+                      patch: true
+                      patch_published_at: null
+                      cve_id: CVE-2012-1823
+                      cve_description: sapi/cgi/cgi_main.c in PHP before 5.3.12 and 5.4.x before 5.4.2, when configured as a CGI script (aka php-cgi), does not properly handle query strings that lack an = (equals sign) character, which allows remote attackers to execute arbitrary code by placing command-line options in the query string, related to lack of skipping a certain php_getopt for the 'd' case.
+                      cve_published_at: '2012-05-11T10:15:00.000Z'
+                      description: null
+                      wasc_id: null
+                      severity: 8
+                      threat: 10
+                      popular_target: false
+                      active_internet_breach: true
+                      easily_exploitable: true
+                      malware_exploitable: false
+                      remote_code_execution: true
+                      predicted_exploitable: false
+                      platform_types:
+                      - hardware
+                      custom_fields: []
+                      first_found_on: '2020-03-04T01:30:36Z'
+                      risk_meter_score: 100
+                      top_priority: false
+                      closed: false
+                      cvss_v2:
+                        score: 7.5
+                        exploit_subscore: 10
+                        impact_subscore: 6.4
+                        temporal_score: 7.5
+                      cvss_v3:
+                        score: 7.5
+                        exploit_subscore: 3.9
+                        impact_subscore: 3.6
+                        temporal_score: 9.4
+                    - connectors:
+                      - name: Nessus XML
+                        id: 1
+                        connector_definition_name: Nessus XML
+                        vendor: Tenable
+                      notes: null
+                      fix_id: 46299
+                      service_ticket:
+                        status: Active
+                        ticket_type: jira
+                        external_identifier: JR-248
+                        system_id: 12abcd345e6789101112f1g21h3ijk14
+                        due_date: '2021-08-12T03:14:57Z'
+                        due_date_override: '2022-07-11T03:15:57Z'
+                      created_at: '2020-03-06T21:47:15Z'
+                      asset_id: 47906
+                      id: 31770054
+                      last_seen_time: '2020-02-24T09:26:54.000Z'
+                      closed_at: null
+                      identifiers:
+                      - '78479'
+                      due_date: null
+                      priority: null
+                      port:
+                      - 443
+                      - 5003
+                      scanner_vulnerabilities:
+                      - port: 443
+                        external_unique_id: '78479'
+                        open: true
+                      - port: 5003
+                        external_unique_id: '78479'
+                        open: true
+                      scanner_score: 2
+                      status: open
+                      urls:
+                        asset: api.nyc3.us.kennasecurity.com/assets/47906
+                      solution: 'Disable SSLv3.
+
+
+                        Services that must support SSLv3 should enable the TLS Fallback SCSV mechanism until SSLv3 can be disabled.'
+                      patch: true
+                      patch_published_at: null
+                      cve_id: CVE-2014-3566
+                      cve_description: The SSL protocol 3.0, as used in OpenSSL through 1.0.1i and other products, uses nondeterministic CBC padding, which makes it easier for man-in-the-middle attackers to obtain cleartext data via a padding-oracle attack, aka the "POODLE" issue.
+                      cve_published_at: '2014-10-15T00:55:00.000Z'
+                      description: null
+                      wasc_id: null
+                      severity: 4
+                      threat: 9
+                      popular_target: true
+                      active_internet_breach: false
+                      easily_exploitable: true
+                      malware_exploitable: false
+                      remote_code_execution: false
+                      predicted_exploitable: false
+                      custom_fields: []
+                      first_found_on: '2020-03-06T21:47:15Z'
+                      risk_meter_score: 61
+                      top_priority: false
+                      closed: false
+                      cvss_v2: null
+                      cvss_v3:
+                        score: 7.8
+                        exploit_subscore: 3.5
+                        impact_subscore: 3.9
+                        temporal_score: 9.7
+                    meta:
+                      total_count: 2
+                      page: 1
+                      pages: 1
+              schema:
+                type: object
+                properties:
+                  vulnerabilities:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/vulnerability_get_response_schema'
+                  meta:
+                    $ref: '#/components/schemas/page_metadata'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /vulnerabilities/validate_search:
+    get:
+      summary: Validate Vulnerability Search Query
+      description: Validate the query string portion of a vulnerability search. If the query is invalid and if the system can determine a suggested replacement, that suggestion will be returned in the response.
+      operationId: validate-vulnerability-search-query
+      security:
+      - X-Risk-Token: []
+      tags:
+      - VULNERABILITIES
+      parameters:
+      - name: q
+        in: query
+        description: This is the q string to be validated. For more detailed documenation, visit [Cisco Vulnerability Management Search Terms](https://help.kennasecurity.com/hc/en-us/articles/206280593-Kenna-Search-Terms), section "Vulnerability Terms".
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/valid_get_response_schema'
+        '422':
+          description: '422'
+  /vulnerabilities/{id}:
+    get:
+      summary: Show Vulnerability
+      description: Returns a single vulnerability by ID.
+      operationId: show-vulnerability
+      security:
+      - X-Risk-Token: []
+      tags:
+      - VULNERABILITIES
+      parameters:
+      - name: id
+        in: path
+        description: The vulnerability ID.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    vulnerability:
+                      id: 709836
+                      status: open
+                      closed_at: null
+                      created_at: '2021-02-23T13:38:57Z'
+                      due_date: null
+                      due_date_changed_by: Manually set by API on March 18th, 2024
+                      notes: null
+                      port: []
+                      priority: 10
+                      identifiers:
+                      - '133531'
+                      last_seen_time: '2021-02-04T21:47:50.000Z'
+                      scanner_score: 4
+                      fix_id: 1841225
+                      scanner_vulnerabilities:
+                      - port: null
+                        external_unique_id: '133531'
+                        open: true
+                      asset_id: 12312
+                      connectors:
+                      - id: 157604
+                        name: Nessus API Importer
+                        connector_definition_name: Nessus API Importer
+                        vendor: Tenable
+                      service_ticket:
+                        status: Active
+                        ticket_type: jira
+                        external_identifier: JR-123
+                        system_id: 12abcd345e6789101112f1g21h3ijk14
+                        due_date: '2021-08-12T03:14:57Z'
+                        due_date_override: '2021-08-12T03:14:57Z'
+                      urls:
+                        asset: api.kennasecurity.com/assets/12312
+                      solution: Upgrade to macOS 10.13.6, 10.14.6, 10.15.3 or later
+                      patch: true
+                      patch_published_at: null
+                      cve_id: CVE-2019-11043
+                      cve_description: In PHP versions 7.1.x below 7.1.33, 7.2.x below 7.2.24 and 7.3.x below 7.3.11 in certain configurations of FPM setup it is possible to cause FPM module to write past allocated buffers into the space reserved for FCGI protocol data, thus opening the possibility of remote code execution.
+                      cve_published_at: '2019-10-28T15:15:00.000Z'
+                      description: null
+                      wasc_id: null
+                      severity: 8
+                      threat: 10
+                      popular_target: false
+                      active_internet_breach: true
+                      easily_exploitable: true
+                      malware_exploitable: false
+                      remote_code_execution: true
+                      predicted_exploitable: false
+                      platform_types:
+                      - application
+                      - operating system
+                      custom_fields: []
+                      first_found_on: '2021-02-23T13:38:57Z'
+                      top_priority: true
+                      risk_meter_score: 100
+                      closed: false
+                      cvss_v2:
+                        score: 7.5
+                        exploit_subscore: 10
+                        impact_subscore: 6.4
+                        temporal_score: 7.5
+                      cvss_v3:
+                        score: 7.5
+                        exploit_subscore: 3.9
+                        impact_subscore: 3.6
+                        temporal_score: 9.4
+                      talos_zero_day:
+                        talos_id: TALOS-2019-5555
+                        cve: CVE-2019-11043
+                        cvss: CVSS:3.1/AB:C/DE:F/HI:J/KL:M/N:O/P:Q/R:S/T:U
+                        cpes:
+                        - cpe:2.3:h:test:a12345:3.3.0:*:*:*:*:*:*:*
+                        - cpe:2.3:h:test:a12345:3.3.1:*:*:*:*:*:*:*
+                        snort_rules:
+                        - '12345'
+                        - '54321'
+              schema:
+                type: object
+                properties:
+                  vulnerability:
+                    $ref: '#/components/schemas/show_vulnerability_get_response_schema'
+        '401':
+          description: '401'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+    delete:
+      summary: Delete Vulnerability
+      description: Delete a single vulnerability by ID.
+      operationId: delete-vulnerability
+      security:
+      - X-Risk-Token: []
+      tags:
+      - VULNERABILITIES
+      parameters:
+      - name: id
+        in: path
+        description: The vulnerability ID to be deleted.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: '204'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    error: unprocessable_entity
+                    message: No vulnerabilites found
+                    success: 'false'
+              schema:
+                $ref: '#/components/schemas/error_response'
+    put:
+      summary: Update Vulnerability
+      description: Update a single vulnerability's attributes by ID.
+      operationId: update-vulnerability
+      security:
+      - X-Risk-Token: []
+      tags:
+      - VULNERABILITIES
+      parameters:
+      - name: id
+        in: path
+        description: The vulnerability ID to be updated.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: '204'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/update_vulnerability_request_body_schema'
+  /vulnerabilities/{id}/scanner_vulnerabilities:
+    get:
+      summary: Show Scanner Vulnerability Details
+      description: Returns an array of the scanner vulnerability details and solution associated to a vulnerability by ID.
+      operationId: show-scanner-vulnerability-details
+      security:
+      - X-Risk-Token: []
+      tags:
+      - VULNERABILITIES
+      parameters:
+      - name: id
+        in: path
+        description: The vulnerability ID.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    scanner_vulnerabilities:
+                    - details: '{\n  \"resource\": {\n    \"type\": \"executable\",\n    \"path\": \"/usr/bin/bash\"\n  }\n}'
+                      solution: Upgrade to macOS 10.13.6, 10.14.6, 10.15.3 or later
+                      scanner_fix_ids:
+                      - 133531
+                    - details: '...'
+                      solution: '...'
+                      scanner_fix_ids: []
+              schema:
+                $ref: '#/components/schemas/scanner_vulnerabilities_get_response_schema'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0: {}
+              schema:
+                $ref: '#/components/schemas/error_response'
+components:
+  schemas:
+    page_metadata:
+      type: object
+      properties:
+        meta:
+          type: object
+          required:
+          - page
+          - pages
+          properties:
+            page:
+              type: integer
+              description: The response current page number.
+              default: 1
+            pages:
+              type: integer
+              description: The total number of pages.
+              default: 1
+            total_count:
+              type: integer
+              description: The total number of items across all pages.
+              default: 1
+    error_response:
+      type: object
+      properties:
+        error:
+          type: string
+          description: The HTTP error message.
+        message:
+          type: string
+          description: The specific error message.
+        success:
+          type: string
+          description: Indicates success, usually 'false'.
+    vulnerabilities_bulk_updated_put_response_schema:
+      type: object
+      properties:
+        vulnerabilities_updated:
+          type: integer
+          description: The number of vulnerabilities updated.
+          example: 5
+    scanner_vulnerabilities_get_response_schema:
+      type: object
+      properties:
+        scanner_vulnerabilities:
+          type: array
+          items:
+            type: object
+            properties:
+              details:
+                type: string
+                example: '...'
+              solution:
+                type: string
+                example: Upgrade to macOS 10.13.6, 10.14.6, 10.15.3 or later
+              scanner_fix_ids:
+                type: array
+                items:
+                  type: integer
+                  example: 133531
+    update_vulnerability_request_body_schema:
+      type: object
+      required:
+      - vulnerability
+      properties:
+        vulnerability:
+          type: object
+          properties:
+            closed_at:
+              type: string
+              description: The datetime(as a UTC timestamp) to mark when a vulnerability was closed in the format (2013-09-01)
+              format: date-time
+            custom_fields:
+              type: object
+              description: 'The custom field ID and value to be updated. The key is the custom field ID, and the value is the desired value of the custom field. For updating a date type custom field, the value must be in ISO-8601 date-time format `YYYY-MM-DDTHH:MM:SS`. <p>Example:<br><pre>{<br>  "vulnerability": {<br>      "custom_fields": {<br>        "1": "Lonely",<br>        "42": 123,<br>        "83": "2023-10-10T00:00:00"<br>      }<br>   }<br>}</pre></p>'
+              additionalProperties:
+                type: string
+            due_date:
+              type: string
+              description: The date a vulnerability needs to be fixed by.
+              format: date-time
+            last_seen_time:
+              type: string
+              description: The date a vulnerability was last seen on.
+              format: date-time
+            notes:
+              type: string
+              description: Strings may be used to store plain english notes on a vulnerability. Maximum 50,000 characters allowed.
+            override_score:
+              type: integer
+              description: An integer (0 - 100) representing the risk score for a vulnerability. Cisco Vulnerability Management continuously updates risk scores as the threat landscape changes. If you manually override this score, the vulnerability will no longer be updated dynamically. This change cannot be reverted to display the Cisco Security Risk Score, and the change will be logged for audit purposes.
+              format: int32
+            prioritized:
+              type: boolean
+              description: Boolean that indicates whether the vulnerability is a top priority or not. Default is false.
+            service_ticket:
+              $ref: '#/components/schemas/service_ticket_request_schema'
+            status:
+              type: string
+              enum:
+              - closed
+              - false_positive
+              - open
+              - risk_accepted
+              description: The status to be updated to for this vulnerability.
+    show_vulnerability_get_response_schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 709836
+        status:
+          type: string
+          enum:
+          - closed
+          - closed_by_human
+          - false_positive_by_human
+          - open
+          - open_by_api
+          - risk_accepted_by_human
+          example: open
+        closed_at:
+          type: string
+          format: date-time
+          example: '2021-08-12T03:14:57Z'
+        created_at:
+          type: string
+          format: date-time
+          example: '2021-02-23T13:38:57Z'
+        due_date:
+          type: string
+          format: date-time
+          example: '2021-08-01T12:00:00Z'
+        notes:
+          type: string
+        port:
+          type: array
+          items:
+            type: string
+        priority:
+          type: integer
+          example: 10
+        identifiers:
+          type: array
+          items:
+            type: string
+            example: '133531'
+        custom_fields:
+          $ref: '#/components/schemas/custom_fields_schema'
+        last_seen_time:
+          type: string
+          format: date-time
+          example: '2021-02-04T21:47:50.000Z'
+        scanner_score:
+          type: integer
+          example: 4
+        fix_id:
+          type: integer
+          example: 1841225
+        scanner_vulnerabilities:
+          type: array
+          items:
+            type: object
+            properties:
+              port: {}
+              external_unique_id:
+                type: string
+                example: '133531'
+              open:
+                type: boolean
+                example: true
+        asset_id:
+          type: integer
+          example: 12312
+        connectors:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 157604
+              name:
+                type: string
+                example: Nessus API Importer
+              connector_definition_name:
+                type: string
+                example: Nessus API Importer
+              vendor:
+                type: string
+                example: Tenable
+        service_ticket:
+          $ref: '#/components/schemas/service_ticket_response_schema'
+        urls:
+          type: object
+          properties:
+            asset:
+              type: string
+              example: api.kennasecurity.com/assets/12312
+        solution:
+          type: string
+          example: Upgrade to macOS 10.13.6, 10.14.6, 10.15.3 or later
+        patch:
+          type: boolean
+          example: true
+        patch_published_at: {}
+        cve_id:
+          type: string
+          example: CVE-2019-11043
+        cve_description:
+          type: string
+          example: In PHP versions 7.1.x below 7.1.33, 7.2.x below 7.2.24 and 7.3.x below 7.3.11 in certain configurations of FPM setup it is possible to cause FPM module to write past allocated buffers into the space reserved for FCGI protocol data, thus opening the possibility of remote code execution.
+        cve_published_at:
+          type: string
+          example: '2019-10-28T15:15:00.000Z'
+        description: {}
+        wasc_id: {}
+        severity:
+          type: integer
+          example: 8
+        threat:
+          type: integer
+          example: 10
+        popular_target:
+          type: boolean
+          example: false
+        active_internet_breach:
+          type: boolean
+          example: true
+        easily_exploitable:
+          type: boolean
+          example: true
+        malware_exploitable:
+          type: boolean
+          example: false
+        remote_code_execution:
+          type: boolean
+          example: true
+        predicted_exploitable:
+          type: boolean
+          example: false
+        platform_types:
+          type: array
+          items:
+            type: string
+            enum:
+            - application
+            - hardware
+            - network
+            - operating system
+          example:
+          - hardware
+        first_found_on:
+          type: string
+          format: date-time
+          example: '2021-02-23T13:38:57Z'
+        top_priority:
+          type: boolean
+          example: true
+        risk_meter_score:
+          type: integer
+          example: 100
+        closed:
+          type: boolean
+          example: false
+        cvss_v2:
+          $ref: '#/components/schemas/cvss_v2_schema'
+        cvss_v3:
+          $ref: '#/components/schemas/cvss_v3_schema'
+        talos_zero_day:
+          $ref: '#/components/schemas/talos_zero_day_schema'
+    vulnerability_get_response_schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 709836
+        status:
+          type: string
+          enum:
+          - closed
+          - closed_by_human
+          - false_positive_by_human
+          - open
+          - open_by_api
+          - risk_accepted_by_human
+          example: open
+        closed_at:
+          type: string
+          format: date-time
+          example: '2021-08-12T03:14:57Z'
+        created_at:
+          type: string
+          format: date-time
+          example: '2021-02-23T13:38:57Z'
+        due_date:
+          type: string
+          format: date-time
+          example: '2021-08-01T12:00:00Z'
+        notes:
+          type: string
+        port:
+          type: array
+          items:
+            type: string
+        priority:
+          type: integer
+          example: 10
+        identifiers:
+          type: array
+          items:
+            type: string
+            example: '133531'
+        custom_fields:
+          $ref: '#/components/schemas/custom_fields_schema'
+        last_seen_time:
+          type: string
+          format: date-time
+          example: '2021-02-04T21:47:50.000Z'
+        scanner_score:
+          type: integer
+          example: 4
+        fix_id:
+          type: integer
+          example: 1841225
+        scanner_vulnerabilities:
+          type: array
+          items:
+            type: object
+            properties:
+              port: {}
+              external_unique_id:
+                type: string
+                example: '133531'
+              open:
+                type: boolean
+                example: true
+        asset_id:
+          type: integer
+          example: 12312
+        connectors:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 157604
+              name:
+                type: string
+                example: Nessus API Importer
+              connector_definition_name:
+                type: string
+                example: Nessus API Importer
+              vendor:
+                type: string
+                example: Tenable
+        service_ticket:
+          $ref: '#/components/schemas/service_ticket_response_schema'
+        urls:
+          type: object
+          properties:
+            asset:
+              type: string
+              example: api.kennasecurity.com/assets/12312
+        solution:
+          type: string
+          example: Upgrade to macOS 10.13.6, 10.14.6, 10.15.3 or later
+        patch:
+          type: boolean
+          example: true
+        patch_published_at: {}
+        cve_id:
+          type: string
+          example: CVE-2019-11043
+        cve_description:
+          type: string
+          example: In PHP versions 7.1.x below 7.1.33, 7.2.x below 7.2.24 and 7.3.x below 7.3.11 in certain configurations of FPM setup it is possible to cause FPM module to write past allocated buffers into the space reserved for FCGI protocol data, thus opening the possibility of remote code execution.
+        cve_published_at:
+          type: string
+          example: '2019-10-28T15:15:00.000Z'
+        description: {}
+        wasc_id: {}
+        severity:
+          type: integer
+          example: 8
+        threat:
+          type: integer
+          example: 10
+        popular_target:
+          type: boolean
+          example: false
+        active_internet_breach:
+          type: boolean
+          example: true
+        easily_exploitable:
+          type: boolean
+          example: true
+        malware_exploitable:
+          type: boolean
+          example: false
+        remote_code_execution:
+          type: boolean
+          example: true
+        predicted_exploitable:
+          type: boolean
+          example: false
+        platform_types:
+          type: array
+          items:
+            type: string
+            enum:
+            - application
+            - hardware
+            - network
+            - operating system
+          example:
+          - application
+          - operating system
+        first_found_on:
+          type: string
+          format: date-time
+          example: '2021-02-23T13:38:57Z'
+        top_priority:
+          type: boolean
+          example: true
+        risk_meter_score:
+          type: integer
+          example: 100
+        closed:
+          type: boolean
+          example: false
+        cvss_v2:
+          $ref: '#/components/schemas/cvss_v2_schema'
+        cvss_v3:
+          $ref: '#/components/schemas/cvss_v3_schema'
+    vulnerabilities_bulk_delete_response_schema:
+      type: object
+      properties:
+        vulnerabilities_deleted:
+          type: integer
+          description: The number of vulnerabilities deleted.
+          example: 3
+    bulk_update_request_body_schema:
+      type: object
+      required:
+      - vulnerability_ids
+      - vulnerability
+      properties:
+        vulnerability_ids:
+          type: array
+          description: IDs of all vulnerabilities to be updated.
+          items:
+            type: integer
+            format: int32
+        vulnerability:
+          type: object
+          properties:
+            closed_at:
+              type: string
+              description: The datetime(as a UTC timestamp) to mark when a vulnerability was closed in the format (2013-09-01)
+              format: date-time
+            custom_fields:
+              type: object
+              description: 'Custom Fields are defined by Custom Field Definitions which can be set up in the UI for your account. When updating a vulnerability''s custom fields, reference them by their custom_field_definition_id, the key in the `CUSTOM_FIELDS OBJECT` below.  Only IDs that are present in the "Bulk Update" request will be modified (ie: leaving out custom fields in the "Bulk Update" request will not delete them on the server). To remove a vulnerability''s custom field value, use an empty string, `{ "777": "" }`. For updating a date type custom field, the value must be in ISO-8601 date-time format `YYYY-MM-DDTHH:MM:SS`. <p>Example:<br><pre>{<br>  "vulnerability_ids": [996,997,995],<br>    "vulnerability": {<br>      "custom_fields": {<br>        "1": "Lonely",<br>        "42": 123,<br>        "83": "2023-10-10T00:00:00"<br>      }<br>   }<br>}</pre></p>'
+              additionalProperties:
+                type: string
+            due_date:
+              type: string
+              description: The date a vulnerability needs to be fixed by.
+              format: date-time
+            last_seen_time:
+              type: string
+              description: The date a vulnerability was last seen on.
+              format: date-time
+            notes:
+              type: string
+              description: Strings may be used to store plain english notes on a vulnerability. Maximum 50,000 characters allowed.
+            override_score:
+              type: integer
+              description: An integer (0 - 100) representing the risk score for a vulnerability. Cisco Vulnerability Management continuously updates risk scores as the threat landscape changes. If you manually override this score, the vulnerability will no longer be updated dynamically. This change cannot be reverted to display the Cisco Security Risk Score, and the change will be logged for audit purposes.
+              format: int32
+            prioritized:
+              type: boolean
+              description: Boolean that indicates whether the vulnerability is a top priority or not.
+              default: 'false'
+            service_ticket:
+              $ref: '#/components/schemas/service_ticket_request_schema'
+            status:
+              type: string
+              enum:
+              - closed
+              - false_positive
+              - open
+              - risk_accepted
+              description: The status to be updated for requested vulnerabilities.
+    cvss_v3_schema:
+      type: object
+      properties:
+        score:
+          type: number
+          format: float
+          description: Numerical score indicates the severity of a vulnerability relative to other vulnerabilities.
+          example: 7.5
+        exploit_subscore:
+          type: number
+          format: float
+          description: Numerical score reflects the ease and technical means by which the vulnerability can be exploited. The Exploitability sub-score equation is derived from the Base Exploitability metrics.
+          example: 3.9
+        impact_subscore:
+          type: number
+          format: float
+          description: Numerical score reflects the direct consequence of a successful exploit, and represents the consequence to the thing that suffers the impact. The Impact sub-score equation is derived from the Base Impact metrics.
+          example: 3.6
+        temporal_score:
+          type: number
+          format: float
+          description: Numerical score reflects the characteristics of a vulnerability that may change over time but not across user environments.
+          example: 9.4
+    service_ticket_response_schema:
+      type: object
+      required:
+      - external_identifier
+      - ticket_type
+      description: Service ticket object to associate with a vulnerability.
+      properties:
+        external_identifier:
+          type: string
+          description: The service ticket's external ID in its ticketing provider.
+          example: JR-678
+        ticket_type:
+          type: string
+          enum:
+          - api
+          - jira
+          - service_now
+          description: The service ticket type.  `api` type tickets are not integrated with ticketing connectors.
+          example: service_now
+        system_id:
+          type: string
+          description: The service ticket's internal ID in its ticketing provider.  Required for Jira and ServiceNow tickets for clients with the relevant ticketing connectors to allow the service ticket to be automatically updated in Cisco Vulnerability Management. Note that this value is the same as external_identifier for Jira type service tickets.
+          example: 12abcd345e6789101112f1g21h3ijk14
+        status:
+          type: string
+          description: The service ticket status.  Will be honored for `api` type tickets.
+          example: Active
+        due_date:
+          type: string
+          format: date-time
+          description: May contain a default due date for internal use, so please refer to `due_date_override` for the service ticket's actual due date
+          example: '2021-08-12T03:14:57Z'
+          default: null
+        due_date_override:
+          type: string
+          format: date-time
+          description: Actual due date.
+          example: '2021-08-12T03:14:57Z'
+    custom_fields_schema:
+      description: The custom field array.
+      type: array
+      items:
+        type: object
+        properties:
+          custom_field_definition_id:
+            description: Custom field ID.
+            type: integer
+            format: int32
+            example: '123'
+          name:
+            description: Custom field Name.
+            type: string
+            example: my custom field
+          value:
+            description: Custom field Value.
+            type: string
+            example: foo
+    create_vulnerability_request_body_schema:
+      type: object
+      description: One of cve_id, wasc_id, or cwe_id is required.
+      required:
+      - primary_locator
+      properties:
+        application:
+          type: string
+          description: The application name. The `application` can be specified along with `file` to match an asset with `file` as primary locator in specified application.
+        cve_id:
+          type: string
+          description: A National Vulnerability Database CVE identifier, 'CVE-YYYY-NNNN', 'CVE-YYYY-NNNNN', or 'CVE-YYYY-NNNNNNN'.  One of the following fields, `cve_id`, `cwe_id`, or `wasc_id`, is required.
+        cwe_id:
+          type: string
+          description: A CWE - Common Weakness Enumeration identifier, 'CWE-<number>'.  One of the following fields, `cve_id`, `cwe_id`, or `wasc_id`, is required.
+        closed_at:
+          type: string
+          description: The datetime(as a UTC timestamp) to mark when a vulnerability was closed in the format (2013-09-01)
+          format: date-time
+        database:
+          type: string
+          description: Whichever locator was specified as the primary_locator above must have a value set that matches the primary_locator of the associated asset.
+        due_date:
+          type: string
+          description: The date a vulnerability needs to be fixed by.
+          format: date-time
+        file:
+          type: string
+          description: Whichever locator was specified as the primary_locator above must have a value set that matches the primary_locator of the associated asset.
+        found_on:
+          type: string
+          description: The date a vulnerability was found on.
+          format: date-time
+        fqdn:
+          type: string
+          description: Whichever locator was specified as the primary_locator above must have a value set that matches the primary_locator of the associated asset.
+        hostname:
+          type: string
+          description: Whichever locator was specified as the primary_locator above must have a value set that matches the primary_locator of the associated asset.
+        identifier:
+          type: string
+          description: A unique text identifier for this type of vulnerability
+        ip_address:
+          type: string
+          description: Whichever locator was specified as the primary_locator above must have a value set that matches the primary_locator of the associated asset.
+        jira_key:
+          type: string
+          description: A JIRA ticket key to associate this vulnerability with
+        last_seen_time:
+          type: string
+          description: The date a vulnerability was last seen on.
+          format: date-time
+        netbios:
+          type: string
+          description: Whichever locator was specified as the primary_locator above must have a value set that matches the primary_locator of the associated asset.
+        notes:
+          type: string
+          description: Strings may be used to store plain english notes on a vulnerability. Maximum 50,000 characters allowed.
+        mac_address:
+          type: string
+          description: Whichever locator was specified as the primary_locator above must have a value set that matches the primary_locator of the associated asset.
+        port:
+          type: integer
+          description: The port affected by the vulnerability.
+          format: int32
+        primary_locator:
+          type: string
+          description: 'The primary locator used for the corresponding asset. This is required to associate the vulnerability with the asset it was found on. This should be one of the following values: ip_address, hostname, database, url, mac_address, netbios, file, or fqdn'
+        service_ticket:
+          $ref: '#/components/schemas/service_ticket_request_schema'
+        threat:
+          type: integer
+          description: The threat level of the vulnerability instance; an integer between 1 (low) to 10 (high)
+          format: int32
+        url:
+          type: string
+          description: Whichever locator was specified as the primary_locator above must have a value set that matches the primary_locator of the associated asset.
+        wasc_id:
+          type: string
+          description: A WASC 2.0 Threat Classification ID. One of the following fields, `cve_id`, `cwe_id`, or `wasc_id`, is required.
+    talos_zero_day_schema:
+      type: object
+      description: This object will only appear when there is a Talos Zero Day vulnerability and in the premium tier subscription
+      properties:
+        talos_id:
+          type: string
+          example: TALOS-2019-5555
+          description: Talos internal identifier for the Zero Day vulnerability
+        cve:
+          type: string
+          example: CVE-2019-11043
+          description: Talos provided CVE for the Zero Day vulnerability, it may not have been published yet
+        cvss:
+          type: string
+          example: CVSS:3.1/AB:C/DE:F/HI:J/KL:M/N:O/P:Q/R:S/T:U
+          description: Talos provided CVSS vector for the Zero Day vulnerability
+        cpes:
+          type: array
+          description: Talos provided CPEs for the Zero Day vulnerability
+          items:
+            type: string
+            example: cpe:2.3:h:test:a12345:3.3.0:*:*:*:*:*:*:*
+        snort_rules:
+          type: array
+          description: Talos Snort rules for the Zero Day vulnerability
+          items:
+            type: string
+            example: '12345'
+    vulnerability_ids_request_body_schema:
+      type: object
+      required:
+      - vulnerability_ids
+      properties:
+        vulnerability_ids:
+          type: array
+          description: An array of vulnerability IDs to be deleted.
+          items:
+            type: integer
+            format: int32
+    valid_get_response_schema:
+      type: object
+      properties:
+        valid:
+          type: boolean
+          example: true
+        query:
+          type: string
+          example: os:solaris AND tag:chicago
+        suggested_query:
+          type: string
+          example: null
+    cvss_v2_schema:
+      type: object
+      properties:
+        score:
+          type: number
+          format: float
+          description: Numerical score indicates the severity of a vulnerability relative to other vulnerabilities.
+          example: 7.5
+        exploit_subscore:
+          type: number
+          format: float
+          description: Numerical score reflects the ease and technical means by which the vulnerability can be exploited. The Exploitability sub-score equation is derived from the Base Exploitability metrics.
+          example: 10
+        impact_subscore:
+          type: number
+          format: float
+          description: Numerical score reflects the direct consequence of a successful exploit, and represents the consequence to the thing that suffers the impact. The Impact sub-score equation is derived from the Base Impact metrics.
+          example: 6.4
+        temporal_score:
+          type: number
+          format: float
+          description: Numerical score reflects the characteristics of a vulnerability that may change over time but not across user environments.
+          example: 7.5
+    service_ticket_request_schema:
+      type:
+      - object
+      - 'null'
+      description: A service ticket to associate with a vulnerability. A null service_ ticket value will unassociate the service ticket associated with these vulnerabilities.
+      properties:
+        external_identifier:
+          type: string
+          description: <strong>Required</strong> for non-null service_ticket objects. The service ticket's external ID in its ticketing provider, e.g. "JR-123".
+          example: abc123
+        ticket_type:
+          type: string
+          enum:
+          - jira
+          - service_now
+          - api
+          description: <strong>Required</strong> for non-null service_ticket objects. `api` type tickets are not integrated with ticketing connectors.
+          example: service_now
+        system_id:
+          type: string
+          description: The service ticket's internal ID in its ticketing provider; e.g. "JR-123" for Jira or "12abcd345e6789101112f1g21h3ijk14" for ServiceNow. Required for Jira and ServiceNow tickets for clients with the relevant ticketing connectors to allow the service ticket to be automatically updated in Cisco Vulnerability Management. Note that this value is the same as external_identifier for Jira type service tickets.
+          example: 12abcd345e6789101112f1g21h3ijk14
+        status:
+          type: string
+          description: Will be ignored for jira or service_now type tickets when the client has the corresponding ticketing connector(s) in place. Will be honored for `api` type tickets.
+          example: Active
+        due_date:
+          type: string
+          format: date-time
+          description: Will be ignored for jira or service_now type tickets when the client has the corresponding ticketing connector(s) in place. Will be honored for `api` type tickets.
+          example: '2021-08-12T03:14:57Z'
+  securitySchemes:
+    X-Risk-Token:
+      type: apiKey
+      name: X-Risk-Token
+      in: header
+x-provenance:
+  method: searched
+  source: https://apidocs.kennasecurity.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://apidocs.kennasecurity.com/reference/add-applications-to-role.md
+  - https://apidocs.kennasecurity.com/reference/add-asset-groups-to-role.md
+  - https://apidocs.kennasecurity.com/reference/application-findings-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/application-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/application-historical-vulnerability-count-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/asset-groups-findings-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/audit-log-search.md
+  - https://apidocs.kennasecurity.com/reference/average-days-open-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/bulk-delete-findings.md
+  - https://apidocs.kennasecurity.com/reference/bulk-delete-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/bulk-update-assets.md
+  - https://apidocs.kennasecurity.com/reference/bulk-update-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/calculate-asset-group-metric.md
+  - https://apidocs.kennasecurity.com/reference/check-data-export-status.md
+  - https://apidocs.kennasecurity.com/reference/check-remediation-score.md
+  - https://apidocs.kennasecurity.com/reference/check-sla-adherence-metrics.md
+  - https://apidocs.kennasecurity.com/reference/check-vulnerability-densities-metrics.md
+  - https://apidocs.kennasecurity.com/reference/create-application.md
+  - https://apidocs.kennasecurity.com/reference/create-asset-group-and-risk-meter.md
+  - https://apidocs.kennasecurity.com/reference/create-asset.md
+  - https://apidocs.kennasecurity.com/reference/create-child-asset-group-and-risk-meter.md
+  - https://apidocs.kennasecurity.com/reference/create-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/create-finding.md
+  - https://apidocs.kennasecurity.com/reference/create-role.md
+  - https://apidocs.kennasecurity.com/reference/create-stack.md
+  - https://apidocs.kennasecurity.com/reference/create-user.md
+  - https://apidocs.kennasecurity.com/reference/create-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/delete-application.md
+  - https://apidocs.kennasecurity.com/reference/delete-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/delete-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/delete-role.md
+  - https://apidocs.kennasecurity.com/reference/delete-stack.md
+  - https://apidocs.kennasecurity.com/reference/delete-user.md
+  - https://apidocs.kennasecurity.com/reference/delete-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/download-zipped-asset-data.md
+  - https://apidocs.kennasecurity.com/reference/download-zipped-vuln-data.md
+  - https://apidocs.kennasecurity.com/reference/entitlements-overage.md
+  - https://apidocs.kennasecurity.com/reference/false-positive-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/get-refresh-reporting-status.md
+  - https://apidocs.kennasecurity.com/reference/historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/historical-risk-meter-scores.md
+  - https://apidocs.kennasecurity.com/reference/historical-vulnerability-risk-category-counts.md
+  - https://apidocs.kennasecurity.com/reference/kill-running-data-export.md
+  - https://apidocs.kennasecurity.com/reference/list-applications.md
+  - https://apidocs.kennasecurity.com/reference/list-asset-groups.md
+  - https://apidocs.kennasecurity.com/reference/list-assets.md
+  - https://apidocs.kennasecurity.com/reference/list-connector-runs.md
+  - https://apidocs.kennasecurity.com/reference/list-connectors.md
+  - https://apidocs.kennasecurity.com/reference/list-cve-identifiers.md
+  - https://apidocs.kennasecurity.com/reference/list-dashboard-groups.md
+  - https://apidocs.kennasecurity.com/reference/list-fix-alternatives.md
+  - https://apidocs.kennasecurity.com/reference/list-fixes.md
+  - https://apidocs.kennasecurity.com/reference/list-roles.md
+  - https://apidocs.kennasecurity.com/reference/list-stacks.md
+  - https://apidocs.kennasecurity.com/reference/list-tags.md
+  - https://apidocs.kennasecurity.com/reference/list-users.md
+  - https://apidocs.kennasecurity.com/reference/list-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/list-vulnerability-definitions.md
+  - https://apidocs.kennasecurity.com/reference/past-due-vulnerabilities-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/refresh-reporting-data.md
+  - https://apidocs.kennasecurity.com/reference/request-data-export.md
+  - https://apidocs.kennasecurity.com/reference/retrieve-data-export.md
+  - https://apidocs.kennasecurity.com/reference/risk-accepted-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/run-connector.md
+  - https://apidocs.kennasecurity.com/reference/search-assets.md
+  - https://apidocs.kennasecurity.com/reference/search-findings.md
+  - https://apidocs.kennasecurity.com/reference/search-fixes.md
+  - https://apidocs.kennasecurity.com/reference/search-for-vulnerability-definitions.md
+  - https://apidocs.kennasecurity.com/reference/search-users.md
+  - https://apidocs.kennasecurity.com/reference/search-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/service-now-list-fixes.md
+  - https://apidocs.kennasecurity.com/reference/service-now-search-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/show-all-fixes.md
+  - https://apidocs.kennasecurity.com/reference/show-application.md
+  - https://apidocs.kennasecurity.com/reference/show-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/show-asset-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/show-asset.md
+  - https://apidocs.kennasecurity.com/reference/show-chatter.md
+  - https://apidocs.kennasecurity.com/reference/show-connector-run.md
+  - https://apidocs.kennasecurity.com/reference/show-cve-history.md
+  - https://apidocs.kennasecurity.com/reference/show-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/show-finding.md
+  - https://apidocs.kennasecurity.com/reference/show-fix.md
+  - https://apidocs.kennasecurity.com/reference/show-malware-hashes.md
+  - https://apidocs.kennasecurity.com/reference/show-role.md
+  - https://apidocs.kennasecurity.com/reference/show-scanner-vulnerability-details.md
+  - https://apidocs.kennasecurity.com/reference/show-stack.md
+  - https://apidocs.kennasecurity.com/reference/show-top-fix-groups.md
+  - https://apidocs.kennasecurity.com/reference/show-user.md
+  - https://apidocs.kennasecurity.com/reference/show-vulnerability-definition.md
+  - https://apidocs.kennasecurity.com/reference/show-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/stack-applications-statistics.md
+  - https://apidocs.kennasecurity.com/reference/stack-asset-groups-statistics.md
+  - https://apidocs.kennasecurity.com/reference/tag-an-asset.md
+  - https://apidocs.kennasecurity.com/reference/total-past-due-vulnerabilities-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/trends.md
+  - https://apidocs.kennasecurity.com/reference/untag-an-asset.md
+  - https://apidocs.kennasecurity.com/reference/update-application.md
+  - https://apidocs.kennasecurity.com/reference/update-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/update-asset.md
+  - https://apidocs.kennasecurity.com/reference/update-connector.md
+  - https://apidocs.kennasecurity.com/reference/update-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/update-findings.md
+  - https://apidocs.kennasecurity.com/reference/update-permissions-in-bulk.md
+  - https://apidocs.kennasecurity.com/reference/update-role-custom-permissions.md
+  - https://apidocs.kennasecurity.com/reference/update-role.md
+  - https://apidocs.kennasecurity.com/reference/update-stack.md
+  - https://apidocs.kennasecurity.com/reference/update-user.md
+  - https://apidocs.kennasecurity.com/reference/update-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/upload-data-file.md
+  - https://apidocs.kennasecurity.com/reference/validate-asset-search-query.md
+  - https://apidocs.kennasecurity.com/reference/validate-vulnerability-search-query.md
+  - https://apidocs.kennasecurity.com/reference/vi-data-snapshot.md
+  - https://apidocs.kennasecurity.com/reference/vulnerabilities-by-due-date.md
+  - https://apidocs.kennasecurity.com/reference/vulnerability-definitions-with-significant-score-change.md
+  merge:
+    pages: 115
+    deduped: 272
+    conflicts_kept_first: 0

@@ -1,0 +1,1696 @@
+openapi: 3.2.0
+info:
+  title: Kenna Platform DATA EXPORT API
+  description: OpenAPI specification for Kenna Security
+  version: '1.0'
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: api.kennasecurity.com
+tags:
+- name: DATA EXPORT
+paths:
+  /data_exports:
+    get:
+      summary: Retrieve Data Export
+      description: 'Get all results from a previously created export using the search_id returned in the
+
+        Request Data Export
+
+        API response.
+
+
+        The response is gzipped and the content of the response data is determined by the
+
+        model field in export_settings in the
+
+        Request Data Export
+
+        API body parameters.
+
+        Usually, the response is stored in a file and gzipped.
+
+
+        If your search has not been completed you will receive an Export Incomplete Response to
+
+        indicate that we are still processing your search results.
+
+
+        The response example shows an uncompressed response for asset exports; whereas, the response
+
+        schema shows the options of returning asset, fix, or vulnerability information in its uncompressed format.
+
+
+        For more details, refer to
+
+        Downloading Export Files
+
+        guide, "Acquiring the Download File" section.'
+      operationId: retrieve-data-export
+      security:
+      - X-Risk-Token: []
+      tags:
+      - DATA EXPORT
+      parameters:
+      - name: search_id
+        in: query
+        example: '2358'
+        description: An ID returned by Request Data Export that identifies the data_export to be retrieved.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/gzip:
+              examples:
+                Findings OK:
+                  value:
+                    meta:
+                      total_count: 1
+                    findings:
+                    - id: 1
+                      name: CWE 79 - Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')
+                      application_identifier: WebGoat 7.0.1 - Java
+                      connector: Checkmarx XML
+                      external_unique_id: WebGoat 7.0.1 - Java Reflected_XSS_All_Clients WebGoat-7.0.1/webgoat-container/src/main/java/org/owasp/webgoat/session/ParameterParser.java:489 -665352662
+                      kenna_risk_score: 90
+                      severity: 9
+                      file_locator: WebGoat-7.0.1/webgoat-container/src/main/java/org/owasp/webgoat/session/ParameterParser.java
+                      url_locator: null
+                      created_at: '2023-04-28T17:26:03Z'
+                      found_on: '2017-02-07T11:25:18Z'
+                      last_seen_time: '2017-02-07T11:25:18.000Z'
+                      due_date: null
+                      closed_at: null
+                      status: new
+                      triage_state: Open
+                      description: The software does not neutralize or incorrectly neutralizes user-controllable input before it is placed in output that is used as a web page that is served to other users.
+                      finding_age: 0
+                      time_to_remediate: null
+                      custom_fields:
+                      - name: risk
+                        custom_field_definition_id: 4
+                        value: high
+                      - name: type
+                        custom_field_definition_id: 3
+                        value: loud
+                      remediation_guidance: ''
+                      scanner_description: 'QueryPath: JavaScript\Cx\JavaScript High Risk\Client DOM XSS Version:1; Language: JavaScript; Categories: PCI DSS v3.2;PCI DSS (3.2) - 6.5.7 - Cross-site scripting (XSS),OWASP Top 10 2013;A3-Cross-Site Scripting (XSS),FISMA 2014;Access Control,NIST SP 800-53;SI-15 Information Output Filtering (P0),OWASP Top 10 2017;A7-Cross-Site Scripting (XSS)'
+                Vulnerabilities (slim=false) OK:
+                  value:
+                    meta:
+                      total_count: 1
+                    vulnerabilities:
+                    - id: 316935
+                      status: open
+                      closed_at: null
+                      created_at: '2022-09-07T18:46:14Z'
+                      due_date: null
+                      notes: null
+                      port: []
+                      priority: 10
+                      identifiers:
+                      - CWE-391
+                      last_seen_time: '2022-09-09T17:33:38.000Z'
+                      scanner_score: 2
+                      fix_id: 222
+                      scanner_vulnerabilities:
+                      - port: null
+                        external_unique_id: '57'
+                        open: true
+                      asset_id: 6790
+                      connectors:
+                      - name: Veracode XML
+                        id: 33
+                        connector_definition_name: Veracode XML
+                        vendor: Veracode
+                      service_ticket: null
+                      urls:
+                        asset: api.kennasec.com/assets/6790
+                      solution: <h4>Recommendations</h4><p>Never ignore return codes, assuming that a function will always succeed.  Check for and handle all possible return codes to ensure that all scenarios are covered, including boundary or edge conditions.  Subject the application to extensive testing to discover some of the possible instances of where and how errors or return values are not handled.</p><p>Use a standard exception handling mechanism to be sure that the application properly handles all types of processing errors. Do not allow the application to throw errors up to the application container, generally the web application server.   </p>
+                      patch: true
+                      patch_published_at: null
+                      cve_id: CWE 391 - Unchecked Error Condition
+                      cve_description: null
+                      cve_published_at: null
+                      description: '[PLANNED FOR DEPRECATION. SEE MAINTENANCE NOTES AND CONSIDER CWE-252, CWE-248, OR CWE-1069.] Ignoring exceptions and other error conditions may allow an attacker to induce unexpected behavior unnoticed.'
+                      wasc_id: null
+                      severity: 0
+                      threat: 0
+                      popular_target: null
+                      active_internet_breach: false
+                      easily_exploitable: false
+                      malware_exploitable: false
+                      remote_code_execution: null
+                      predicted_exploitable: false
+                      cvss_v2: null
+                      cvss_v3: null
+                      custom_fields:
+                      - name: new custom field
+                        custom_field_definition_id: 49
+                        value: null
+                      - name: VM Description limit
+                        custom_field_definition_id: 47
+                        value: null
+                      - name: VM Attachment CF
+                        custom_field_definition_id: 9
+                        value: null
+                      first_found_on: '2012-02-08T20:18:02Z'
+                      top_priority: false
+                      risk_meter_score: 40
+                      closed: false
+                Vulnerabilities (slim=true) OK:
+                  value:
+                    meta:
+                      total_count: 1
+                    vulnerabilities:
+                    - id: 316935
+                      status: open
+                      closed_at: null
+                      port: []
+                      status_changed_at: null
+                      last_seen_time: '2022-09-09T17:33:38.000Z'
+                      asset_id: 6790
+                      cve_id: CWE 391 - Unchecked Error Condition
+                      severity: 0
+                      cvss_v2: null
+                      cvss_v3: null
+                      first_found_on: '2012-02-08T20:18:02Z'
+                Vulnerabilities (fields=["id", "asset_id", "cve_id", "severity", "platform_types" ]) OK:
+                  value:
+                    meta:
+                      total_count: 1
+                    vulnerabilities:
+                    - id: 316935
+                      asset_id: 6790
+                      cve_id: CWE 391 - Unchecked Error Condition
+                      severity: 0
+                      platform_types:
+                      - application
+                      - operating system
+                Assets OK:
+                  value:
+                    meta:
+                      total_count: 1
+                    assets:
+                    - vulnerabilities_count: 1
+                      notes: null
+                      last_booted_at: null
+                      created_at: '2013-09-24T15:50:21Z'
+                      primary_locator: url
+                      network_ports:
+                      - hostname: null
+                        product: tomcat
+                        protocol: TCP
+                        extra_info: null
+                        port_number: 8080
+                        name: http
+                        id: 600002
+                        ostype: windows
+                        state: running
+                        version: 7.0.61
+                      ipv6: null
+                      operating_system: null
+                      id: 183
+                      last_seen_time: '2013-09-30T20:00:30Z'
+                      owner: null
+                      priority: 1
+                      tags:
+                      - nihil
+                      - facilis
+                      - quo
+                      locator: http://www.example.com
+                      status: active
+                      urls:
+                        vulnerabilities: api.kennasec.com/assets/183/vulnerabilities
+                      application: null
+                      external_id: null
+                      ec2: null
+                      url: http://www.example.com
+                      netbios: null
+                      file: null
+                      fqdn: null
+                      hostname: null
+                      database: null
+                      ip_address: 127.0.0.1
+                      mac_address: null
+                      risk_meter_score: 0
+                      overage: false
+                Assets (fields=["primary_locator", "locator", "hostname", "risk_meter_score", "status" ]) OK:
+                  value:
+                    meta:
+                      total_count: 1
+                    assets:
+                    - id: 183
+                      primary_locator: url
+                      locator: http://www.example.com
+                      hostname: null
+                      risk_meter_score: 0
+                      status: active
+              schema:
+                oneOf:
+                - type: object
+                  properties:
+                    meta:
+                      description: The `xml` and `json` data formats include count metadata; `jsonl` does not--the number of records can be calculated by calculating the number of lines in the file.
+                      type: object
+                      properties:
+                        total_count:
+                          type: integer
+                          description: The total number of records in the export.
+                    assets:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/export_get_asset_response_schema'
+                - type: object
+                  properties:
+                    meta:
+                      description: The `xml` and `json` data formats include count metadata; `jsonl` does not--the number of records can be calculated by calculating the number of lines in the file.
+                      type: object
+                      properties:
+                        total_count:
+                          type: integer
+                          description: The total number of records in the export.
+                    fixes:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/export_get_fix_response_schema'
+                - type: object
+                  properties:
+                    meta:
+                      description: The `xml` and `json` data formats include count metadata; `jsonl` does not--the number of records can be calculated by calculating the number of lines in the file.
+                      type: object
+                      properties:
+                        total_count:
+                          type: integer
+                          description: The total number of records in the export.
+                    vulnerabilities:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/export_get_vulnerability_response_schema'
+                - type: object
+                  properties:
+                    meta:
+                      description: The `xml` and `json` data formats include count metadata; `jsonl` does not--the number of records can be calculated by calculating the number of lines in the file.
+                      type: object
+                      properties:
+                        total_count:
+                          type: integer
+                          description: The total number of records in the export.
+                    findings:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/export_get_finding_response_schema'
+        '206':
+          description: Partial Content
+          content:
+            application/json:
+              examples:
+                currently_enqueued:
+                  value:
+                    message: The export is currently enqueued. Try again later.
+                    success: 'true'
+                currently_processing:
+                  value:
+                    message: The export is currently processing. Try again later.
+                    success: 'true'
+            application/gzip:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                export_not_found:
+                  value:
+                    error: Bad Request
+                    message: Export not found.
+                    success: 'false'
+                failed_to_retrieve:
+                  value:
+                    error: Bad Request
+                    message: Cannot retrieve a failed or cancelled export.
+                    success: 'false'
+            application/gzip:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '410':
+          description: Resource not available
+          content:
+            application/json:
+              examples:
+                export_expired:
+                  value:
+                    error: Resource gone
+                    message: This search has expired and is no longer available
+                    success: 'false'
+            application/gzip:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              examples:
+                cannot_get_data:
+                  value:
+                    error: Internal Server Error
+                    message: There was an error getting your search data. Please contact tech support for more details.
+                    success: 'false'
+            application/gzip:
+              schema:
+                $ref: '#/components/schemas/error_response'
+    post:
+      summary: Request Data Export
+      description: 'Filters client data by a given set of search parameters below and ones in the respective search API
+
+        endpoints.The request is processed in the background.
+
+
+        User must specify the format of the data, including the model
+
+        type (asset, fix, vulnerability or finding), and data
+
+        format (json, jsonl, xml).
+
+        For asset and vulnerability exports, the defaults are open vulnerabilities with active assets.
+
+        For finding exports, the default is open findings with active assets.
+
+
+        User can also specify fields in export_settings to return only the
+
+        fields that the user is interested in.For more details, please refer to the
+
+        Downloading Export Files
+
+        guide, "Selecting Your Fields" section.
+
+
+        Due to the async nature of the request, a search_id is returned which can be used to get the
+
+        results of the search once the processing of the request is complete. Search IDs are valid
+
+        for 30 days after the initial request is made.
+
+
+        The model field in export_settings is referred to as "model" in the
+
+        filter body parameters below. Each filter body parameter contains information on which model
+
+        or models the filter body parameter is valid.'
+      operationId: request-data-export
+      security:
+      - X-Risk-Token: []
+      tags:
+      - DATA EXPORT
+      parameters: []
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    search_id: 42
+                    record_count: 2001
+              schema:
+                $ref: '#/components/schemas/search_id_post_response_schema'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                fields_with_slim:
+                  value:
+                    success: false
+                    message: Picked fields should not be applied to slim exports. Please check API documentation.
+                badly_formed_fields:
+                  value:
+                    success: false
+                    message: Requested fields should be an array. Please check API documentation.
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                non_existent_field:
+                  value:
+                    success: false
+                    message: Unable to apply fields { non_existent_field } to assets model. Please check API documentation.
+                duplicate_fields:
+                  value:
+                    success: false
+                    message: Duplicate fields { tags } found. Please check API documentation.
+              schema:
+                $ref: '#/components/schemas/search_id_post_422_response_schema'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/export_settings_request_body_schema'
+  /data_exports/kill:
+    put:
+      summary: Kill Running Data Export
+      description: 'Kill a running export by specifying the export ID.
+
+
+        The following messages are currently returned with the appropriate HTTP response status code:
+
+
+        HTTP Status Code Message
+
+
+        200 Terminating client data export.
+
+
+        400 Export not found.
+
+
+        400 Cannot kill an already cancelled, failed, or completed export.
+
+
+        500 There was an error while killing the export. Please contact tech support for more details.
+
+
+        Error handling in client code should be based on the HTTP status code.'
+      operationId: kill-running-data-export
+      security:
+      - X-Risk-Token: []
+      tags:
+      - DATA EXPORT
+      parameters:
+      - name: export_id
+        in: query
+        example: '2358'
+        description: The `search_id` returned by [Request Data Export](https://apidocs.kennasecurity.com/reference/request-data-export) that identifies the data_export to terminate.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    message: Terminating client data export.
+              schema:
+                $ref: '#/components/schemas/message_put_response_schema'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    message: Export not found.
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '500':
+          description: '500'
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    message: There was an error while killing the export. Please contact tech support for more details.
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /data_exports/status:
+    get:
+      summary: Check Data Export Status
+      description: 'Get the status message from a previously created asynchronous search using the search_id.
+
+
+        The following messages are currently returned with the appropriate HTTP response status code:
+
+
+        HTTP Status Code Message
+
+
+        200 Export ready for download
+
+
+        206 The export is currently enqueued. Try again later.
+
+
+        206 The export is currently processing. Try again later.
+
+
+        404 No search found.
+
+
+        410 The search has expired and is no longer available.
+
+
+        500 There was an error getting your search data. Please contact tech support for more details.
+
+
+        Error handling in client code should be based on the HTTP status code.'
+      operationId: check-data-export-status
+      security:
+      - X-Risk-Token: []
+      tags:
+      - DATA EXPORT
+      parameters:
+      - name: search_id
+        in: query
+        example: '2358'
+        description: An ID returned by Request Data Export that identifies the data_export.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Export complete
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    message: Export ready for download
+              schema:
+                $ref: '#/components/schemas/export_status_get_response_schema'
+        '206':
+          description: Export not complete
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    message: The export is currently processing. Try again later.
+              schema:
+                $ref: '#/components/schemas/export_status_get_response_schema'
+        '404':
+          description: Cannot find a search
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    message: No search found
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '410':
+          description: Expired search
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    message: The search has expired and is no longer available.
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    message: There was an error getting your search data. Please contact tech support for more details.
+              schema:
+                $ref: '#/components/schemas/error_response'
+components:
+  schemas:
+    export_get_vulnerability_response_schema:
+      type: object
+      title: exported_vulnerability
+      properties:
+        id:
+          type: integer
+          example: 709836
+        status:
+          type: string
+          enum:
+          - closed
+          - closed_by_human
+          - false_positive_by_human
+          - open
+          - open_by_api
+          - risk_accepted_by_human
+          example: open
+        closed_at:
+          type: string
+          format: date-time
+          example: '2021-08-12T03:14:57Z'
+        created_at:
+          type: string
+          format: date-time
+          example: '2021-02-23T13:38:57Z'
+        due_date:
+          type: string
+          format: date-time
+          example: '2021-08-01T12:00:00Z'
+        notes:
+          type: string
+        port:
+          type: array
+          items:
+            type: string
+        priority:
+          type: integer
+          example: 10
+        identifiers:
+          type: array
+          items:
+            type: string
+            example: '133531'
+        last_seen_time:
+          type: string
+          format: date-time
+          example: '2021-02-04T21:47:50.000Z'
+        scanner_score:
+          type: integer
+          example: 4
+        fix_id:
+          type: integer
+          example: 1841225
+        scanner_vulnerabilities:
+          type: array
+          items:
+            type: object
+            properties:
+              port: {}
+              external_unique_id:
+                type: string
+                example: '133531'
+              open:
+                type: boolean
+                example: true
+        asset_id:
+          type: integer
+          example: 12312
+        connectors:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 157604
+              name:
+                type: string
+                example: Nessus API Importer
+              connector_definition_name:
+                type: string
+                example: Nessus API Importer
+              vendor:
+                type: string
+                example: Tenable
+        service_ticket:
+          $ref: '#/components/schemas/service_ticket_response_schema'
+        urls:
+          type: object
+          properties:
+            asset:
+              type: string
+              example: api.kennasecurity.com/assets/12312
+        solution:
+          type: string
+          example: Upgrade to macOS 10.13.6, 10.14.6, 10.15.3 or later
+        patch:
+          type: boolean
+          example: true
+        patch_published_at: {}
+        cve_id:
+          type: string
+          example: CVE-2019-11043
+        cve_description:
+          type: string
+          example: In PHP versions 7.1.x below 7.1.33, 7.2.x below 7.2.24 and 7.3.x below 7.3.11 in certain configurations of FPM setup it is possible to cause FPM module to write past allocated buffers into the space reserved for FCGI protocol data, thus opening the possibility of remote code execution.
+        cve_published_at:
+          type: string
+          example: '2019-10-28T15:15:00.000Z'
+        description:
+          type: string
+          example: <p>SSI Injection (Server-side Include) is a server-side exploit technique that allows an attacker to send code into a web application, which will later be executed locally by the web server. SSI Injection exploits a web application's failure to sanitize user-supplied data before they are inserted into a server-side interpreted HTML file.</p><p>Before serving an HTML web page, a web server may parse and execute Server-side Include statements before providing it to the client. In some cases (e.g. message boards, guest books, or content management systems), a web application will insert user-supplied data into the source of a web page.</p><p>If an attacker submits a Server-side Include statement, he may have the ability to execute arbitrary operating system commands, or include a restricted file's contents the next time the page is served. This is performed at the permission level of the web server user.</p><p> </p><h3>Example</h3><p>The following SSI tag can allow an attacker to get the root directory listing on a UNIX based system.</p><p> </p><p>&lt;!--#exec cmd="/bin/ls /" --&gt;</p><p> </p><p>The following SSI tag can allow an attacker to obtain database connection strings, or other sensitive data contained within a .NET configuration file.</p>
+        wasc_id:
+          type: string
+          example: WASC-36
+        severity:
+          type: integer
+          example: 8
+        threat:
+          type: integer
+          example: 10
+        popular_target:
+          type: boolean
+          example: false
+        active_internet_breach:
+          type: boolean
+          example: true
+        easily_exploitable:
+          type: boolean
+          example: true
+        malware_exploitable:
+          type: boolean
+          example: false
+        remote_code_execution:
+          type: boolean
+          example: true
+        predicted_exploitable:
+          type: boolean
+          example: false
+        platform_types:
+          type: array
+          items:
+            type: string
+            enum:
+            - application
+            - hardware
+            - network
+            - operating system
+          example:
+          - application
+          - operating system
+        cvss_v2:
+          $ref: '#/components/schemas/cvss_v2_schema'
+        cvss_v3:
+          $ref: '#/components/schemas/cvss_v3_schema'
+        custom_fields:
+          description: 'Array of custom fields matching known custom fields defintions.  Specific custom fields may be picked by requesting a field with the prefix ''custom_fields:'' and name of custom field as a suffix; for example: ''custom_fields:my custom field'''
+          type: array
+          items:
+            type: object
+            properties:
+              custom_field_definition_id:
+                description: ID of the custom field definition associated with the custom field.
+                type: integer
+                format: int32
+                example: '123'
+              name:
+                description: Name of the custom field
+                type: string
+                example: my custom field
+              value:
+                description: Value of the custom field corresponding to the type set within the custom field defintion
+                oneOf:
+                - type: string
+                - type: number
+                - type: integer
+                - type: boolean
+                example: foo
+        first_found_on:
+          type: string
+          format: date-time
+          example: '2021-02-23T13:38:57Z'
+        top_priority:
+          type: boolean
+          example: true
+        risk_meter_score:
+          type: integer
+          example: 100
+        closed:
+          type: boolean
+          example: false
+        status_changed_at:
+          description: (Will not be provided unless requested within `fields`.) Date representing when the status last changed.  If the status has never changed, will be null.
+          format: date-time
+          example: '2019-06-08'
+        details:
+          description: (Will not be provided unless requested within `fields`.) Array of details text provided by all connectors reporting the vulnerability.
+          type: array
+          items:
+            type: object
+            properties:
+              connector_name:
+                type: string
+                example: Nessus API Importer
+              value:
+                type: string
+                example: File X found at version N
+    search_id_post_422_response_schema:
+      type: integer
+      example: 1
+      default: 0
+    export_settings_request_body_schema:
+      type: object
+      properties:
+        export_settings:
+          type: object
+          required:
+          - format
+          - model
+          properties:
+            format:
+              type: string
+              description: The format of the returned data.
+              enum:
+              - json
+              - jsonl
+              - xml
+              default: jsonl
+            model:
+              type: string
+              description: The type of data requested and returned.
+              enum:
+              - asset
+              - finding
+              - fix
+              - vulnerability
+            slim:
+              type: boolean
+              description: If `true`, applies a predetermined set of fields consisting of `id`, `status`, `closed_at`, `port`, `status_changed_at`, `last_seen_time`, `asset_id`, `cve_id`, `severity`, `cvss_v2`, `cvss_v3`, and `first_found_on`. This field only applies to the vulnerability model.
+              default: false
+            fields:
+              type: array
+              items:
+                type: string
+              description: 'An array of fields that will be returned in requested export. If empty array is provided, all the supported fields are returned. Supported fields are located in the [Retrieve Data Exports](https://apidocs.kennasecurity.com/reference/retrieve-data-export) API, "Responses" under the appropriate model. The `id` field is always returned. Note: If you use this field to export custom fields, you need to specify the custom field name and prefix it with “custom_fields:”. For example, if you have a custom field named “reopen-date” you would use the following syntax: “custom_fields:reopen-date”'
+        id:
+          type: array
+          items:
+            type: integer
+          description: '*Valid for asset, vulnerability, finding, and fix models.*  Dependent on the `model`, an array of asset, vulnerability, finding, or fix IDs'
+        max_priority:
+          type: integer
+          description: '*Valid for asset model.*  Search for all assets that have a priority less than this value.'
+        max_risk_meter_score:
+          type: integer
+          description: '*Valid for asset, vulnerability, finding, and fix models.*  Search for all assets that have a risk meter score less than this value.'
+        min_priority:
+          type: integer
+          description: '*Valid for asset model.*  Search for all assets that have a priority greater than this value.'
+        min_risk_meter_score:
+          type: integer
+          description: '*Valid for asset, vulnerability, finding, and fix models.*  Search for all assets that have a risk meter score greater than this value.'
+        q:
+          type: string
+          description: '*Valid for asset, vulnerability, and fix models.*  Additional text search parameters, as documented at: [Cisco Vulnerability Management Search Terms](https://help.kennasecurity.com/hc/en-us/articles/206280593-Kenna-Search-Terms).  Use the section that matches the model.*  Example q=tag:(mytag+AND+thetag).'
+        records_updated_since:
+          type: string
+          description: '*Valid for asset, vulnerability and fix models.*  Supports **Incremental Exports**. It will fetch all records updated since that time. This can be added to both asset and vulnerabilities.  The format can be an offset date ("now-2d") following [this format](https://www.elastic.co/guide/en/elasticsearch/reference/current/common-options.html#date-math), a date ("2020-09-09") or a date-time ("2020-10-10 12:30:00").'
+        records_updated_until:
+          type: string
+          description: '*Valid for asset, vulnerability and fix models.*  Effective only when `records_updated_since` is specified. It will fetch all records updated since `records_updated_since` (inclusive) datetime until `records_update_until` datetime (exclusive). The format is the same to `records_update_since` parameter.'
+        status:
+          type: array
+          items:
+            type: string
+            enum:
+            - active
+            - inactive
+            - open
+            - closed
+            - risk accepted
+            - false positive
+          description: '*Valid for asset, vulnerability, finding, and fix models.*  An array of statuses. For the asset model, ''active'' and ''inactive'' are valid.  The asset model default is ''active''.  For the vulnerability and fix models, ''open'', ''closed'', ''risk accepted'', and ''false positive'' are valid.  The vulnerability and fix models default is ''open''. For the finding model, ''duplicate'', ''false positive'', ''not a security issue'', ''resolved'', ''risk accepted'', ''in progress'', ''new'', ''triaged'', ''open'', ''closed'', and ''all'' are valid.'
+        exclude_child_filter:
+          type: array
+          items:
+            type: string
+          description: '*Valid for asset model.*  If you want to include all assets regardless of vulnerability filters, pass a value of `["Include all assets"]`; or if you want to include assets without vulnerabilities, pass the value `["Assets without Vulnerabilities"]`.  Otherwise, omit this parameter.'
+        operating_system:
+          type: array
+          items:
+            type: string
+          description: '*Valid for asset model.*  An array of the names of the operating systems associated with a set of assets.'
+        primary_locator:
+          type: array
+          items:
+            type: string
+          description: '*Valid for asset model.*  The primary locator used for an asset. This should be one of the following values: ip_address, hostname, database, url, mac_address, netbios, fqdn, file, or application'
+        search_id:
+          type: integer
+          description: '*Valid for asset and vulnerability models.*  A risk meter ID. Other risk meter parameters are ignored. Child risk meters are not supported.'
+        service_names:
+          type: array
+          items:
+            type: string
+          description: '*Valid for asset model.*  An array of service names relating to your assets. Make sure all letters are lowercase.'
+        service_ports:
+          type: array
+          items:
+            type: integer
+          description: '*Valid for asset model.*  An array of ports relating to your assets.'
+        service_products:
+          type: array
+          items:
+            type: string
+          description: '*Valid for asset model.*  An array of service products relating to your assets. Make sure all letters are lowercase.'
+        service_protocols:
+          type: array
+          items:
+            type: string
+          description: '*Valid for asset model.*  An array of service protocols relating to your assets. Make sure all letters are lowercase.'
+        status_set_manually:
+          type: array
+          items:
+            type: boolean
+          description: '*Valid for asset model.*  A boolean to indicate whether an asset''s active/inactive status was set automatically by Cisco Vulnerability Management or manually by a human.'
+        tag_boolean_mode:
+          type: string
+          description: '*Valid for asset model.*  Set this to "all" if you would like to return assets that contain all of the tags in your query rather than assets that contain any of the tags.'
+        tags:
+          type: array
+          items:
+            type: string
+          description: '*Valid for asset model.*  An array of tag names associated with your assets.'
+        active_internet_breach:
+          type: array
+          items:
+            type: boolean
+          description: '*Valid for vulnerability and fix models.*  An array of booleans to filter by vulnerabilities that have seen trending breach activity.'
+        classification:
+          type: array
+          items:
+            type: string
+            enum:
+            - Informational
+            - CVE
+            - CWE
+            - WASC
+          description: '*Valid for vulnerability and fix models.*  Find all vulnerabilities matching the specified classifications.'
+        connector_names:
+          type: array
+          items:
+            type: string
+          description: '*Valid for vulnerability, finding, and fixes models.*  An array of connector names related to your vulnerabilities or findings.'
+        connector_types:
+          type: array
+          items:
+            type: string
+          description: '*Valid for vulnerability, finding, and fixes models.*  An array of connector types related to your vulnerabilities or findings.'
+        easily_exploitable:
+          type: array
+          items:
+            type: boolean
+          description: '*Valid for vulnerability models*  An array of booleans for filtering your vulnerabilities by those that are easy to exploit.'
+        has_known_exploits:
+          type: array
+          items:
+            type: boolean
+          description: '*Deprecated:* Please use the `easily_exploitable` body parameter.'
+        has_known_malware:
+          type: array
+          items:
+            type: boolean
+          description: '*Deprecated:* Please use the `malware_exploitable` body parameter.'
+        malware_exploitable:
+          type: array
+          items:
+            type: boolean
+          description: '*Valid for vulnerability and fix models.*  An array of booleans for filtering your vulnerabilities by those that have had pieces of malware identified.'
+        max_rounded_risk_meter_score:
+          type: integer
+          description: '*Valid for vulnerability, finding, and fixes models.*  Similar to max_risk_meter_score, rounded to the nearest integer.'
+        max_severity:
+          type: integer
+          description: '*Valid for vulnerability, finding, and fixes models.*  Find all vulnerabilities or findings with severity levels less than this value.'
+        max_threat:
+          type: integer
+          description: '*Valid for vulnerability and fix models.*  Find all vulnerabilities with threat levels less than this value.'
+        min_rounded_risk_meter_score:
+          type: integer
+          description: '*Valid for vulnerability, finding, and fixes models.*  Similar to min_risk_meter_score, rounded to the nearest integer.'
+        min_severity:
+          type: integer
+          description: '*Valid for vulnerability, finding, and fixes models.*  Find all vulnerabilities or findings with severity levels greater than this value.'
+        min_threat:
+          type: integer
+          description: '*Valid for vulnerability and fix models.*  Find all vulnerabilities with threat levels greater than this value.'
+        no_vulnerability_definition_id:
+          type: array
+          items:
+            type: integer
+          description: '*Valid for vulnerability and fix models.*  Exclude all vulnerabilities for the identified definition IDs.'
+        pci_related:
+          type: array
+          items:
+            type: boolean
+          description: '*Valid for vulnerability and fix models.*  An array of booleans for filtering your vulnerabilities by those that are Payment Card Industry related'
+        port:
+          type: array
+          items:
+            type: integer
+          description: '*Valid for vulnerability and fix models.*  An array of ports associated with your vulnerabilities.'
+        predicted_exploitable:
+          type: array
+          items:
+            type: boolean
+          description: '*Valid for vulnerability and fix models.*  An array of booleans for filtering your vulnerabilities by those that have been predicted to be exploited.'
+        prioritized:
+          type: array
+          items:
+            type: boolean
+          description: '*Deprecated:* Please use the `top_priority` body parameter.'
+        remote_code_execution:
+          type: array
+          items:
+            type: boolean
+          description: '*Valid for vulnerability and fix models.*  An array of booleans for filtering your vulnerabilities by those that can be executed remotely.'
+        service_ticket_status:
+          type: array
+          items:
+            type: string
+          description: '*Valid for vulnerability and fix models.*  An array of strings that represent the statuses of all service tickets connected to your vulnerabilities.'
+        top_exploit:
+          type: array
+          items:
+            type: boolean
+          description: '*Deprecated:* Please use the `active_internet_breach` body parameter.'
+        top_priority:
+          type: array
+          items:
+            type: boolean
+          description: '*Valid for vulnerability and fix models.*  An array of booleans for filtering your vulnerabilities by those that Cisco Vulnerability Management recommends should be a top priority to fix.'
+        trending:
+          type: array
+          items:
+            type: boolean
+          description: '*Valid for vulnerability and fix models.*  An array of booleans for filtering by vulnerabilities that are trending.'
+        vulnerability_class:
+          type: array
+          items:
+            type: string
+            enum:
+            - Web app
+            - Host or network
+          description: '*Valid for vulnerability and fix models.*  An array of strings for filtering by vulnerability classification.'
+        vulnerability_definition_id:
+          type: array
+          items:
+            type: integer
+          description: '*Valid for vulnerability and fix models.*  Find all vulnerabilities for the identified definition IDs.'
+        wasc_classification:
+          type: array
+          items:
+            type: string
+          description: '*Valid for vulnerability and fix models.*  An array to filter your vulnerabilities by specified WASC classifications.'
+        zero_day:
+          type: array
+          items:
+            type: boolean
+          description: '*Valid for vulnerability and fixes models.*  An array of booleans for filtering by vulnerabilities that have zero days.'
+        files:
+          type: array
+          items:
+            type: string
+          description: '*Valid for findings model.*  An array of file locators.'
+        applications:
+          type: array
+          items:
+            type: string
+          description: '*Valid for findings model.* An array of application locators.'
+        urls:
+          type: array
+          items:
+            type: string
+          description: '*Valid for findings model.* An array of url locators.'
+    message_put_response_schema:
+      type: string
+      example: Terminating client data export.
+    error_response:
+      type: object
+      properties:
+        error:
+          type: string
+          description: The HTTP error message.
+        message:
+          type: string
+          description: The specific error message.
+        success:
+          type: string
+          description: Indicates success, usually 'false'.
+    search_id_post_response_schema:
+      type: object
+      properties:
+        search_id:
+          type: integer
+          description: The search ID to use for checking, retrieving, and killing data exports.
+        record_count:
+          type: integer
+          description: The number of records to be returned in the data export.
+    cvss_v3_schema:
+      type: object
+      properties:
+        score:
+          type: number
+          format: float
+          description: Numerical score indicates the severity of a vulnerability relative to other vulnerabilities.
+          example: 7.5
+        exploit_subscore:
+          type: number
+          format: float
+          description: Numerical score reflects the ease and technical means by which the vulnerability can be exploited. The Exploitability sub-score equation is derived from the Base Exploitability metrics.
+          example: 3.9
+        impact_subscore:
+          type: number
+          format: float
+          description: Numerical score reflects the direct consequence of a successful exploit, and represents the consequence to the thing that suffers the impact. The Impact sub-score equation is derived from the Base Impact metrics.
+          example: 3.6
+        temporal_score:
+          type: number
+          format: float
+          description: Numerical score reflects the characteristics of a vulnerability that may change over time but not across user environments.
+          example: 9.4
+    service_ticket_response_schema:
+      type: object
+      required:
+      - external_identifier
+      - ticket_type
+      description: Service ticket object to associate with a vulnerability.
+      properties:
+        external_identifier:
+          type: string
+          description: The service ticket's external ID in its ticketing provider.
+          example: JR-678
+        ticket_type:
+          type: string
+          enum:
+          - api
+          - jira
+          - service_now
+          description: The service ticket type.  `api` type tickets are not integrated with ticketing connectors.
+          example: service_now
+        system_id:
+          type: string
+          description: The service ticket's internal ID in its ticketing provider.  Required for Jira and ServiceNow tickets for clients with the relevant ticketing connectors to allow the service ticket to be automatically updated in Cisco Vulnerability Management. Note that this value is the same as external_identifier for Jira type service tickets.
+          example: 12abcd345e6789101112f1g21h3ijk14
+        status:
+          type: string
+          description: The service ticket status.  Will be honored for `api` type tickets.
+          example: Active
+        due_date:
+          type: string
+          format: date-time
+          description: May contain a default due date for internal use, so please refer to `due_date_override` for the service ticket's actual due date
+          example: '2021-08-12T03:14:57Z'
+          default: null
+        due_date_override:
+          type: string
+          format: date-time
+          description: Actual due date.
+          example: '2021-08-12T03:14:57Z'
+    export_status_get_response_schema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Data export status.
+          example: Export ready for download
+    export_get_asset_response_schema:
+      type: object
+      title: exported_asset
+      properties:
+        id:
+          type: integer
+          example: 183
+          default: 0
+        created_at:
+          type: string
+          format: date-time
+          example: '2015-08-06T12:37:54Z'
+        priority:
+          type: integer
+          example: 1
+          default: 0
+        operating_system:
+          type:
+          - string
+          - 'null'
+        notes:
+          type: string
+        last_booted_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          example: '2015-08-12T15:00:54Z'
+        primary_locator:
+          type: string
+          example: url
+        locator:
+          type: string
+          example: http://www.example.com
+        vulnerabilities_count:
+          type: integer
+          example: 1
+          default: 0
+        status:
+          type: string
+          example: active
+        last_seen_time:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          example: '2015-08-12T15:00:54Z'
+        network_ports:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 600002
+                default: 0
+              protocol:
+                type: string
+                example: TCP
+              port_number:
+                type: integer
+                example: 8080
+                default: 0
+              name:
+                type: string
+                example: http
+              product:
+                type: string
+                example: tomcat
+              version:
+                type: string
+                example: 7.0.61
+              state:
+                type: string
+                example: running
+              ostype:
+                type: string
+                example: windows
+        tags:
+          type: array
+          items:
+            type: string
+            example: engineering
+        owner:
+          type: string
+          example: Freddy
+        inactive_at:
+          type: string
+          example: '2020-10-31'
+        status_set_manually:
+          type: boolean
+          example: false
+          default: true
+        urls:
+          type: object
+          properties:
+            vulnerabilities:
+              type: string
+              example: https://api.kennasecurity.com/assets/183/vulnerabilities
+        database:
+          type: string
+        hostname:
+          type: string
+        mac_address:
+          type: string
+        ec2:
+          type: string
+        external_id:
+          type: string
+        netbios:
+          type: string
+        fqdn:
+          type: string
+        ip_address:
+          type: string
+          example: 127.0.0.1
+        url:
+          type: string
+        file:
+          type: string
+        application:
+          type: string
+        ipv6:
+          type:
+          - string
+          - 'null'
+        risk_meter_score:
+          type: integer
+          example: 0
+          default: 0
+        asset_groups:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+                default: 0
+              name:
+                type: string
+                example: name
+        overage:
+          type: boolean
+          example: false
+          default: false
+          description: Indicates if the asset is in overage. If true, no vulnerabilities will be imported for this asset until client overage is resolved.
+    cvss_v2_schema:
+      type: object
+      properties:
+        score:
+          type: number
+          format: float
+          description: Numerical score indicates the severity of a vulnerability relative to other vulnerabilities.
+          example: 7.5
+        exploit_subscore:
+          type: number
+          format: float
+          description: Numerical score reflects the ease and technical means by which the vulnerability can be exploited. The Exploitability sub-score equation is derived from the Base Exploitability metrics.
+          example: 10
+        impact_subscore:
+          type: number
+          format: float
+          description: Numerical score reflects the direct consequence of a successful exploit, and represents the consequence to the thing that suffers the impact. The Impact sub-score equation is derived from the Base Impact metrics.
+          example: 6.4
+        temporal_score:
+          type: number
+          format: float
+          description: Numerical score reflects the characteristics of a vulnerability that may change over time but not across user environments.
+          example: 7.5
+    export_get_fix_response_schema:
+      type: object
+      title: exported_fix
+      properties:
+        asset_count:
+          type: integer
+          example: '5'
+        asset_count_display_string:
+          type: string
+          example: 5 Assets Affected
+        assets:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+                example: 27183
+              locator:
+                type: string
+                example: 127.0.0.1
+              primary_locator:
+                type: string
+                example: ip_address
+              display_locator:
+                type: string
+                example: localhost
+        category:
+          type: string
+          example: Ubuntu
+        consequence:
+          type: string
+          example: If these vulnerabilities are successfully exploited, an attacker can bypass certain security ...
+        cves:
+          type: array
+          items:
+            type: string
+            example: CVE-2006-4924
+        diagnosis:
+          type: string
+          example: OpenSSH is OpenBSD's SSH (Secure SHell) protocol implementation. This package includes the core files ...
+        id:
+          type: integer
+          example: '48910'
+          format: int32
+        max_vuln_score:
+          type: integer
+          format: int32
+          example: 49
+        patch_publication_date:
+          type: string
+          example: 4/21/2009
+        reference_links:
+          type: array
+          items:
+            type: string
+            example: https://nvd.nist.gov/vuln/detail/CVE-2006-4924#:~:text=CVE-2006-4924%20Detail
+        scanner_ids:
+          type: array
+          items:
+            type: string
+            example: '118667'
+        solution:
+          type: string
+          example: Download the patch for ELSA-2006:0697 from Oracle metalink account ...
+        title:
+          type: string
+          example: Oracle Enterprise Linux Openssh security update (ELSA-2006:0697)
+        updated_at:
+          type: string
+          example: 5/19/2015
+        url:
+          type: string
+          example: http://oss.oracle.com/pipermail/el-errata/2006-November/000010.html
+          description: Deprecated. The first url in the urls array.
+          deprecated: true
+        urls:
+          type: array
+          items:
+            type: string
+            example:
+            - http://oss.oracle.com/pipermail/el-errata/2006-November/000010.html
+            - http://oss.oracle.com/pipermail/el-errata/2006-November/123456.html
+        vendor:
+          type: string
+          example: oracle
+        vuln_count:
+          type: integer
+          format: int32
+          example: 1
+    export_get_finding_response_schema:
+      type: object
+      title: exported_finding
+      properties:
+        id:
+          type: integer
+          example: 709836
+        name:
+          type: string
+          example: CWE 279
+        application_identifier:
+          type: string
+          example: identifier
+        external_unique_id:
+          type: string
+          example: external id
+        kenna_risk_score:
+          type: integer
+          description: An integer between 0 and 100
+          example: '90'
+        severity:
+          type: number
+          format: float
+          description: A number between 0.0 and 10.0
+          example: '9.0'
+        file_locator:
+          type: string
+          example: filename.extension
+        url_locator:
+          type: string
+          example: https://example.com
+        created_at:
+          type: string
+          format: date-time
+          example: '2021-02-23T13:38:57Z'
+        found_on:
+          type: string
+          format: date-time
+          example: '2021-02-23T13:38:57Z'
+        last_seen_time:
+          type: string
+          format: date-time
+          example: '2021-02-04T21:47:50.000Z'
+        due_date:
+          type: string
+          format: date-time
+          example: '2021-08-01T12:00:00Z'
+        closed_at:
+          type: string
+          format: date-time
+          example: '2021-08-12T03:14:57Z'
+        status:
+          type: string
+          enum:
+          - duplicate
+          - false_positive
+          - not_a_security_issue
+          - resolved
+          - risk_accepted
+          - open
+          - in_progress
+          - new
+          - triaged
+          example: resolved
+        triage_state:
+          type: string
+          enum:
+          - Closed
+          - Open
+          - Risk Accepted
+          - Unknown Status
+          example: Open
+        description:
+          type: string
+          example: <p>SSI Injection (Server-side Include) is a server-side exploit technique that allows an attacker to send code into a web application, which will later be executed locally by the web server. SSI Injection exploits a web application's failure to sanitize user-supplied data before they are inserted into a server-side interpreted HTML file.</p><p>Before serving an HTML web page, a web server may parse and execute Server-side Include statements before providing it to the client. In some cases (e.g. message boards, guest books, or content management systems), a web application will insert user-supplied data into the source of a web page.</p><p>If an attacker submits a Server-side Include statement, he may have the ability to execute arbitrary operating system commands, or include a restricted file's contents the next time the page is served. This is performed at the permission level of the web server user.</p><p> </p><h3>Example</h3><p>The following SSI tag can allow an attacker to get the root directory listing on a UNIX based system.</p><p> </p><p>&lt;!--#exec cmd="/bin/ls /" --&gt;</p><p> </p><p>The following SSI tag can allow an attacker to obtain database connection strings, or other sensitive data contained within a .NET configuration file.</p>
+        finding_age:
+          description: Number of days since the finding was created.
+          type: integer
+          example: '4'
+        time_to_remediate:
+          description: Number of days to close the finding. Null is returned if the finding is not a closed status or has no found_on or created_at date.
+          type: integer
+          example: '15'
+        custom_fields:
+          description: 'Array of custom fields matching known custom fields defintions.  Specific custom fields may be picked by requesting a field with the prefix ''custom_fields:'' and name of custom field as a suffix; for example: ''custom_fields:my custom field'''
+          type: array
+          items:
+            type: object
+            properties:
+              custom_field_definition_id:
+                description: ID of the custom field definition associated with the custom field.
+                type: integer
+                format: int32
+                example: '123'
+              name:
+                description: Name of the custom field
+                type: string
+                example: my custom field
+              value:
+                description: Value of the custom field corresponding to the type set within the custom field defintion
+                oneOf:
+                - type: string
+                - type: number
+                - type: integer
+                - type: boolean
+                example: foo
+  securitySchemes:
+    X-Risk-Token:
+      type: apiKey
+      name: X-Risk-Token
+      in: header
+x-provenance:
+  method: searched
+  source: https://apidocs.kennasecurity.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://apidocs.kennasecurity.com/reference/add-applications-to-role.md
+  - https://apidocs.kennasecurity.com/reference/add-asset-groups-to-role.md
+  - https://apidocs.kennasecurity.com/reference/application-findings-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/application-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/application-historical-vulnerability-count-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/asset-groups-findings-historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/audit-log-search.md
+  - https://apidocs.kennasecurity.com/reference/average-days-open-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/bulk-delete-findings.md
+  - https://apidocs.kennasecurity.com/reference/bulk-delete-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/bulk-update-assets.md
+  - https://apidocs.kennasecurity.com/reference/bulk-update-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/calculate-asset-group-metric.md
+  - https://apidocs.kennasecurity.com/reference/check-data-export-status.md
+  - https://apidocs.kennasecurity.com/reference/check-remediation-score.md
+  - https://apidocs.kennasecurity.com/reference/check-sla-adherence-metrics.md
+  - https://apidocs.kennasecurity.com/reference/check-vulnerability-densities-metrics.md
+  - https://apidocs.kennasecurity.com/reference/create-application.md
+  - https://apidocs.kennasecurity.com/reference/create-asset-group-and-risk-meter.md
+  - https://apidocs.kennasecurity.com/reference/create-asset.md
+  - https://apidocs.kennasecurity.com/reference/create-child-asset-group-and-risk-meter.md
+  - https://apidocs.kennasecurity.com/reference/create-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/create-finding.md
+  - https://apidocs.kennasecurity.com/reference/create-role.md
+  - https://apidocs.kennasecurity.com/reference/create-stack.md
+  - https://apidocs.kennasecurity.com/reference/create-user.md
+  - https://apidocs.kennasecurity.com/reference/create-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/delete-application.md
+  - https://apidocs.kennasecurity.com/reference/delete-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/delete-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/delete-role.md
+  - https://apidocs.kennasecurity.com/reference/delete-stack.md
+  - https://apidocs.kennasecurity.com/reference/delete-user.md
+  - https://apidocs.kennasecurity.com/reference/delete-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/download-zipped-asset-data.md
+  - https://apidocs.kennasecurity.com/reference/download-zipped-vuln-data.md
+  - https://apidocs.kennasecurity.com/reference/entitlements-overage.md
+  - https://apidocs.kennasecurity.com/reference/false-positive-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/get-refresh-reporting-status.md
+  - https://apidocs.kennasecurity.com/reference/historical-mean-time-to-remediate-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/historical-risk-meter-scores.md
+  - https://apidocs.kennasecurity.com/reference/historical-vulnerability-risk-category-counts.md
+  - https://apidocs.kennasecurity.com/reference/kill-running-data-export.md
+  - https://apidocs.kennasecurity.com/reference/list-applications.md
+  - https://apidocs.kennasecurity.com/reference/list-asset-groups.md
+  - https://apidocs.kennasecurity.com/reference/list-assets.md
+  - https://apidocs.kennasecurity.com/reference/list-connector-runs.md
+  - https://apidocs.kennasecurity.com/reference/list-connectors.md
+  - https://apidocs.kennasecurity.com/reference/list-cve-identifiers.md
+  - https://apidocs.kennasecurity.com/reference/list-dashboard-groups.md
+  - https://apidocs.kennasecurity.com/reference/list-fix-alternatives.md
+  - https://apidocs.kennasecurity.com/reference/list-fixes.md
+  - https://apidocs.kennasecurity.com/reference/list-roles.md
+  - https://apidocs.kennasecurity.com/reference/list-stacks.md
+  - https://apidocs.kennasecurity.com/reference/list-tags.md
+  - https://apidocs.kennasecurity.com/reference/list-users.md
+  - https://apidocs.kennasecurity.com/reference/list-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/list-vulnerability-definitions.md
+  - https://apidocs.kennasecurity.com/reference/past-due-vulnerabilities-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/refresh-reporting-data.md
+  - https://apidocs.kennasecurity.com/reference/request-data-export.md
+  - https://apidocs.kennasecurity.com/reference/retrieve-data-export.md
+  - https://apidocs.kennasecurity.com/reference/risk-accepted-by-risk-level-over-time.md
+  - https://apidocs.kennasecurity.com/reference/run-connector.md
+  - https://apidocs.kennasecurity.com/reference/search-assets.md
+  - https://apidocs.kennasecurity.com/reference/search-findings.md
+  - https://apidocs.kennasecurity.com/reference/search-fixes.md
+  - https://apidocs.kennasecurity.com/reference/search-for-vulnerability-definitions.md
+  - https://apidocs.kennasecurity.com/reference/search-users.md
+  - https://apidocs.kennasecurity.com/reference/search-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/service-now-list-fixes.md
+  - https://apidocs.kennasecurity.com/reference/service-now-search-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/show-all-fixes.md
+  - https://apidocs.kennasecurity.com/reference/show-application.md
+  - https://apidocs.kennasecurity.com/reference/show-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/show-asset-vulnerabilities.md
+  - https://apidocs.kennasecurity.com/reference/show-asset.md
+  - https://apidocs.kennasecurity.com/reference/show-chatter.md
+  - https://apidocs.kennasecurity.com/reference/show-connector-run.md
+  - https://apidocs.kennasecurity.com/reference/show-cve-history.md
+  - https://apidocs.kennasecurity.com/reference/show-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/show-finding.md
+  - https://apidocs.kennasecurity.com/reference/show-fix.md
+  - https://apidocs.kennasecurity.com/reference/show-malware-hashes.md
+  - https://apidocs.kennasecurity.com/reference/show-role.md
+  - https://apidocs.kennasecurity.com/reference/show-scanner-vulnerability-details.md
+  - https://apidocs.kennasecurity.com/reference/show-stack.md
+  - https://apidocs.kennasecurity.com/reference/show-top-fix-groups.md
+  - https://apidocs.kennasecurity.com/reference/show-user.md
+  - https://apidocs.kennasecurity.com/reference/show-vulnerability-definition.md
+  - https://apidocs.kennasecurity.com/reference/show-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/stack-applications-statistics.md
+  - https://apidocs.kennasecurity.com/reference/stack-asset-groups-statistics.md
+  - https://apidocs.kennasecurity.com/reference/tag-an-asset.md
+  - https://apidocs.kennasecurity.com/reference/total-past-due-vulnerabilities-by-risk-level.md
+  - https://apidocs.kennasecurity.com/reference/trends.md
+  - https://apidocs.kennasecurity.com/reference/untag-an-asset.md
+  - https://apidocs.kennasecurity.com/reference/update-application.md
+  - https://apidocs.kennasecurity.com/reference/update-asset-group.md
+  - https://apidocs.kennasecurity.com/reference/update-asset.md
+  - https://apidocs.kennasecurity.com/reference/update-connector.md
+  - https://apidocs.kennasecurity.com/reference/update-dashboard-group.md
+  - https://apidocs.kennasecurity.com/reference/update-findings.md
+  - https://apidocs.kennasecurity.com/reference/update-permissions-in-bulk.md
+  - https://apidocs.kennasecurity.com/reference/update-role-custom-permissions.md
+  - https://apidocs.kennasecurity.com/reference/update-role.md
+  - https://apidocs.kennasecurity.com/reference/update-stack.md
+  - https://apidocs.kennasecurity.com/reference/update-user.md
+  - https://apidocs.kennasecurity.com/reference/update-vulnerability.md
+  - https://apidocs.kennasecurity.com/reference/upload-data-file.md
+  - https://apidocs.kennasecurity.com/reference/validate-asset-search-query.md
+  - https://apidocs.kennasecurity.com/reference/validate-vulnerability-search-query.md
+  - https://apidocs.kennasecurity.com/reference/vi-data-snapshot.md
+  - https://apidocs.kennasecurity.com/reference/vulnerabilities-by-due-date.md
+  - https://apidocs.kennasecurity.com/reference/vulnerability-definitions-with-significant-score-change.md
+  merge:
+    pages: 115
+    deduped: 272
+    conflicts_kept_first: 0
