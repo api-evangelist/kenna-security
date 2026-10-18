@@ -209,6 +209,8 @@ apis:
   humanURL: https://apidocs.kennasecurity.com/reference
   baseURL: https://api.kennasecurity.com
   tags:
+  - Application
+  tags_raw:
   - APPLICATIONS
   properties:
   - type: OpenAPI
@@ -280,6 +282,8 @@ apis:
   humanURL: https://apidocs.kennasecurity.com/reference
   baseURL: https://api.kennasecurity.com
   tags:
+  - Asset groups
+  tags_raw:
   - ASSET GROUPS
   properties:
   - type: OpenAPI
@@ -350,6 +354,8 @@ apis:
   humanURL: https://apidocs.kennasecurity.com/reference
   baseURL: https://api.kennasecurity.com
   tags:
+  - Assets
+  tags_raw:
   - ASSETS
   properties:
   - type: OpenAPI
@@ -385,6 +391,8 @@ apis:
   humanURL: https://apidocs.kennasecurity.com/reference
   baseURL: https://api.kennasecurity.com
   tags:
+  - Audit Logs
+  tags_raw:
   - AUDIT LOGS
   properties:
   - type: OpenAPI
@@ -455,6 +463,8 @@ apis:
   humanURL: https://apidocs.kennasecurity.com/reference
   baseURL: https://api.kennasecurity.com
   tags:
+  - Connectors
+  tags_raw:
   - CONNECTORS
   properties:
   - type: OpenAPI
@@ -490,6 +500,8 @@ apis:
   humanURL: https://apidocs.kennasecurity.com/reference
   baseURL: https://api.kennasecurity.com
   tags:
+  - CVEs
+  tags_raw:
   - CVES
   properties:
   - type: OpenAPI
@@ -525,6 +537,8 @@ apis:
   humanURL: https://apidocs.kennasecurity.com/reference
   baseURL: https://api.kennasecurity.com
   tags:
+  - Dashboard Groups
+  tags_raw:
   - DASHBOARD GROUPS
   properties:
   - type: OpenAPI
@@ -560,6 +574,8 @@ apis:
   humanURL: https://apidocs.kennasecurity.com/reference
   baseURL: https://api.kennasecurity.com
   tags:
+  - Data Export
+  tags_raw:
   - DATA EXPORT
   properties:
   - type: OpenAPI
@@ -595,6 +611,8 @@ apis:
   humanURL: https://apidocs.kennasecurity.com/reference
   baseURL: https://api.kennasecurity.com
   tags:
+  - Entitlements
+  tags_raw:
   - ENTITLEMENTS
   properties:
   - type: OpenAPI
@@ -630,6 +648,8 @@ apis:
   humanURL: https://apidocs.kennasecurity.com/reference
   baseURL: https://api.kennasecurity.com
   tags:
+  - Findings
+  tags_raw:
   - FINDINGS
   properties:
   - type: OpenAPI
@@ -665,6 +685,8 @@ apis:
   humanURL: https://apidocs.kennasecurity.com/reference
   baseURL: https://api.kennasecurity.com
   tags:
+  - Fixes
+  tags_raw:
   - FIXES
   properties:
   - type: OpenAPI
@@ -881,6 +903,8 @@ apis:
   humanURL: https://apidocs.kennasecurity.com/reference
   baseURL: https://api.kennasecurity.com
   tags:
+  - Integration
+  tags_raw:
   - INTEGRATIONS
   properties:
   - type: OpenAPI
@@ -951,6 +975,8 @@ apis:
   humanURL: https://apidocs.kennasecurity.com/reference
   baseURL: https://api.kennasecurity.com
   tags:
+  - Roles
+  tags_raw:
   - ROLES
   properties:
   - type: OpenAPI
@@ -1021,6 +1047,8 @@ apis:
   humanURL: https://apidocs.kennasecurity.com/reference
   baseURL: https://api.kennasecurity.com
   tags:
+  - Stacks
+  tags_raw:
   - STACKS
   properties:
   - type: OpenAPI
@@ -1056,6 +1084,8 @@ apis:
   humanURL: https://apidocs.kennasecurity.com/reference
   baseURL: https://api.kennasecurity.com
   tags:
+  - User
+  tags_raw:
   - USERS
   properties:
   - type: OpenAPI
@@ -1091,6 +1121,8 @@ apis:
   humanURL: https://apidocs.kennasecurity.com/reference
   baseURL: https://api.kennasecurity.com
   tags:
+  - Vulnerabilities
+  tags_raw:
   - VULNERABILITIES
   properties:
   - type: OpenAPI
